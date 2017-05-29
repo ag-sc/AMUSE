@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+ 
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+ 
+    <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-7p %d [%t] %c %x - %m%n"/>
+        </layout>
+    </appender>
+  
+    <appender name="File" class="org.apache.log4j.FileAppender">
+        <param name="File" value="applog.txt" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-7p %d [%t] %c %x - %m%n"/>
+        </layout>
+    </appender>
+ 
+
+    <Loggers>
+        <Logger name="de.citec.sc.main.Test" level="info" additivity="false">
+            <AppenderRef ref="File" level="info" />
+            <AppenderRef ref="Console" level = "info"/>
+        </Logger>
+
+        <Root level="INFO">
+            <AppenderRef ref="File" level="info" />
+            <AppenderRef ref="Console" level = "info"/>
+        </Root>
+    </Loggers>
+</log4j:configuration>
+<!--    <Loggers>
+    <root>
+        <priority value="WARN"/>
+        <appender-ref ref="File" />
+        <appender-ref ref="Console" />
+    </root>
+     ++++++++++++++++++++++++ 
+     Loggers for this project 
+     ++++++++++++++++++++++++ 
+    <Logger name="de.citec.sc.main.Test" level="INFO" additivity="false">
+        <AppenderRef ref="Console" />
+        <AppenderRef ref="LogFile" />
+    </Logger>
+</Loggers>-->
+     
+

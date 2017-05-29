@@ -1,0 +1,5 @@
+annotators = tokenize, ssplit, pos, lemma, ner, parse, dcoref
+
+# depparse
+depparse.model    = edu/stanford/nlp/models/parser/nndep/english_UD.gz
+depparse.language = english

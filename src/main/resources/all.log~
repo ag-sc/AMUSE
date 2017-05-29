@@ -1,0 +1,695 @@
+2016-04-01 14:42:20.911 [main] INFO  learning.Trainer      - #Epochs=1, #Instances=4
+2016-04-01 14:42:20.912 [main] INFO  learning.Trainer      - ##############################
+2016-04-01 14:42:20.912 [main] INFO  learning.Trainer      - Epoch: 1/1
+2016-04-01 14:42:20.913 [main] INFO  learning.Trainer      - ##############################
+2016-04-01 14:42:20.913 [main] INFO  learning.Trainer      - ===========TRAIN===========
+2016-04-01 14:42:20.913 [main] INFO  learning.Trainer      - Epoch: 1/1; Instance: 1/4
+2016-04-01 14:42:20.913 [main] INFO  learning.Trainer      - Content   : Who produces Orangina?
+
+SELECT DISTINCT ?uri WHERE {  ?uri <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Orangina> . } 
+
+
+Nodes:
+	1,Who		2,produces		3,Orangina	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:42:20.913 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  ?uri <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Orangina> . } 
+2016-04-01 14:42:20.913 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:20.916 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:20.916 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:20.916 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 1; Explorer: JointExplorer
+2016-04-01 14:42:22.859 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:22.859 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:22.860 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 2; Explorer: JointExplorer
+2016-04-01 14:42:23.934 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:23.934 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:23.934 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 3; Explorer: JointExplorer
+2016-04-01 14:42:24.579 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=4, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/product, expandedTokens=[], dbpediaScore=0.0, matollScore=0.05319148936170213}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Orangina, expandedTokens=[], dbpediaScore=1.0, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 1.0
+ModelScore: 0.90625
+]
+2016-04-01 14:42:24.579 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 3
+2016-04-01 14:42:24.579 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:24.579 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  ?uri <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Orangina> . } 
+2016-04-01 14:42:24.579 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=4, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/product, expandedTokens=[], dbpediaScore=0.0, matollScore=0.05319148936170213}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Orangina, expandedTokens=[], dbpediaScore=1.0, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 1.0
+ModelScore: 0.90625
+
+2016-04-01 14:42:24.580 [main] INFO  learning.Trainer      - TrainingTime: 3672 (3 seconds)
+2016-04-01 14:42:24.580 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:24.580 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:26.112 [main] INFO  learning.Trainer      - ===========TRAIN===========
+2016-04-01 14:42:26.112 [main] INFO  learning.Trainer      - Epoch: 1/1; Instance: 2/4
+2016-04-01 14:42:26.112 [main] INFO  learning.Trainer      - Content   : Who developed Minecraft?
+
+SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Minecraft> <http://dbpedia.org/ontology/developer> ?uri . } 
+
+
+Nodes:
+	1,Who		2,developed		3,Minecraft	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:42:26.112 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Minecraft> <http://dbpedia.org/ontology/developer> ?uri . } 
+2016-04-01 14:42:26.112 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:26.112 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:26.112 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:26.112 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 1; Explorer: JointExplorer
+2016-04-01 14:42:26.463 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:26.463 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:26.463 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 2; Explorer: JointExplorer
+2016-04-01 14:42:27.363 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:27.363 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:27.363 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 3; Explorer: JointExplorer
+2016-04-01 14:42:28.827 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/developer, expandedTokens=[], dbpediaScore=0.0, matollScore=0.23529411764705882}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Minecraft, expandedTokens=[], dbpediaScore=0.9489795918367347, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 1.0
+ModelScore: 0.7305555555555555
+]
+2016-04-01 14:42:28.827 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 3
+2016-04-01 14:42:28.827 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:28.828 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Minecraft> <http://dbpedia.org/ontology/developer> ?uri . } 
+2016-04-01 14:42:28.828 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/developer, expandedTokens=[], dbpediaScore=0.0, matollScore=0.23529411764705882}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Minecraft, expandedTokens=[], dbpediaScore=0.9489795918367347, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 1.0
+ModelScore: 0.7305555555555555
+
+2016-04-01 14:42:28.828 [main] INFO  learning.Trainer      - TrainingTime: 7920 (7 seconds)
+2016-04-01 14:42:28.828 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:28.828 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:29.520 [main] INFO  learning.Trainer      - ===========TRAIN===========
+2016-04-01 14:42:29.521 [main] INFO  learning.Trainer      - Epoch: 1/1; Instance: 3/4
+2016-04-01 14:42:29.521 [main] INFO  learning.Trainer      - Content   : Who founded Intel?
+
+SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Intel> <http://dbpedia.org/ontology/foundedBy> ?uri . } 
+
+
+Nodes:
+	1,Who		2,founded		3,Intel	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:42:29.521 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Intel> <http://dbpedia.org/ontology/foundedBy> ?uri . } 
+2016-04-01 14:42:29.521 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:29.521 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:29.521 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:29.521 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 1; Explorer: JointExplorer
+2016-04-01 14:42:29.898 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:29.899 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:29.899 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 2; Explorer: JointExplorer
+2016-04-01 14:42:32.316 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:32.316 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:32.316 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 3; Explorer: JointExplorer
+2016-04-01 14:42:35.872 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/foundedBy, expandedTokens=[], dbpediaScore=0.0, matollScore=0.002352941176470588}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Intel, expandedTokens=[], dbpediaScore=0.923046875, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 1.0
+ModelScore: 0.7111111111111111
+]
+2016-04-01 14:42:35.873 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 3
+2016-04-01 14:42:35.873 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:35.873 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Intel> <http://dbpedia.org/ontology/foundedBy> ?uri . } 
+2016-04-01 14:42:35.873 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/foundedBy, expandedTokens=[], dbpediaScore=0.0, matollScore=0.002352941176470588}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Intel, expandedTokens=[], dbpediaScore=0.923046875, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 1.0
+ModelScore: 0.7111111111111111
+
+2016-04-01 14:42:35.873 [main] INFO  learning.Trainer      - TrainingTime: 14966 (14 seconds)
+2016-04-01 14:42:35.873 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:35.873 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:37.174 [main] INFO  learning.Trainer      - ===========TRAIN===========
+2016-04-01 14:42:37.175 [main] INFO  learning.Trainer      - Epoch: 1/1; Instance: 4/4
+2016-04-01 14:42:37.175 [main] INFO  learning.Trainer      - Content   : Who created Wikipedia?
+
+SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } 
+
+
+Nodes:
+	1,Who		2,created		3,Wikipedia	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:42:37.175 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } 
+2016-04-01 14:42:37.175 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:37.175 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:37.175 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:37.176 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 1; Explorer: JointExplorer
+2016-04-01 14:42:37.512 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:37.512 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:37.512 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 2; Explorer: JointExplorer
+2016-04-01 14:42:39.467 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:39.467 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:39.467 [main] INFO  de.citec.sc.sampling.TopKSampler      - TRAINING Step: 3; Explorer: JointExplorer
+2016-04-01 14:42:42.831 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=4, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/author, expandedTokens=[], dbpediaScore=0.0, matollScore=0.015151515151515152}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Wikipedia, expandedTokens=[], dbpediaScore=0.9823529411764705, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 1.0
+ModelScore: 0.775
+]
+2016-04-01 14:42:42.831 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 3
+2016-04-01 14:42:42.832 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:42.832 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } 
+2016-04-01 14:42:42.832 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=4, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/author, expandedTokens=[], dbpediaScore=0.0, matollScore=0.015151515151515152}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Wikipedia, expandedTokens=[], dbpediaScore=0.9823529411764705, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 1.0
+ModelScore: 0.775
+
+2016-04-01 14:42:42.832 [main] INFO  learning.Trainer      - TrainingTime: 21925 (21 seconds)
+2016-04-01 14:42:42.832 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:42.832 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:43.576 [main] INFO  learning.Trainer      - ##############################
+2016-04-01 14:42:43.578 [main] INFO  learning.Trainer      - ===========TEST============
+2016-04-01 14:42:43.578 [main] INFO  learning.Trainer      - Document: 1/4
+2016-04-01 14:42:43.578 [main] INFO  learning.Trainer      - Content   : Who produces Orangina?
+
+SELECT DISTINCT ?uri WHERE {  ?uri <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Orangina> . } 
+
+
+Nodes:
+	1,Who		2,produces		3,Orangina	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:42:43.578 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  ?uri <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Orangina> . } 
+2016-04-01 14:42:43.578 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:43.578 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:43.578 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:43.579 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 1; Explorer: JointExplorer
+2016-04-01 14:42:43.744 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:42:43.746 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:43.746 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:43.746 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 2; Explorer: JointExplorer
+2016-04-01 14:42:46.902 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 12
+2016-04-01 14:42:46.904 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:46.904 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:46.904 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 3; Explorer: JointExplorer
+2016-04-01 14:42:48.797 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 12
+2016-04-01 14:42:48.801 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:48.802 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:48.802 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 4; Explorer: JointExplorer
+2016-04-01 14:42:50.700 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 3
+2016-04-01 14:42:50.701 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:50.701 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:50.701 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 5; Explorer: JointExplorer
+2016-04-01 14:42:51.179 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 3
+2016-04-01 14:42:51.269 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/produces, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Orangina, expandedTokens=[], dbpediaScore=1.0, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 0.0
+ModelScore: 1.6500000000000004
+]
+2016-04-01 14:42:51.269 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 5
+2016-04-01 14:42:51.269 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:51.269 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  ?uri <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Orangina> . } 
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/produces, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Orangina, expandedTokens=[], dbpediaScore=1.0, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=2}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=1}
+
+ObjectiveScore: 0.0
+ModelScore: 1.6500000000000004
+
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - ===========TEST============
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - Document: 2/4
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - Content   : Who developed Minecraft?
+
+SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Minecraft> <http://dbpedia.org/ontology/developer> ?uri . } 
+
+
+Nodes:
+	1,Who		2,developed		3,Minecraft	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Minecraft> <http://dbpedia.org/ontology/developer> ?uri . } 
+2016-04-01 14:42:51.270 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:42:51.270 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:51.270 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:51.270 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 1; Explorer: JointExplorer
+2016-04-01 14:42:51.441 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:42:51.442 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:51.442 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:51.442 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 2; Explorer: JointExplorer
+2016-04-01 14:42:54.622 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:42:54.623 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:54.623 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:54.623 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 3; Explorer: JointExplorer
+2016-04-01 14:42:57.736 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 12
+2016-04-01 14:42:57.737 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:57.737 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:57.737 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 4; Explorer: JointExplorer
+2016-04-01 14:42:59.599 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 4
+2016-04-01 14:42:59.599 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:42:59.599 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:42:59.599 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 5; Explorer: JointExplorer
+2016-04-01 14:43:00.216 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 4
+2016-04-01 14:43:00.344 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/developer, expandedTokens=[], dbpediaScore=0.0, matollScore=0.23529411764705882}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Minecraft, expandedTokens=[], dbpediaScore=0.9489795918367347, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 0.0
+ModelScore: 1.1305555555555558
+]
+2016-04-01 14:43:00.345 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 5
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Minecraft> <http://dbpedia.org/ontology/developer> ?uri . } 
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/developer, expandedTokens=[], dbpediaScore=0.0, matollScore=0.23529411764705882}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Minecraft, expandedTokens=[], dbpediaScore=0.9489795918367347, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 0.0
+ModelScore: 1.1305555555555558
+
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - ===========TEST============
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - Document: 3/4
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - Content   : Who founded Intel?
+
+SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Intel> <http://dbpedia.org/ontology/foundedBy> ?uri . } 
+
+
+Nodes:
+	1,Who		2,founded		3,Intel	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Intel> <http://dbpedia.org/ontology/foundedBy> ?uri . } 
+2016-04-01 14:43:00.345 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:43:00.345 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:00.346 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:00.346 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 1; Explorer: JointExplorer
+2016-04-01 14:43:00.514 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:43:00.516 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:00.516 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:00.516 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 2; Explorer: JointExplorer
+2016-04-01 14:43:03.615 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:43:03.617 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:03.617 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:03.617 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 3; Explorer: JointExplorer
+2016-04-01 14:43:06.706 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:43:06.707 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:06.707 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:06.707 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 4; Explorer: JointExplorer
+2016-04-01 14:43:09.795 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 2
+2016-04-01 14:43:09.796 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:09.796 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:09.796 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 5; Explorer: JointExplorer
+2016-04-01 14:43:10.108 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 2
+2016-04-01 14:43:10.170 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/founder, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0106951871657754}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Intel, expandedTokens=[], dbpediaScore=0.923046875, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 0.0
+ModelScore: 1.125
+]
+2016-04-01 14:43:10.173 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 5
+2016-04-01 14:43:10.173 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:43:10.174 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Intel> <http://dbpedia.org/ontology/foundedBy> ?uri . } 
+2016-04-01 14:43:10.174 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=0, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/founder, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0106951871657754}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Intel, expandedTokens=[], dbpediaScore=0.923046875, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 0.0
+ModelScore: 1.125
+
+2016-04-01 14:43:10.174 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:43:10.174 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:43:10.174 [main] INFO  learning.Trainer      - ===========TEST============
+2016-04-01 14:43:10.174 [main] INFO  learning.Trainer      - Document: 4/4
+2016-04-01 14:43:10.174 [main] INFO  learning.Trainer      - Content   : Who created Wikipedia?
+
+SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } 
+
+
+Nodes:
+	1,Who		2,created		3,Wikipedia	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:43:10.175 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } 
+2016-04-01 14:43:10.175 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:43:10.175 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:10.175 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:10.175 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 1; Explorer: JointExplorer
+2016-04-01 14:43:10.384 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:43:10.387 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:10.387 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:10.387 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 2; Explorer: JointExplorer
+2016-04-01 14:43:14.041 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 8
+2016-04-01 14:43:14.042 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:14.042 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:14.042 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 3; Explorer: JointExplorer
+2016-04-01 14:43:15.529 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 7
+2016-04-01 14:43:15.538 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:15.539 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:15.539 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 4; Explorer: JointExplorer
+2016-04-01 14:43:16.892 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 7
+2016-04-01 14:43:16.893 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:16.893 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:16.893 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 5; Explorer: JointExplorer
+2016-04-01 14:43:18.196 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 7
+2016-04-01 14:43:18.637 [main] INFO  de.citec.sc.sampling.TopKSampler      - Sampled State:  [
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=4, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/created, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Wikipedia, expandedTokens=[], dbpediaScore=0.9823529411764705, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 0.0
+ModelScore: 1.2500000000000002
+]
+2016-04-01 14:43:18.637 [main] INFO  de.citec.sc.sampling.TopKSampler      - Stop sampling after step 5
+2016-04-01 14:43:18.637 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:43:18.638 [main] INFO  learning.Trainer      - Gold Result:   SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } 
+2016-04-01 14:43:18.638 [main] INFO  learning.Trainer      - Final State:  
+DUDES:
+Node#1 DUDE: DUDESVariable{nodeId=1, dudesId=4, parentDudesId=1}
+Node#2 DUDE: DUDESVariable{nodeId=2, dudesId=1, parentDudesId=-2}
+Node#3 DUDE: DUDESVariable{nodeId=3, dudesId=2, parentDudesId=1}
+
+URIS:
+Node#1 URIVariable{tokenId=1, uri=EMPTY_STRING, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#2 URIVariable{tokenId=2, uri=http://dbpedia.org/ontology/created, expandedTokens=[], dbpediaScore=0.0, matollScore=0.0}
+Node#3 URIVariable{tokenId=3, uri=http://dbpedia.org/resource/Wikipedia, expandedTokens=[], dbpediaScore=0.9823529411764705, matollScore=0.0}
+
+Expansions:
+
+Swaps:
+
+Slots: 
+Node: 1 Argument: SlotVariable{nodeId=1, argument=1}
+Node: 3 Argument: SlotVariable{nodeId=3, argument=2}
+
+ObjectiveScore: 0.0
+ModelScore: 1.2500000000000002
+
+2016-04-01 14:43:18.638 [main] INFO  learning.Trainer      - ++++++++++++++++
+2016-04-01 14:43:18.638 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:43:18.664 [main] INFO  learning.Trainer      - ===========TEST============
+2016-04-01 14:43:18.664 [main] INFO  learning.Trainer      - Document: 1/3
+2016-04-01 14:43:18.664 [main] INFO  learning.Trainer      - Content   : Who created Batman?
+
+SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Batman> <http://dbpedia.org/ontology/creator> ?uri . } 
+
+
+Nodes:
+	1,Who		2,created		3,Batman	
+Edges:
+	1,nsubj		3,dobj	
+
+Parse Tree:
+ (1,2)	 (3,2)	
+Head node: 2
+
+
+2016-04-01 14:43:18.664 [main] INFO  learning.Trainer      - Gold Result: SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Batman> <http://dbpedia.org/ontology/creator> ?uri . } 
+2016-04-01 14:43:18.664 [main] INFO  learning.Trainer      - ===========================
+2016-04-01 14:43:18.664 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:18.664 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:18.664 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 1; Explorer: JointExplorer
+2016-04-01 14:43:18.826 [main] INFO  de.citec.sc.sampling.TopKSampler      - States# 20
+2016-04-01 14:43:18.828 [main] INFO  de.citec.sc.sampling.TopKSampler      - ---------------------------
+2016-04-01 14:43:18.828 [main] INFO  de.citec.sc.sampling.TopKSampler      - ...............
+2016-04-01 14:43:18.828 [main] INFO  de.citec.sc.sampling.TopKSampler      - PREDICTION Step: 2; Explorer: JointExplorer

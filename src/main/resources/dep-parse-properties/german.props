@@ -1,0 +1,13 @@
+annotators = tokenize, ssplit, pos, ner, parse
+
+pos.model = edu/stanford/nlp/models/pos-tagger/german/german-hgc.tagger
+
+# ner
+ner.language = german
+ner.model = edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz
+ner.applyNumericClassifiers = false
+ner.useSUTime = false
+
+# depparse
+depparse.model    = edu/stanford/nlp/models/parser/nndep/UD_German.gz
+#depparse.language = german

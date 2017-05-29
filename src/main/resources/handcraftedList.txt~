@@ -1,0 +1,129 @@
+cosmonauts	?uri rdf:type dbo:Astronaut . ?uri dbo:nationality res:Russia .
+start	dbo:sourceCountry
+inhabitants	dbo:populationTotal
+German	?uri dbo:country res:Germany
+mayor	dbo:leader
+second highest	dbo:elevation
+from	dbo:birthPlace
+professional skateboarders	?uri dbo:occupation res:Skateboarding
+total amount of men and women serving in	dbp:employees
+youngest	dbo:birthDate
+player	dbo:team
+in	dbo:league
+longest	dbo:length
+produced in	dbo:assembly
+tall	dbo:height
+U.S. state	?uri rdf:type yago:StatesOfTheUnitedStates
+type	dbo:class
+Methodist	?uri dbo:religion res:Methodism
+Australian	?uri dbo:locationCountry res:Australia
+games by	dbo:publisher
+flow through	dbo:city
+connected by	dbp:country
+professional surfers	?uri dbo:occupation res:Surfing
+belong to	dbo:country
+Greek goddesses	?uri rdf:type yago:GreekGoddesses
+dwelt	dbp:abode
+Apollo 14 astronauts	?uri dbo:mission res:Apollo_14
+time zone	dbp:timezone
+countries in Africa	?states rdf:type yago:AfricanCountries
+in	dbo:country
+missions	dbp:programme
+Danish	?uri dbo:country res:Denmark
+called after	dbp:shipNamesake
+win	dbo:award
+in	dbo:isPartOf
+built	dbp:beginningDate
+called	dbp:nickname
+chemist	?uri dbo:profession res:Chemist
+jew	?uri dbp:ethnicity 'Jewish'@en
+by	dbo:author
+American inventions	?uri rdf:type yago:AmericanInventions
+high	dbo:elevation
+buried	?x dbo:restingPlace ?uri. ?uri rdf:type dbo:Settlement .
+abbreviation	dbp:postalabbreviation
+MN	'MN'@en
+from	dbo:artist
+painted	dbo:author
+country	dbo:nationality
+birthdays	dbo:birthDate
+actors	dbo:starring
+states border	dbp:borderingstates
+type	dbp:design
+involved in a war	dbo:battle
+population density	dbp:densityrank
+German	?spouse dbo:birthPlace res:Germany
+When	dbo:date
+in Australia	?uri dbo:locatedInArea res:Australia
+in Spain	?uri dbo:ground res:Spain
+in the advertising industry	?uri dbo:industry res:Advertising
+with Tom Cruise	?uri dbo:starring res:Tom_Cruise
+telecommunications organizations	?uri  rdf:type dbo:Organisation  . ?uri dbo:industry res:Telecommunication
+people	?uri rdf:type foaf:Person
+first name	foaf:givenName
+higher	dbo:elevation
+created	dbo:author
+websites	dbp:homepage
+films	?uri rdf:type dbo:Film
+stores	dbo:numberOfLocations
+capitals in Europe	?uri rdf:type yago:CapitalsInEurope
+host cities of the summer olympic games	?uri rdf:type yago:HostCitiesOfTheSummerOlympicGames
+16th	'16th'
+president of the United States	'President of the United States'
+states of Germany	?uri rdf:type yago:StatesOfGermany
+governed by	dbo:leaderParty
+Canadian	?uri dbo:country res:Canada
+play	dbo:starring
+star in	dbo:starring
+painter	dbo:author
+deep	dbo:depth
+youngest	dbo:birthDate
+can you pay using	dbo:currency
+won	dbo:award
+taikonauts	?uri rdf:type dbo:Astronaut .   ?uri dbo:nationality res:China .
+span	dbo:mainspan
+actors	?uri dbo:occupation res:Actor
+called	foaf:surname
+Baldwin	'Baldwin'@en
+tallest	dbo:height
+player	dbo:team
+James Bond movies	?uri rdf:type yago:JamesBondFilms
+When	dbp:date
+Swedish	?uri dbo:birthPlace res:Sweden
+oceanographers	?uri dbo:field res:Oceanography
+last	dbo:releaseDate
+stand for	dbo:abbreviation
+IYCM	'IYCM'
+run through	dbp:country
+moon	dbp:satelliteOf
+heavy	dbo:mass
+Australian	?uri dbo:hometown res:Australia
+shot	dbp:dateOfDeath
+Rodzilla	"Rodzilla"@en
+called	dbp:nickname
+play	dbo:league
+in	dbo:locatedInArea
+in	dbo:location
+cost	dbo:budget
+part	dbp:alliance
+serve	dbo:targetAirport
+graduated	dbo:almaMater
+politicians	?uri dbo:profession res:Politician
+Africa	?uri dbo:locatedInArea ?area .   ?area rdf:type yago:AfricanCountries . 
+beer	?uri dbp:type res:Beer
+Ireland	"Ireland"@en
+president of Pakistan	?uri dbp:title res:President_of_Pakistan
+in	dbp:years
+English	?uri dbo:birthPlace res:England
+types of eating disorders	?uri rdf:type yago:EatingDisorders
+largest metropolitan area	dbp:largestmetro
+timezone	dbo:timezone
+killed	dbp:conviction
+city	?uri rdf:type yago:City108524735
+serves	dbo:targetAirport
+members	dbp:alliance
+flew	dbp:planet
+stand for	dbp:name
+Greek	?uri dbo:country res:Greece
+Japanese musical instruments	yago:JapaneseMusicalInstruments
+in	dbo:locatedInArea

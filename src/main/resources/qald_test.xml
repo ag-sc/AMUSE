@@ -1,0 +1,91 @@
+{
+"dataset": {
+"id": "qald-6-train-multilingual"
+},
+        "questions": [
+
+{
+        "id": "15",
+                "answertype": "resource",
+                "aggregation": "false",
+                "onlydbo": "true",
+                "hybrid": "false",
+                "question": [
+                {
+                "language": "en",
+                        "string": "Who created Goofy?",
+                        "keywords": "created, Goofy"
+                },
+                {
+                "language": "fa",
+                        "string": "چه کسی گوفی را ساخت؟",
+                        "keywords": "گوفی، ساخت"
+                },
+                {
+                "language": "de",
+                        "string": "Wer hat Goofy erfunden?",
+                        "keywords": "erfinden, Goofy"
+                },
+                {
+                "language": "es",
+                        "string": "¿Quién es el creador de Goofy?",
+                        "keywords": "creador, Goofy"
+                },
+                {
+                "language": "it",
+                        "string": "Chi è il creatore di Pippo?",
+                        "keywords": "creatore, Pippo"
+                },
+                {
+                "language": "fr",
+                        "string": "Qui est le créateur de Goofy?",
+                        "keywords": "Goofy, créateur"
+                },
+                {
+                "language": "nl",
+                        "string": "Wie bedacht Goofy?",
+                        "keywords": "bedenker, Goofy"
+                },
+                {
+                "language": "ro",
+                        "string": "Cine l-a creat pe Goofy?",
+                        "keywords": "creat, Goofy"
+                }
+                ],
+                "query": {
+                "sparql": "SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Goofy> <http://dbpedia.org/ontology/creator> ?uri . }  "
+                },
+                "answers": [
+                {
+                "head": {
+                "vars": [
+                        "uri"
+                ]
+                },
+                        "results": {
+                        "bindings": [
+                        {
+                        "uri": {
+                        "type": "uri",
+                                "value": "http://dbpedia.org/resource/Walt_Disney"
+                        }
+                        },
+                        {
+                        "uri": {
+                        "type": "uri",
+                                "value": "http://dbpedia.org/resource/Del_Connell"
+                        }
+                        },
+                        {
+                        "uri": {
+                        "type": "uri",
+                                "value": "http://dbpedia.org/resource/Paul_Murry"
+                        }
+                        }
+                        ]
+                        }
+                }
+                ]
+        }
+]
+        }

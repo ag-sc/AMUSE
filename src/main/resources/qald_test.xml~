@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset id="qald-5_train">
+
+
+<question aggregation="false" answertype="resource" hybrid="false" id="1" onlydbo="true">
+<string lang="en"><![CDATA[When did Dracula's creator die?]]></string>
+<string lang="de"><![CDATA[Welchen Fluss überspannt die Brooklyn Bridge?]]></string>
+<string lang="es"><![CDATA[¿Por qué río cruza la Brooklyn Bridge?]]></string>
+<string lang="it"><![CDATA[Quale fiume attraversa il ponte di Brooklyn?]]></string>
+<string lang="fr"><![CDATA[Quelle cours d'eau est traversé par le pont de Brooklyn?]]></string>
+<string lang="nl"><![CDATA[Welke rivier overspant de Brooklyn Bridge?]]></string>
+<string lang="ro"><![CDATA[Ce râu traversează podul din Brooklyn?]]></string>
+<keywords lang="en"><![CDATA[river, cross, Brooklyn Bridge]]></keywords>
+<keywords lang="de"><![CDATA[Fluss, überspannen, Brooklyn Bridge]]></keywords>
+<keywords lang="es"><![CDATA[río, cruza, Brooklyn Bridge]]></keywords>
+<keywords lang="it"><![CDATA[fiume, attraversare, ponte di Brooklyn]]></keywords>
+<keywords lang="fr"><![CDATA[cours d'eau, pont de Brooklyn]]></keywords>
+<keywords lang="nl"><![CDATA[rivier, Brooklyn Bridge, overspant]]></keywords>
+<keywords lang="ro"><![CDATA[râu, traversează, podul din Brooklyn]]></keywords>
+<query><![CDATA[
+SELECT DISTINCT ?date WHERE {  <http://dbpedia.org/resource/Count_Dracula> <http://dbpedia.org/ontology/creator> ?x .  ?x <http://dbpedia.org/ontology/deathDate> ?date .
+]]></query>
+<answers>
+</answers>
+</question>
+
+
+
+
+
+
+
+
+
+</dataset>

@@ -1,0 +1,124 @@
+inhabitants	http://dbpedia.org/ontology/populationTotal
+German	http://dbpedia.org/ontology/country###http://dbpedia.org/resource/Germany
+mayor	http://dbpedia.org/ontology/leader
+second highest	http://dbpedia.org/ontology/elevation
+from	http://dbpedia.org/ontology/birthPlace
+professional skateboarders	http://dbpedia.org/ontology/occupation###http://dbpedia.org/resource/Skateboarding
+total amount of men and women serving in	http://dbpedia.org/property/employees
+youngest	http://dbpedia.org/ontology/birthDate
+player	http://dbpedia.org/ontology/team
+in	http://dbpedia.org/ontology/league
+longest	http://dbpedia.org/ontology/length
+produced in	http://dbpedia.org/ontology/assembly
+tall	http://dbpedia.org/ontology/height
+U.S. state	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/StatesOfTheUnitedStates
+type	http://dbpedia.org/ontology/class
+Methodist	http://dbpedia.org/ontology/religion###http://dbpedia.org/resource/Methodism
+Australian	http://dbpedia.org/ontology/locationCountry###http://dbpedia.org/resource/Australia
+games	http://dbpedia.org/ontology/publisher
+flow through	http://dbpedia.org/ontology/city
+connected by	http://dbpedia.org/property/country
+professional surfers	http://dbpedia.org/ontology/occupation###http://dbpedia.org/resource/Surfing
+Greek goddesses	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/GreekGoddesses
+city	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/ontology/Settlement
+dwelt	http://dbpedia.org/property/abode
+Apollo 14 astronauts	http://dbpedia.org/ontology/mission###http://dbpedia.org/resource/Apollo_14
+time zone	http://dbpedia.org/property/timezone
+countries in Africa	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/AfricanCountries
+in	http://dbpedia.org/ontology/country
+missions	http://dbpedia.org/property/programme
+Danish	http://dbpedia.org/ontology/country###http://dbpedia.org/resource/Denmark
+called after	http://dbpedia.org/property/shipNamesake
+win	http://dbpedia.org/ontology/award
+in	http://dbpedia.org/ontology/isPartOf
+built	http://dbpedia.org/property/beginningDate
+called	http://dbpedia.org/property/nickname
+chemist	http://dbpedia.org/ontology/profession###http://dbpedia.org/resource/Chemist
+jew	http://dbpedia.org/property/ethnicity###'Jewish'@en
+by	http://dbpedia.org/ontology/author
+American inventions	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/AmericanInventions
+high	http://dbpedia.org/ontology/elevation
+abbreviation	http://dbpedia.org/property/postalabbreviation
+MN	'MN'@en
+from	http://dbpedia.org/ontology/artist
+painted	http://dbpedia.org/ontology/author
+country	http://dbpedia.org/ontology/nationality
+birthdays	http://dbpedia.org/ontology/birthDate
+actors	http://dbpedia.org/ontology/starring
+states border	http://dbpedia.org/property/borderingstates
+type	http://dbpedia.org/property/design
+involved in a war	http://dbpedia.org/ontology/battle
+population density	http://dbpedia.org/property/densityrank
+German	http://dbpedia.org/ontology/birthPlace###http://dbpedia.org/resource/Germany
+When	http://dbpedia.org/ontology/date
+Australia	http://dbpedia.org/ontology/locatedInArea###http://dbpedia.org/resource/Australia
+Spain	http://dbpedia.org/ontology/ground###http://dbpedia.org/resource/Spain
+advertising industry	http://dbpedia.org/ontology/industry###http://dbpedia.org/resource/Advertising
+with	http://dbpedia.org/ontology/starring
+people	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://xmlns.com/foaf/0.1/foaf:Person
+first name	http://xmlns.com/foaf/0.1/givenName
+higher	http://dbpedia.org/ontology/elevation
+websites	http://dbpedia.org/property/homepage
+birth name	http://dbpedia.org/property/birthName
+films	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/ontology/Film
+organizations	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/ontology/Company
+stores	http://dbpedia.org/ontology/numberOfLocations
+capitals in Europe	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/CapitalsInEurope
+host cities of the summer olympic games	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/HostCitiesOfTheSummerOlympicGames
+16th	'16th'
+president of the United States	'President of the United States'
+states of Germany	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/StatesOfGermany
+governed by	http://dbpedia.org/ontology/leaderParty
+Canadian	http://dbpedia.org/ontology/country###http://dbpedia.org/resource/Canada
+play	http://dbpedia.org/ontology/starring
+star in	http://dbpedia.org/ontology/starring
+painter	http://dbpedia.org/ontology/author
+deep	http://dbpedia.org/ontology/depth
+youngest	http://dbpedia.org/ontology/birthDate
+can you pay using	http://dbpedia.org/ontology/currency
+won	http://dbpedia.org/ontology/award
+span	http://dbpedia.org/ontology/mainspan
+actors	http://dbpedia.org/ontology/occupation###http://dbpedia.org/resource/Actor
+called	http://xmlns.com/foaf/0.1/surname
+Baldwin	'Baldwin'@en
+tallest	http://dbpedia.org/ontology/height
+player	http://dbpedia.org/ontology/team
+James Bond movies	http://www.w3.org/1999/02/22-rdf-syntax-ns#type##http://dbpedia.org/class/yago/JamesBondFilms
+When	http://dbpedia.org/property/date
+Swedish	http://dbpedia.org/ontology/birthPlace###http://dbpedia.org/resource/Sweden
+oceanographers	http://dbpedia.org/ontology/field###http://dbpedia.org/resource/Oceanography
+last	http://dbpedia.org/ontology/releaseDate
+stand for	http://dbpedia.org/ontology/abbreviation
+IYCM	'IYCM'
+run through	http://dbpedia.org/property/country
+moon	http://dbpedia.org/property/satelliteOf
+heavy	http://dbpedia.org/ontology/mass
+Australian	http://dbpedia.org/ontology/hometown###http://dbpedia.org/resource/Australia
+shot	http://dbpedia.org/property/dateOfDeath
+Rodzilla	"Rodzilla"@en
+called	http://dbpedia.org/property/nickname
+play	http://dbpedia.org/ontology/league
+in	http://dbpedia.org/ontology/locatedInArea
+in	http://dbpedia.org/ontology/location
+cost	http://dbpedia.org/ontology/budget
+part	http://dbpedia.org/property/alliance
+serve	http://dbpedia.org/ontology/targetAirport
+graduated	http://dbpedia.org/ontology/almaMater
+politicians	http://dbpedia.org/ontology/profession###http://dbpedia.org/resource/Politician
+beer	http://dbpedia.org/property/type###http://dbpedia.org/resource/Beer
+Ireland	"Ireland"@en
+president of Pakistan	http://dbpedia.org/property/title###http://dbpedia.org/resource/President_of_Pakistan
+in	http://dbpedia.org/property/years
+English	http://dbpedia.org/ontology/birthPlace###http://dbpedia.org/resource/England
+types of eating disorders	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/EatingDisorders
+largest metropolitan area	http://dbpedia.org/property/largestmetro
+timezone	http://dbpedia.org/ontology/timezone
+killed	http://dbpedia.org/property/conviction
+city	http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/class/yago/City108524735
+serves	http://dbpedia.org/ontology/targetAirport
+members	http://dbpedia.org/property/alliance
+flew	http://dbpedia.org/property/planet
+stand for	http://dbpedia.org/property/name
+Greek	http://dbpedia.org/ontology/country###http://dbpedia.org/resource/Greece
+Japanese musical instruments	http://dbpedia.org/class/yago/JapaneseMusicalInstruments
+in	http://dbpedia.org/ontology/locatedInArea

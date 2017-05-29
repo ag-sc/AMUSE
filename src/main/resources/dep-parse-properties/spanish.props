@@ -1,0 +1,13 @@
+annotators = tokenize, ssplit, pos, ner, parse
+
+pos.model = edu/stanford/nlp/models/pos-tagger/spanish/spanish-distsim.tagger
+
+# ner
+ner.language = spanish
+ner.model = edu/stanford/nlp/models/ner/spanish.ancora.distsim.s512.crf.ser.gz
+ner.applyNumericClassifiers = false
+ner.useSUTime = false
+
+# depparse
+depparse.model    = edu/stanford/nlp/models/parser/nndep/UD_Spanish.gz
+#depparse.language = spanish

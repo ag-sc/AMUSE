@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<dataset id="qald-4_multilingual_train">
+    <question aggregation="true" answertype="number" id="126" onlydbo="true">
+        <string lang="en"><![CDATA[How many languages are spoken in Turkmenistan?]]></string>
+        <string lang="de"><![CDATA[Wieviele Sprachen werden in Turkmenistan gesprochen?]]></string>
+        <string lang="es"><![CDATA[¿Cuántos idiomas se hablan en Turkmenistán?]]></string>
+        <string lang="it"><![CDATA[Quante lingue sono parlate in Turkmenistan?]]></string>
+        <string lang="fr"><![CDATA[Combien de langues sont parlées au Turkménistan?]]></string>
+        <string lang="nl"><![CDATA[Hoeveel talen worden er gesproken in Turkmenistan?]]></string>
+        <string lang="ro"><![CDATA[Câte limbi sunt vorbite în Turkmenistan?]]></string>
+        <keywords lang="en"><![CDATA[languages, Turkmenistan]]></keywords>
+        <keywords lang="de"><![CDATA[Sprachen, Turkmenistan]]></keywords>
+        <keywords lang="es"><![CDATA[idiomas, Turkmenistán]]></keywords>
+        <keywords lang="it"><![CDATA[lingue, Turkmenistan]]></keywords>
+        <keywords lang="fr"><![CDATA[langues, Turkménistan]]></keywords>
+        <keywords lang="nl"><![CDATA[talen, Turkmenistan]]></keywords>
+        <keywords lang="ro"><![CDATA[limbi, Turkmenistan]]></keywords>
+        <query><![CDATA[PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+SELECT (COUNT(DISTINCT ?uri) as ?ss)
+WHERE { 
+        res:Turkmenistan dbo:language ?uri . 
+	?uri rdf:type dbo:Language .
+}]]></query>
+        <answers>
+            <answer>
+                <number>2</number>
+            </answer>
+        </answers>
+    </question>
+</dataset>
