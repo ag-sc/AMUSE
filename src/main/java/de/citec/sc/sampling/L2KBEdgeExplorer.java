@@ -273,7 +273,7 @@ public class L2KBEdgeExplorer implements Explorer<State> {
         boolean useWordNet = false;
         boolean mergePartialMatches = false;
 
-        int topK = 70;
+        int topK = 90;
 
         String queryTerm = node.toLowerCase().trim();
 
