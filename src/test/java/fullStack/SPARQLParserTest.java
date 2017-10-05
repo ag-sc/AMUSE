@@ -7,6 +7,7 @@ package fullStack;
 
 import de.citec.sc.qald.SPARQLParser;
 import java.util.List;
+import java.util.Set;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class SPARQLParserTest {
 
     @Test
     public void test() {
-        List<String> uris = SPARQLParser.extractURIsFromQuery("SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } ");
+        Set<String> uris = SPARQLParser.extractURIsFromQuery("SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Wikipedia> <http://dbpedia.org/ontology/author> ?uri . } ");
 
         System.out.println("Extracted URIs: " + uris);
         Assert.assertEquals(true, uris.contains("http://dbpedia.org/resource/Wikipedia"));

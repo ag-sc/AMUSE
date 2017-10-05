@@ -5,7 +5,9 @@
  */
 package de.citec.sc.index;
 
+import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.utils.FileFactory;
+import de.citec.sc.utils.StringPreprocessor;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -39,11 +41,6 @@ import org.apache.commons.lang3.StringEscapeUtils;
  */
 public class DBpediaIndex {
 
-    public enum Language {
-
-        EN, DE, ES
-    }
-
     private static Map<String, Integer> indexMap;
     private static Map<String, String> redirectsMap;
     private static Map<String, String> interlanguageLinksMap;
@@ -54,7 +51,7 @@ public class DBpediaIndex {
         interlanguageLinksMap = getInterlanguageLinks("dbpediaData/interlanguage_links_en.ttl.bz2");
         propertySet = FileFactory.readFile("dbpediaData/dbpediaProperties.txt");
 
-//        DBpediaIndex.indexTriples(Language.EN);
+        DBpediaIndex.indexTriples(Language.EN);
         DBpediaIndex.indexTriples(Language.DE);
         DBpediaIndex.indexTriples(Language.ES);
 
@@ -98,7 +95,17 @@ public class DBpediaIndex {
 
             String label = convertURI2Label(redirectURI);
 
+            label = StringPreprocessor.preprocess(label, lang);
+
+            if (label.isEmpty() || label.length() < 3) {
+                continue;
+            }
+
             String uri = redirectsMap.get(redirectURI);
+
+            if (interlanguageLinksMap.containsKey(uri)) {
+                uri = interlanguageLinksMap.get(uri);
+            }
 
             indexMap.put(label + "\t" + uri, indexMap.getOrDefault(label + "\t" + uri, 1) + 1);
         }
@@ -111,8 +118,8 @@ public class DBpediaIndex {
         }
 
         //save the file
-        writeIndex(indexMap, outputDirectory+ "/" + lang.name().toLowerCase() + "_resource_dbpediaFile.txt");
-        
+        writeIndex(indexMap, outputDirectory + "/" + lang.name().toLowerCase() + "_resource_dbpediaFile.txt");
+
         indexMap.clear();
         redirectsMap.clear();
     }
@@ -147,11 +154,11 @@ public class DBpediaIndex {
                     continue;
                 }
 
-                if ((uri.contains("Category:") || uri.contains("Kategorie:") || uri.contains("Categoría:") || uri.contains("(disambiguation)"))) {
+                if ((uri.contains("Category:") || uri.contains("Kategorie:") || uri.contains("Categoría:") || uri.contains("(disambiguation)")) || uri.contains ("Lista_") || uri.contains("Liste_") || uri.contains("List_")) {
                     continue;
                 }
 
-                label = preprocess(lang, label);
+                label = StringPreprocessor.preprocess(label, lang);
 
                 if (label.isEmpty() || label.length() < 3) {
                     continue;
@@ -163,14 +170,20 @@ public class DBpediaIndex {
                     uri = StringEscapeUtils.unescapeJava(uri);
                     uri = URLDecoder.decode(uri, "UTF-8");
 
-                    //convert redirect to actual page
                     if (redirectsMap.containsKey(uri)) {
                         uri = redirectsMap.get(uri);
+
+                        if (interlanguageLinksMap.containsKey(uri)) {
+                            uri = interlanguageLinksMap.get(uri);
+                        }
                     }
 
-                    //get the english version uri
                     if (interlanguageLinksMap.containsKey(uri)) {
                         uri = interlanguageLinksMap.get(uri);
+
+                        if (redirectsMap.containsKey(uri)) {
+                            uri = redirectsMap.get(uri);
+                        }
                     }
 
                     indexMap.put(label + "\t" + uri, indexMap.getOrDefault(label + "\t" + uri, 1) + 1);
@@ -180,53 +193,6 @@ public class DBpediaIndex {
 
             }
         }
-    }
-
-    private static String preprocess(Language language, String rawText) {
-
-        String s = rawText;
-
-        s = s.toLowerCase();
-
-        //add to index
-        if (s.contains(",")) {
-            s = s.substring(0, s.indexOf(","));
-        }
-        if (s.contains("(") && s.contains(")")) {
-            s = s.substring(0, s.indexOf("(")).trim();
-        }
-
-        switch (language) {
-
-            case DE:
-
-                s = s.replaceAll("ö", "oe")
-                        .replaceAll("ä", "ae")
-                        .replaceAll("ü", "ue")
-                        .replaceAll("ß", "ss");
-
-                break;
-
-            case EN:
-
-                s = s.replaceAll("n't", " not")
-                        .replaceAll("'re", " are")
-                        .replaceAll("'s", " is")
-                        .replaceAll("'m", " am");
-
-                break;
-        }
-
-        s = Normalizer.normalize(s, Normalizer.Form.NFD);
-        s = s.replaceAll("\\p{M}", "");
-        s = s.replaceAll("[!?,.;:'\"]", "");
-        s = s.replaceAll("\\s+", " ");
-        s = s.replaceAll("-", " ");
-        s = s.replace("\\", "");
-
-        s = s.trim();
-
-        return s;
     }
 
     private static void writeIndex(Map<String, Integer> indexMap, String filePath) {
@@ -260,6 +226,7 @@ public class DBpediaIndex {
     private static String convertURI2Label(String s) {
         String label = "";
 
+        s = s.replace("_", " ");
         //replace each big character with space and the same character
         //indexing  accessible computing is better than AccessibleComputing
         for (int k = 0; k < s.length(); k++) {
@@ -281,9 +248,13 @@ public class DBpediaIndex {
                 label += c + "";
             }
         }
-
+        
         s = label.trim().toLowerCase();
+        
+        s = s.replaceAll("\\s+", " ");
 
+        s = s.trim();
+        
         return s;
     }
 

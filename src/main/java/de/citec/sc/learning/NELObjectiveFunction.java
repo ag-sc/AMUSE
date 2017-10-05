@@ -8,13 +8,14 @@ package de.citec.sc.learning;
 import de.citec.sc.evaluator.BagOfLinksEvaluator;
 
 import de.citec.sc.qald.SPARQLParser;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.utils.FreshVariable;
+import de.citec.sc.variable.URIVariable;
 
 import de.citec.sc.variable.State;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import learning.ObjectiveFunction;
 
 /**
@@ -28,10 +29,10 @@ public class NELObjectiveFunction extends ObjectiveFunction<State, String> imple
         return computeScore(deptState, goldState);
     }
 
-    public double computeValue(String query, String goldState) {
+    public static double computeValue(String query, String goldState) {
 
-        List<String> uris1 = SPARQLParser.extractURIsFromQuery(query);
-        List<String> uris2 = SPARQLParser.extractURIsFromQuery(goldState);
+        Set<String> uris1 = SPARQLParser.extractURIsFromQuery(query);
+        Set<String> uris2 = SPARQLParser.extractURIsFromQuery(goldState);
 
         double value = BagOfLinksEvaluator.evaluate(uris1, uris2);
 
@@ -41,10 +42,13 @@ public class NELObjectiveFunction extends ObjectiveFunction<State, String> imple
     @Override
     protected double computeScore(State deptState, String goldState) {
 
-        List<String> derived = new ArrayList<String>();
-
-        for (HiddenVariable var : deptState.getHiddenVariables().values()) {
+        Set<String> derived = new HashSet<>();
+        for (URIVariable var : deptState.getHiddenVariables().values()) {
             if (!var.getCandidate().getUri().equals("EMPTY_STRING")) {
+                
+                if(var.getCandidate().getUri().equals("http://dbpedia.org/ontology/conservationStatus###'CR'^^<http://www.w3.org/2001/XMLSchema#string>")){
+                    int z=1;
+                }
 
                 if (var.getCandidate().getUri().contains("###")) {
                     String property = var.getCandidate().getUri().substring(0, var.getCandidate().getUri().indexOf("###"));
@@ -52,14 +56,23 @@ public class NELObjectiveFunction extends ObjectiveFunction<State, String> imple
 
                     derived.add(resource);
                     derived.add(property);
-                } else {
+                }
+                //Underspecified property
+                else if(var.getDudeId() == 5){
+                    String property = "p" + FreshVariable.get();
+                    String resource = var.getCandidate().getUri();
+
+                    derived.add(resource);
+                    derived.add(property);
+                }
+                else {
                     derived.add(var.getCandidate().getUri());
                 }
 
             }
         }
 
-        List<String> uris = SPARQLParser.extractURIsFromQuery(goldState);
+        Set<String> uris = SPARQLParser.extractURIsFromQuery(goldState);
 
         double value = BagOfLinksEvaluator.evaluate(derived, uris);
 

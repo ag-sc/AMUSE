@@ -15,13 +15,12 @@ import de.citec.sc.qald.Variable;
 import de.citec.sc.utils.FreshVariable;
 import de.citec.sc.variable.State;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.jena.query.Query;
 
 /**
  *
@@ -72,14 +71,28 @@ public class QueryConstructor {
 
             headDUDE.postprocess();
 
-            boolean isSELECTQuery = true;
-
-            String questionString = state.getDocument().getQuestionString();
-
-            if (questionString.startsWith("Did") || questionString.startsWith("Does") || questionString.startsWith("Do") || questionString.startsWith("Is") || questionString.startsWith("Were") || questionString.startsWith("Was") || questionString.startsWith("Are")) {
-                isSELECTQuery = false;
+            boolean hasCorrectQueryType = true;
+            //1=SELECT, 2 = COUNT , 3 = ASK
+            if (state.getQueryTypeVariable().getType() == 3) {
+                hasCorrectQueryType = false;
             }
 
+//            List<Integer> tokenIDs = new ArrayList<>(state.getDocument().getParse().getNodes().keySet());
+//            Collections.sort(tokenIDs);
+//        
+//            Integer firstToken = tokenIDs.get(0);
+//            String firstPOS = state.getDocument().getParse().getPOSTag(firstToken);
+//
+//            String questionString = state.getDocument().getQuestionString();
+//            
+//            if(firstPOS.equals("PRON")){
+//                isSELECTQuery = false;
+//            }
+//
+////            if (questionString.startsWith("Did") || questionString.startsWith("Does") || questionString.startsWith("Do") || questionString.startsWith("Is") || questionString.startsWith("Were") || questionString.startsWith("Was") || questionString.startsWith("Are")) {
+////                isSELECTQuery = false;
+////            }
+//
             boolean hasReturnVariable = false;
             for (Integer i : state.getHiddenVariables().keySet()) {
                 if (specialSemanticTypes.containsKey(state.getHiddenVariables().get(i).getDudeId())) {
@@ -91,7 +104,10 @@ public class QueryConstructor {
                 }
             }
 
-            isSELECTQuery = hasReturnVariable;
+            boolean isSELECTQuery = false;
+            if (hasReturnVariable && hasCorrectQueryType) {
+                isSELECTQuery = true;
+            }
 
             query = headDUDE.convertToSPARQL(isSELECTQuery).toString();
 
@@ -101,36 +117,17 @@ public class QueryConstructor {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+//            System.out.println(state.toString());
+
         }
 
         return query;
     }
 
-    private static String getQueryFromTriples(List<Triple> triples) {
-        String query = "";
-        String variables = "";
+    public static Set<Triple> getTriples(State state) {
 
-        for (Triple t : triples) {
-            if (!t.IsReturnVariable()) {
-                query += t.toString();
-            } else {
-                variables += " " + t.toString();
-            }
-        }
-
-        if (!variables.equals("")) {
-            query = "SELECT DISTINCT " + variables + " WHERE { " + query + " }";
-        } else {
-            query = "ASK WHERE { " + query + " }";
-        }
-
-        return query;
-    }
-
-    public static List<Triple> getTriples(State state) {
-
-        List<Triple> triples = new ArrayList<>();
+        Set<Triple> triples = new HashSet<>();
 
         try {
             String query = getSPARQLQuery(state);
@@ -209,7 +206,7 @@ public class QueryConstructor {
 
                     int nextNumber = FreshVariable.get();
 
-                    someUnderSpecifiedClass.instantiateProperty("p"+nextNumber);
+                    someUnderSpecifiedClass.instantiateProperty(nextNumber);
                     someUnderSpecifiedClass.instantiateObject(uri);
 
                     instantiatedDudes.put(nodeIndex, someUnderSpecifiedClass);
@@ -217,6 +214,38 @@ public class QueryConstructor {
                 case "What":
                     RDFDUDES what = expressions.what();
                     instantiatedDudes.put(nodeIndex, what);
+                    break;
+                case "Which":
+                    RDFDUDES which = expressions.which("1");
+                    instantiatedDudes.put(nodeIndex, which);
+                    break;
+                case "When":
+                    RDFDUDES whenAsProperty = new RDFDUDES(RDFDUDES.Type.PROPERTY, "1", "2");
+
+                    whenAsProperty.instantiateProperty("http://dbpedia.org/ontology/date");
+
+                    RDFDUDES what2 = expressions.what();
+                    //merge the return variable in the slot position 1
+                    whenAsProperty = whenAsProperty.merge(what2, "2");
+
+                    instantiatedDudes.put(nodeIndex, whenAsProperty);
+                    break;
+                case "Who":
+                    RDFDUDES who = expressions.wh("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://dbpedia.org/ontology/Agent");
+
+                    instantiatedDudes.put(nodeIndex, who);
+                    break;
+                case "HowMany":
+                    RDFDUDES howmany = expressions.howmany("1");
+
+                    instantiatedDudes.put(nodeIndex, howmany);
+                    break;
+                case "Where":
+                    RDFDUDES where = expressions.wh("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://dbpedia.org/ontology/PopulatedPlace");
+
+                    instantiatedDudes.put(nodeIndex, where);
+                    break;
+
             }
         }
 

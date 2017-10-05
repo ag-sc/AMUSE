@@ -20,13 +20,15 @@ import templates.TemplateFactory;
  */
 public class QATemplateFactory implements TemplateFactory<AnnotatedDocument, State> {
 
-    private static Set<String> validPOSTags;
+    private static Set<String> linkingValidPOSTags;
+    private static Set<String> qaValidPOSTags;
     private static Set<String> validEdges;
     private static Map<Integer, String> semanticTypes;
     private static Map<Integer, String> specialSemanticTypes;
 
-    public static void initialize(Set<String> v, Set<String> f, Map<Integer, String> s, Map<Integer, String> sp) {
-        validPOSTags = v;
+    public static void initialize(Set<String> v1,Set<String> v2, Set<String> f, Map<Integer, String> s, Map<Integer, String> sp) {
+        linkingValidPOSTags = v1;
+        qaValidPOSTags = v2;
         semanticTypes = s;
         specialSemanticTypes = sp;
         validEdges = f;
@@ -37,15 +39,17 @@ public class QATemplateFactory implements TemplateFactory<AnnotatedDocument, Sta
 
         switch (templateName) {
             case "NELLexicalTemplate":
-                return new NELLexicalTemplate(validPOSTags, validEdges, semanticTypes);
+                return new NELLexicalTemplate(linkingValidPOSTags, validEdges, semanticTypes);
             case "NELEdgeTemplate":
-                return new NELEdgeTemplate(validPOSTags, validEdges, semanticTypes);
+                return new NELEdgeTemplate(linkingValidPOSTags, validEdges, semanticTypes);
             case "NELNodeTemplate":
-                return new NELNodeTemplate(validPOSTags, validEdges, semanticTypes);
+                return new NELNodeTemplate(linkingValidPOSTags, validEdges, semanticTypes);
             case "QAEdgeTemplate":
-                return new QAEdgeTemplate(validPOSTags, validEdges, specialSemanticTypes);
+                return new QAEdgeTemplate(qaValidPOSTags, validEdges, specialSemanticTypes);
             case "QAEdgeAdvTemplate":
-                return new QAEdgeAdvTemplate(validPOSTags, validEdges,semanticTypes, specialSemanticTypes);
+                return new QAEdgeAdvTemplate(qaValidPOSTags, validEdges,semanticTypes, specialSemanticTypes);
+            case "QueryTypeTemplate":
+                return new QueryTypeTemplate(qaValidPOSTags, validEdges,semanticTypes, specialSemanticTypes);
 
         }
 

@@ -7,14 +7,17 @@ package de.citec.sc.sampling;
 
 import de.citec.sc.main.Main;
 import de.citec.sc.query.Candidate;
+import de.citec.sc.query.EmbeddingLexicon;
 import de.citec.sc.query.Instance;
 import de.citec.sc.query.ManualLexicon;
 
 import de.citec.sc.query.Search;
+import de.citec.sc.utils.ProjectConfiguration;
 import de.citec.sc.utils.Stopwords;
 import de.citec.sc.variable.State;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +31,10 @@ import sampling.Explorer;
 public class SingleNodeExplorer implements Explorer<State> {
 
     private Map<Integer, String> semanticTypes;
-    private Set<String> frequentWordsToExclude;
     private Set<String> validPOSTags;
 
-    public SingleNodeExplorer(Map<Integer, String> semanticTypes, Set<String> frequentWordsToExclude, Set<String> validPOSTags) {
+    public SingleNodeExplorer(Map<Integer, String> semanticTypes, Set<String> validPOSTags) {
         this.semanticTypes = semanticTypes;
-        this.frequentWordsToExclude = frequentWordsToExclude;
         this.validPOSTags = validPOSTags;
     }
 
@@ -46,16 +47,13 @@ public class SingleNodeExplorer implements Explorer<State> {
 
             String pos = currentState.getDocument().getParse().getPOSTag(indexOfNode);
 
-            if (validPOSTags.contains(pos) && !frequentWordsToExclude.contains(node.toLowerCase())) {
-//            if (validPOSTags.contains(pos)) {
+            if (validPOSTags.contains(pos)) {
+
                 //assign all dudes
                 for (Integer indexOfDude : semanticTypes.keySet()) {
 
                     String dudeName = semanticTypes.get(indexOfDude);
 
-//                    if(!(dudeName.equals("Class") || dudeName.equals("UnderSpecifiedClass"))){
-//                        continue;
-//                    }
                     Set<State> newCreatedStates = createNewStates(node.toLowerCase(), currentState, indexOfNode, dudeName, indexOfDude);
 
                     for (State s1 : newCreatedStates) {
@@ -94,7 +92,7 @@ public class SingleNodeExplorer implements Explorer<State> {
         return newStates;
     }
 
-    private Set<Candidate> getDBpediaMatches(String dude, String node, String posTag) {
+    private Set<Candidate> getDBpediaMatches(String dude, String node, String pos) {
         //predicate DUDE
         Set<Candidate> uris = new LinkedHashSet<>();
 
@@ -111,9 +109,11 @@ public class SingleNodeExplorer implements Explorer<State> {
         boolean useWordNet = false;
         boolean mergePartialMatches = false;
 
-        int topK = 100;
+        int topK = 80;
 
-        String queryTerm = node.toLowerCase().trim();
+        String queryTerm = node;
+
+        Set<String> indexURIs = new HashSet<>();
 
         switch (dude) {
             case "Property":
@@ -121,35 +121,59 @@ public class SingleNodeExplorer implements Explorer<State> {
                 useWordNet = false;
                 mergePartialMatches = false;
 
+                topK = 20;
+
                 if (!Stopwords.isStopWord(queryTerm)) {
                     Set<Candidate> propertyURIs = Search.getPredicates(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
-                    uris.addAll(propertyURIs);
+
+                    for (Candidate c : propertyURIs) {
+                        indexURIs.add(c.getUri());
+                        uris.add(c.clone());
+                    }
                 }
 
                 //retrieve manual lexicon even if it's in stop word list
-                if (ManualLexicon.useManualLexicon) {
+                if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getProperties(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
+
+                if (ProjectConfiguration.useEmbeddingLexicon() && (pos.equals("NOUN") || pos.equals("VERB"))) {
+
+                    Set<String> embeddingLexica = EmbeddingLexicon.getProperties(queryTerm, Main.lang);
+                    for (String d : embeddingLexica) {
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
+                    }
+                }
+
                 break;
 
             case "Class":
                 useLemmatizer = true;
                 mergePartialMatches = false;
-                useWordNet = false;
+                useWordNet = true;
                 if (!Stopwords.isStopWord(queryTerm)) {
                     Set<Candidate> classURIs = Search.getClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
 
-                    uris.addAll(classURIs);
+                    for (Candidate c : classURIs) {
+                        indexURIs.add(c.getUri());
+                        uris.add(c.clone());
+                    }
                 }
 
                 //retrieve manual lexicon even if it's in stop word list
-                if (ManualLexicon.useManualLexicon) {
+                if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getClasses(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;
@@ -158,21 +182,34 @@ public class SingleNodeExplorer implements Explorer<State> {
                 useWordNet = false;
                 mergePartialMatches = false;
 
+                topK = 20;
+
                 if (!Stopwords.isStopWord(queryTerm)) {
                     Set<Candidate> restrictionClassURIs = Search.getRestrictionClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
-                    uris.addAll(restrictionClassURIs);
+
+                    for (Candidate c : restrictionClassURIs) {
+                        indexURIs.add(c.getUri());
+                        uris.add(c.clone());
+                    }
                 }
 
                 //check manual lexicon for Restriction Classes
-                if (ManualLexicon.useManualLexicon) {
+                if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getRestrictionClasses(queryTerm, Main.lang);
+
+                    if (queryTerm.equals("endangered")) {
+                        int z = 1;
+                    }
+
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;
             case "UnderSpecifiedClass":
-                topK = 10;
+                topK = 5;
                 useLemmatizer = false;
                 mergePartialMatches = false;
                 useWordNet = false;
@@ -183,35 +220,49 @@ public class SingleNodeExplorer implements Explorer<State> {
 
                     //set some empty propertyy
                     for (Candidate c : resourceURIs) {
-                        c.setUri("<someProperty>###" + c.getUri());
-                    }
+                        Candidate c2 = c.clone();
 
-                    uris.addAll(resourceURIs);
+                        indexURIs.add(c.getUri());
+
+                        uris.add(c2);
+                    }
                 }
 
                 //check manual lexicon for Resources => to make underspecified class
-                if (ManualLexicon.useManualLexicon) {
+                if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getResources(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance("<someProperty>###" + d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;
             case "Individual":
-                topK = 10;
+                topK = 1;
                 useLemmatizer = false;
                 mergePartialMatches = false;
                 useWordNet = false;
+
                 if (!Stopwords.isStopWord(queryTerm)) {
-                    Set<Candidate> resourceURIs = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
-                    uris.addAll(resourceURIs);
+                    Set<Candidate> resourceCandidates = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
+
+                    for (Candidate c : resourceCandidates) {
+                        if (c.getUri().contains("List_of")) {
+                            continue;
+                        }
+                        uris.add(c.clone());
+                        indexURIs.add(c.getUri());
+                    }
                 }
 
                 //check manual lexicon
-                if (ManualLexicon.useManualLexicon) {
+                if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getResources(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;

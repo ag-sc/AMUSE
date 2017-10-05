@@ -5,7 +5,7 @@
 package de.citec.sc.qald;
 
 import de.citec.sc.query.CandidateRetriever.Language;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -65,6 +65,13 @@ public class Question {
 
     public void setId(String id) {
         this.id = id;
+    }
+    
+    public Question(Language lang, String questionText, String queryText) {
+        this.questionText = new HashMap<>();
+        this.questionText.put(lang, questionText);
+        
+        this.queryText = queryText;
     }
 
     public Question(Map<Language, String> questionText, String queryText) {

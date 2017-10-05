@@ -8,15 +8,19 @@ package de.citec.sc.qald;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.main.Main;
+import de.citec.sc.nel.AnnotationExtractor;
+import de.citec.sc.nel.EntityAnnotation;
 import de.citec.sc.parser.DependencyParse;
 import de.citec.sc.parser.StanfordParser;
 import de.citec.sc.parser.UDPipe;
 import de.citec.sc.query.CandidateRetriever.Language;
+import de.citec.sc.query.Search;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -35,10 +39,13 @@ public class QALDCorpusLoader {
     private static final String qald6FileTest = "src/main/resources/qald-6-test-multilingual.json";
     private static final String qald5FileTest = "src/main/resources/qald-5_test.xml";
     private static final String qaldSubset = "src/main/resources/qald_test.xml";
+    private static final String webQuestionsTrain = "src/main/resources/webquestions/WebQuestions.DBpedia.train.json";
+    private static final String webQuestionsTest = "src/main/resources/webquestions/WebQuestions.DBpedia.test.json";
+    private static final String webQuestionsSubset = "src/main/resources/webquestions/WebQuestions.DBpedia.subset.json";
 
     public enum Dataset {
 
-        qald4Test, qald4Train, qald5Test, qald5Train, qaldSubset, qald6Train, qald6Test, qald7Train
+        qald4Test, qald4Train, qald5Test, qald5Train, qaldSubset, qald6Train, qald6Test, qald7Train, webQuestionsTrain, webQuestionsTest, webQuestionsSubset
     }
 
     /**
@@ -93,6 +100,18 @@ public class QALDCorpusLoader {
                 filePath = qald7FileTrain;
                 questions = readJSONFile(filePath);
                 break;
+            case "webQuestionsTrain":
+                filePath = webQuestionsTrain;
+                questions = readWebQuestionsJSONFile(filePath);
+                break;
+            case "webQuestionsTest":
+                filePath = webQuestionsTest;
+                questions = readWebQuestionsJSONFile(filePath);
+                break;
+            case "webQuestionsSubset":
+                filePath = webQuestionsSubset;
+                questions = readWebQuestionsJSONFile(filePath);
+                break;
             default:
                 System.err.println("Corpus not found!");
                 System.exit(0);
@@ -103,14 +122,61 @@ public class QALDCorpusLoader {
 
         List<AnnotatedDocument> documents = new ArrayList<>();
 
+        System.out.println("Parsing sentences ... \n");
+
         for (Question q : questions) {
-            DependencyParse parse = UDPipe.parse(q.getQuestionText().get(Main.lang), Main.lang);
-            
-            if(parse != null){
-                parse.removeLoops();
+
+            String text = q.getQuestionText().get(Main.lang);
+
+            String replacedText = text;
+
+            DependencyParse parse = null;
+            //do only for webquestions datasets
+            if (dataset.name().toLowerCase().contains("webquestions")) {
+                //extract entities with 2 pass over the input
+                List<EntityAnnotation> annotations = AnnotationExtractor.getAnnotations(text, 4, 0.90, 0.65, Search.getRetriever());
+                HashMap<String, String> replacedMap = new HashMap<>();
+
+                //replace each found entity with Barack_Obama_N_index
+                
+                for (EntityAnnotation e1 : annotations) {
+                    String entityText = e1.getSpannedText(text)+"";
+
+                    replacedText = replacedText.replace(entityText, "Barack_Obama_N"+annotations.indexOf(e1));
+
+                    replacedMap.put("Barack_Obama_N"+annotations.indexOf(e1), entityText+"");
+                }
+
+                parse = UDPipe.parse(replacedText, Main.lang);
+
+                //replace the Barack_Obama_N_index with it's real value, add also replace the POSTAG with PROPN
+                if (parse != null) {
+                    HashMap<Integer, String> nodes = parse.getNodes();
+                    HashMap<Integer, String> changedNodes = new HashMap<>();
+
+                    for (Integer key : nodes.keySet()) {
+                        String node = nodes.get(key);
+
+                        if(replacedMap.containsKey(node)){
+                            changedNodes.put(key, replacedMap.get(node)+"");
+                            
+                            parse.setPOSTag(key, "PROPN");
+                        }
+                        else{
+                            changedNodes.put(key, node+"");
+                            
+                        }
+                    }
+                    parse.setNodes(changedNodes);
+                }
             }
+            else{
+                parse = UDPipe.parse(replacedText, Main.lang);
+            }
+            
 
             AnnotatedDocument document = new AnnotatedDocument(parse, q);
+            
 
             documents.add(document);
 
@@ -200,14 +266,14 @@ public class QALDCorpusLoader {
 
                     if (englishQuestionText.get("language").equals("en")) {
                         questionText.put(Language.EN, englishQuestionText.get("string").toString());
-                        
+
                     }
                     if (englishQuestionText.get("language").equals("de")) {
                         questionText.put(Language.DE, englishQuestionText.get("string").toString());
-                        
+
                     }
                     if (englishQuestionText.get("language").equals("es")) {
-                        questionText.put(Language.ES, englishQuestionText.get("string").toString());   
+                        questionText.put(Language.ES, englishQuestionText.get("string").toString());
                     }
                 }
 
@@ -225,6 +291,44 @@ public class QALDCorpusLoader {
                     }
                 }
 
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return qaldQuestions;
+    }
+
+    private static List<Question> readWebQuestionsJSONFile(String filePath) {
+        ArrayList<Question> qaldQuestions = new ArrayList<>();
+
+        JSONParser parser = new JSONParser();
+
+        try {
+
+            HashMap obj = (HashMap) parser.parse(new FileReader(filePath));
+
+            JSONArray questions = (JSONArray) obj.get("questions");
+            for (int i = 0; i < questions.size(); i++) {
+                HashMap o1 = (HashMap) questions.get(i);
+
+                String hybrid = "false", onlyDBO = "true", aggregation = "false", answerType = "resource";
+
+                String question = (String) o1.get("questionText");
+                String query = (String) o1.get("query");
+
+                Map<Language, String> questionText = new HashMap<>();
+                questionText.put(Language.EN, question);
+
+                String id = (i + 1) + "";
+
+                List<String> answers = (List<String>) o1.get("answers");
+
+                Question q1 = new Question(questionText, query, onlyDBO, aggregation, answerType, hybrid, id);
+                q1.setAnswers(answers);
+
+                qaldQuestions.add(q1);
             }
 
         } catch (Exception e) {

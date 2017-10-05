@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author sherzod
  */
-public class HiddenVariable {
+public class URIVariable {
 
     private Integer tokenId;
     private Integer dudeId;
@@ -35,7 +35,7 @@ public class HiddenVariable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final HiddenVariable other = (HiddenVariable) obj;
+        final URIVariable other = (URIVariable) obj;
         if (!Objects.equals(this.tokenId, other.tokenId)) {
             return false;
         }
@@ -72,7 +72,7 @@ public class HiddenVariable {
         this.candidate = candidate;
     }
 
-    public HiddenVariable(Integer tokenId, Integer dudeId, Candidate candidate) {
+    public URIVariable(Integer tokenId, Integer dudeId, Candidate candidate) {
         this.tokenId = tokenId;
         this.dudeId = dudeId;
         this.candidate = candidate;
@@ -83,8 +83,8 @@ public class HiddenVariable {
         return "TokenID: " + tokenId + " DUDE: " + dudeId + " URI: " + candidate.getUri() + " DBpedia Score: " + candidate.getDbpediaScore() + " MATOLL Score:  " + candidate.getMatollScore() + " Prior Score: " + candidate.getPriorScore();
     }
 
-    public HiddenVariable clone() {
-        return new HiddenVariable(tokenId, dudeId, candidate.clone());
+    public URIVariable clone() {
+        return new URIVariable(tokenId, dudeId, candidate.clone());
     }
 
 }

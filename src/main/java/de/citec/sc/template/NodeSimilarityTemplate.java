@@ -7,7 +7,7 @@ package de.citec.sc.template;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.main.Main;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.variable.URIVariable;
 
 import de.citec.sc.variable.State;
 import factors.Factor;
@@ -26,7 +26,7 @@ import templates.AbstractTemplate;
  *
  * @author sherzod
  */
-public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, State, SingleNodeFactorScope<HiddenVariable>> {
+public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, State, SingleNodeFactorScope<URIVariable>> {
 
     private SimilarityStrategy stringSim;
 
@@ -34,7 +34,7 @@ public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, 
         this.stringSim = new StringSimilarityMeasures();
     }
 
-    private Set<String> getRestrictionClassFeatures(String node, String pos, HiddenVariable u, int binNumber) {
+    private Set<String> getRestrictionClassFeatures(String node, String pos, URIVariable u, int binNumber) {
         Set<String> featureNames = new HashSet<>();
 
         String featurePrefix = "SIMILARITY FEATURE : RESTRICTION_CLASS: ";
@@ -61,7 +61,7 @@ public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, 
         return featureNames;
     }
 
-    private Set<String> getClassFeatures(String node, String pos, HiddenVariable u, int binNumber) {
+    private Set<String> getClassFeatures(String node, String pos, URIVariable u, int binNumber) {
         Set<String> featureNames = new HashSet<>();
 
         String featurePrefix = "SIMILARITY FEATURE : CLASS: ";
@@ -85,7 +85,7 @@ public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, 
         return featureNames;
     }
 
-    private Set<String> getResourceFeatures(String node, String pos, HiddenVariable u, int binNumber) {
+    private Set<String> getResourceFeatures(String node, String pos, URIVariable u, int binNumber) {
         Set<String> featureNames = new HashSet<>();
 
         String featurePrefix = "SIMILARITY FEATURE : RESOURCE: ";
@@ -122,7 +122,7 @@ public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, 
         return featureNames;
     }
 
-    private Set<String> getPropertyFeatures(String node, String inputQuestion, String pos, HiddenVariable u, int binNumber) {
+    private Set<String> getPropertyFeatures(String node, String inputQuestion, String pos, URIVariable u, int binNumber) {
         Set<String> featureNames = new HashSet<>();
 
         String featurePrefix = "SIMILARITY FEATURE : ";
@@ -381,12 +381,12 @@ public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, 
     }
 
     @Override
-    public List<SingleNodeFactorScope<HiddenVariable>> generateFactorScopes(State state) {
-        List<SingleNodeFactorScope<HiddenVariable>> factors = new ArrayList<>();
+    public List<SingleNodeFactorScope<URIVariable>> generateFactorScopes(State state) {
+        List<SingleNodeFactorScope<URIVariable>> factors = new ArrayList<>();
 
         for (Integer key : state.getDocument().getParse().getNodes().keySet()) {
 
-            HiddenVariable a = state.getHiddenVariables().get(key);
+            URIVariable a = state.getHiddenVariables().get(key);
 
             factors.add(new SingleNodeFactorScope<>(this, a, state.getDocument()));
         }
@@ -395,8 +395,8 @@ public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, 
     }
 
     @Override
-    public void computeFactor(Factor<SingleNodeFactorScope<HiddenVariable>> factor) {
-        HiddenVariable u = factor.getFactorScope().getVar();
+    public void computeFactor(Factor<SingleNodeFactorScope<URIVariable>> factor) {
+        URIVariable u = factor.getFactorScope().getVar();
         AnnotatedDocument doc = factor.getFactorScope().getDoc();
 
         Vector featureVector = factor.getFeatureVector();

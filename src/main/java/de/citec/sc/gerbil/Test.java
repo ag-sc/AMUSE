@@ -29,14 +29,14 @@ public class Test {
 
     private static void sendPost() throws Exception {
 
-        String address = "http://localhost:8080/qa";
+        String address = "http://testpagengrok.ngrok.io";
 
         URL url = new URL(address);
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
 
-        String urlParameters = "query=" + URLEncoder.encode("Who created Wikipedia?", "UTF-8");
+        String urlParameters = "query=" + URLEncoder.encode("Who was the doctoral supervisor of Albert Einstein?", "UTF-8");
 
         // Send post request
         con.setDoOutput(true);

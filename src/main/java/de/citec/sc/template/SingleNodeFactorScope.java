@@ -6,7 +6,7 @@
 package de.citec.sc.template;
 
 import de.citec.sc.corpus.AnnotatedDocument;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.variable.URIVariable;
 import de.citec.sc.variable.State;
 import factors.FactorScope;
 import java.util.Objects;

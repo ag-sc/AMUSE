@@ -9,6 +9,7 @@ import de.citec.sc.evaluator.AnswerEvaluator;
 import de.citec.sc.evaluator.QueryEvaluator;
 import de.citec.sc.qald.SPARQLParser;
 import de.citec.sc.utils.DBpediaEndpoint;
+import de.citec.sc.utils.ProjectConfiguration;
 
 import de.citec.sc.variable.State;
 
@@ -29,12 +30,7 @@ public class QAObjectiveFunction extends ObjectiveFunction<State, String> implem
         this.useQueryEvaluator = useQueryEvaluator;
     }
 
-    public double computeValue(State deptState, String goldState) {
-
-        return computeScore(deptState, goldState);
-    }
-
-    public double computeValue(String query, String goldState) {
+    public static double computeValue(String query, String goldState) {
 
         String constructedQuery = query;
 
@@ -50,18 +46,22 @@ public class QAObjectiveFunction extends ObjectiveFunction<State, String> implem
             return 0;
         }
 
-        double score2 = 0;
-        if (useQueryEvaluator) {
-            score2 = QueryEvaluator.evaluate(constructedQuery, goldState);
+        double score = QueryEvaluator.evaluate(constructedQuery, goldState, false);
+
+        if (score == 1.0) {
+            return score;
         }
 
-        if (score2 == 1.0) {
-            return score2;
+        if (!ProjectConfiguration.useDBpediaEndpoint()) {
+            return score;
         }
-        double score1 = AnswerEvaluator.evaluate(constructedQuery, goldState);
 
-        double score = Math.max(score1, score2);
-        
+        if (score >= 0.50) {
+            double score2 = AnswerEvaluator.evaluate(constructedQuery, goldState, false);
+
+            score = Math.max(score, score2);
+        }
+
         return score;
     }
 
@@ -69,6 +69,16 @@ public class QAObjectiveFunction extends ObjectiveFunction<State, String> implem
     protected double computeScore(State state, String goldState) {
 
         String constructedQuery = QueryConstructor.getSPARQLQuery(state);
+
+        //get the query type from the query
+        int constructedQueryType = 1;
+        if (constructedQuery.contains("SELECT")) {
+            if (constructedQuery.contains("COUNT")) {
+                constructedQueryType = 2;
+            }
+        } else {
+            constructedQueryType = 3;
+        }
 
         if (constructedQuery.trim().isEmpty()) {
             return 0;
@@ -82,14 +92,36 @@ public class QAObjectiveFunction extends ObjectiveFunction<State, String> implem
             return 0;
         }
 
-        double score1 = AnswerEvaluator.evaluate(constructedQuery, goldState);
         double score2 = 0;
+        double score1 = 0;
         if (useQueryEvaluator) {
-            score2 = QueryEvaluator.evaluate(constructedQuery, goldState);
+            score2 = QueryEvaluator.evaluate(constructedQuery, goldState, false);
+
+            //if it's not the same type, penalize
+            if (state.getQueryTypeVariable().getType() != constructedQueryType) {
+                score2 = score2 * 0.90;
+            }
+        }
+
+        if (!ProjectConfiguration.useDBpediaEndpoint()) {
+            return score2;
+        }
+
+        if (score2 == 1.0) {
+            return score2;
+        }
+
+        if (useQueryEvaluator && score2 >= 0.65) {
+            score1 = AnswerEvaluator.evaluate(constructedQuery, goldState, false);
         }
 
         double score = Math.max(score1, score2);
-        
+
+        //if it's not the same type, penalize
+        if (state.getQueryTypeVariable().getType() != constructedQueryType) {
+            score = score * 0.90;
+        }
+
         return score;
     }
 }

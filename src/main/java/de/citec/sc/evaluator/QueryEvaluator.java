@@ -15,6 +15,7 @@ import de.citec.sc.variable.State;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -22,24 +23,24 @@ import java.util.List;
  */
 public class QueryEvaluator {
 
-    public static double evaluate(String derived, String goldStandard) {
+    public static double evaluate(String derived, String goldStandard, boolean isStructure) {
 
-        List<Triple> constructedTriples = SPARQLParser.extractTriplesFromQuery(derived);
+        Set<Triple> constructedTriples = SPARQLParser.extractTriplesFromQuery(derived);
 
         if (constructedTriples.isEmpty()) {
             return 0;
         }
 
-        List<Triple> goldStandardTriples = SPARQLParser.extractTriplesFromQuery(goldStandard);
+        Set<Triple> goldStandardTriples = SPARQLParser.extractTriplesFromQuery(goldStandard);
 
-        return similarity(constructedTriples, goldStandardTriples);
+        return similarity(constructedTriples, goldStandardTriples, isStructure);
     }
 
-    private static double similarity(List<Triple> derived, List<Triple> goldStandard) {
+    private static double similarity(Set<Triple> derived, Set<Triple> goldStandard, boolean isStructure) {
         double sim = 0;
 
-        double p = score(derived, goldStandard);
-        double r = score(goldStandard, derived);
+        double p = score(derived, goldStandard, isStructure);
+        double r = score(goldStandard, derived, isStructure);
 
         sim = (2 * p * r) / (p + r);
 
@@ -50,7 +51,7 @@ public class QueryEvaluator {
         return sim;
     }
 
-    private static double score(List<Triple> derived, List<Triple> goldStandard) {
+    private static double score(Set<Triple> derived, Set<Triple> goldStandard, boolean isStructure) {
         double score = 0;
 
         //remove sameAsVariables
@@ -104,6 +105,10 @@ public class QueryEvaluator {
             double structure = structure(triplesWithReturnVar, goldSetWithReturnVar, map);
 
             double alpha = 0.95;
+            
+            if(isStructure){
+                alpha = 0;
+            }
 
             score = alpha * body + (1 - alpha) * structure;
 
@@ -129,6 +134,8 @@ public class QueryEvaluator {
         try {
             for (Triple t1 : triples1) {
                 Term var1 = t1.getSubject();
+                
+                Term object1 = t1.getObject();
 
                 //retrieve from mapping
                 Variable mappedVar = (Variable) map.get(var1);
@@ -141,8 +148,10 @@ public class QueryEvaluator {
                 for (Triple t2 : triples2) {
 
                     Variable var2 = (Variable) t2.getSubject();
+                    
+                    Term object2 = t2.getObject();
 
-                    if (var2.equals(mappedVar)) {
+                    if (var2.equals(mappedVar) && object1.equals(object2)) {
                         contains = true;
                         break;
                     }

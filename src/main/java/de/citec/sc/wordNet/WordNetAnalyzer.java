@@ -5,7 +5,6 @@ import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.SynsetType;
 import edu.smu.tspell.wordnet.WordNetDatabase;
 import edu.smu.tspell.wordnet.WordSense;
-import edu.stanford.nlp.util.ArraySet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

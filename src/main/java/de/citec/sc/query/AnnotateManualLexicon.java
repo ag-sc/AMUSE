@@ -32,10 +32,10 @@ public class AnnotateManualLexicon {
 
         Scanner scannner = new Scanner(System.in);
 
-        boolean includeYAGO = false;
-        boolean includeAggregation = false;
-        boolean includeUNION = false;
-        boolean onlyDBO = true;
+        boolean includeYAGO = true;
+        boolean includeAggregation = true;
+        boolean includeUNION = true;
+        boolean onlyDBO = false;
         boolean isHybrid = false;
 
         List<CandidateRetriever.Language> languages = new ArrayList<>();
@@ -72,7 +72,7 @@ public class AnnotateManualLexicon {
             System.out.println("Left docs: Test: " + (corpusTest.getDocuments().size() - coveredTestIds.size()));
 
             content = getContent(coveredTrainIds, corpusTrain, content, scannner, l, "train");
-            content = getContent(coveredTestIds, corpusTest, content, scannner, l, "test");
+//            content = getContent(coveredTestIds, corpusTest, content, scannner, l, "test");
 
         }
         FileFactory.writeListToFile("Manual_Lexicon.txt", content, false);
@@ -102,7 +102,7 @@ public class AnnotateManualLexicon {
                 String parseTree = d.getParse().toString();
                 String query = d.getGoldQueryString();
 
-                List<Triple> triples = SPARQLParser.extractTriplesFromQuery(query);
+                Set<Triple> triples = SPARQLParser.extractTriplesFromQuery(query);
                 Map<String, String> uriMap = new LinkedHashMap<>();
                 Map<String, String> tokenMap = new LinkedHashMap<>();
 

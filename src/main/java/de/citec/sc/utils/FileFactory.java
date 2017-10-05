@@ -5,7 +5,6 @@
  */
 package de.citec.sc.utils;
 
-import edu.stanford.nlp.util.ArraySet;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;

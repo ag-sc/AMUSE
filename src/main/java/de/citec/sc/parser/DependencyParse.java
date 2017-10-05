@@ -46,10 +46,11 @@ public class DependencyParse {
 //        mergeCompountEdges();
         mergePatterns();
 
+//        System.out.println("After mergePatterns\n\n" + toString()+"\n");
         mergeAmodEdges();
 //
-////        System.out.println("After mergeAmodEdges\n\n" + toString()+"\n");
-//        mergeDepEdges();
+//        System.out.println("After mergeAmodEdges\n\n" + toString()+"\n");
+//        int stop=1;
 //
 ////        System.out.println("After mergeDepEdges\n\n" + toString()+"\n");
 //        mergeDetEdges();
@@ -63,6 +64,7 @@ public class DependencyParse {
 
         List<String> patterns = new ArrayList<>();
 //        patterns.add("NOUN ADP PROPN");//Battle (NN) 		5,of (IN) 		6,Gettysburg (NNP)
+        patterns.add("PROPN PROPN");//John (PROPN) 		6,F (PROPN) 		7,. (PUNCT) 		8,Kennedy (PROPN)
         patterns.add("PROPN PROPN PUNCT PROPN");//John (PROPN) 		6,F (PROPN) 		7,. (PUNCT) 		8,Kennedy (PROPN)
         patterns.add("PROPN PROPN PROPN PROPN");//West (PROPN) 		10,African (PROPN) 		11,CFA (PROPN) 		12,franc (PROPN)
         patterns.add("PROPN PROPN PROPN");//West (PROPN) 		10,African (PROPN) 		11,CFA (PROPN) 		12,franc (PROPN)
@@ -74,8 +76,10 @@ public class DependencyParse {
         patterns.add("PROPN PROPN ADP NOUN");//Nobel (PROPN) 		9,Prize (PROPN) 		10,in (ADP) 		11,literature (NOUN)
         patterns.add("PROPN NUM");//7,Chile Route (NNP) 		8,68 (CD) 
         patterns.add("NOUN NOUN ADP NOUN");//nobel (NOUN) 		6,prize (NOUN) 		7,in (ADP) 		8,physics (NOUN) 
-//        patterns.add("DET PROPN");//The (DET) 		14,Sopranos (PROPN)
+        patterns.add("NOUN ADP PROPN");// Game (NOUN) 		5,of (ADP) 		6,Thrones (PROPN)
+        patterns.add("PROPN PROPN PUNCT NOUN");//5,Park (PROPN) 		6,Chan (PROPN) 		7,- (PUNCT) 		8,wook (NOUN)
 
+//        patterns.add("DET PROPN");//The (DET) 		14,Sopranos (PROPN)
         List<String> edges = new ArrayList<>();
         edges.add("obj");
         edges.add("obl");
@@ -96,6 +100,7 @@ public class DependencyParse {
         edges.add("amod");
         edges.add("xcomp");
         edges.add("vocative");
+        edges.add("det");
 
         int counter = 0;
         int max = nodes.size();
@@ -129,7 +134,16 @@ public class DependencyParse {
                             if (POSTAG.get(m).equals("PUNCT")) {
                                 mergedTokens += getToken(m);
                             } else {
-                                mergedTokens += " " + getToken(m);
+                                if (POSTAG.containsKey(m-1)) {
+                                    if (POSTAG.get(m - 1).equals("PUNCT")) {
+                                        mergedTokens += getToken(m);
+                                    } else {
+                                        mergedTokens += " " + getToken(m);
+                                    }
+                                } else {
+                                    mergedTokens += " " + getToken(m);
+                                }
+
                             }
 
                         }
@@ -159,7 +173,7 @@ public class DependencyParse {
                             }
 
                             boolean b = Search.matches(mergedTokens.toLowerCase(), Main.lang);
-
+                            
                             //if matches then remove nodes
                             if (b) {
 
@@ -228,7 +242,7 @@ public class DependencyParse {
     private void mergeAmodEdges() {
         //do another merging on amod - Give me all Australian nonprofit organizations. --> merges nonprofit organizations
         int counter = 0;
-        
+
         List<String> edges = new ArrayList<>();
         edges.add("obj");
         edges.add("obl");
@@ -417,20 +431,19 @@ public class DependencyParse {
             }
         }
     }
-    
+
     public void removePunctuations() {
         HashMap<Integer, String> tempEdgeStrings = (HashMap<Integer, String>) edgeStrings.clone();
-        
-        for(Integer node : tempEdgeStrings.keySet()){
+
+        for (Integer node : tempEdgeStrings.keySet()) {
             String edgeString = tempEdgeStrings.get(node);
-            
-            if(edgeString.equals("punct")){
+
+            if (edgeString.equals("punct")) {
                 relations.remove(node);
                 edgeStrings.remove(node);
                 nodes.remove(node);
                 POSTAG.remove(node);
-                
-                
+
             }
         }
     }
@@ -567,7 +580,7 @@ public class DependencyParse {
      */
     public List<Integer> getDependentEdges(int headNode, Set<String> acceptedPOSTAGs) {
 
-        List<Integer> list = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
         for (Integer k : relations.keySet()) {
             Integer v = relations.get(k);
 
@@ -578,11 +591,46 @@ public class DependencyParse {
                     continue;
                 }
 
-                list.add(k);
+                set.add(k);
 
             }
         }
+        List<Integer> list = new ArrayList<>(set);
+        return list;
+    }
 
+    /**
+     * returns dependent edges given the headNode that have a valid postag based
+     * on the dependency level it can return dependent nodes of dependent nodes
+     * given the head node
+     *
+     * @param headNode
+     * @param dependencyLevel
+     * @param acceptedPOSTAGs set of postags
+     * @return List of dependent nodes
+     */
+    public List<Integer> getDependentEdges(int headNode, Set<String> acceptedPOSTAGs, Integer dependencyLevel) {
+
+        Set<Integer> set = new HashSet<>();
+        for (Integer k : relations.keySet()) {
+            Integer v = relations.get(k);
+
+            if (v == headNode) {
+                String postag = getPOSTag(k);
+
+                if (acceptedPOSTAGs.contains(postag)) {
+                    set.add(k);
+                }
+
+                if (dependencyLevel > 1) {
+                    //decrease the dependency level
+                    List<Integer> dependentNodeOfK = getDependentEdges(k, acceptedPOSTAGs, dependencyLevel - 1);
+                    set.addAll(dependentNodeOfK);
+                }
+            }
+        }
+
+        List<Integer> list = new ArrayList<>(set);
         return list;
     }
 
@@ -713,6 +761,64 @@ public class DependencyParse {
     }
 
     /**
+     * returns previous postag for the given node
+     *
+     * @param dependentNodeId
+     * @return String POSTag
+     */
+    public String getPreviousPOSTag(Integer nodeId) {
+        List<Integer> nodeIDs = new ArrayList<>(nodes.keySet());
+        Collections.sort(nodeIDs);
+
+        Integer prevNodeID = -1;
+
+        for (int i = 0; i < nodeIDs.size(); i++) {
+            if (nodeIDs.get(i).equals(nodeId)) {
+
+                if (i > 0) {
+                    prevNodeID = nodeIDs.get(i - 1);
+                    break;
+                }
+            }
+        }
+
+        if (prevNodeID != -1) {
+            return POSTAG.get(prevNodeID);
+        }
+
+        return "NO-PREV-TOKEN-POS";
+    }
+
+    /**
+     * returns next postag for the given node
+     *
+     * @param dependentNodeId
+     * @return String POSTag
+     */
+    public String getNextPOSTag(Integer nodeId) {
+        List<Integer> nodeIDs = new ArrayList<>(nodes.keySet());
+        Collections.sort(nodeIDs);
+
+        Integer nextNodeID = -1;
+
+        for (int i = 0; i < nodeIDs.size(); i++) {
+            if (nodeIDs.get(i).equals(nodeId)) {
+
+                if (i + 1 < nodeIDs.size()) {
+                    nextNodeID = nodeIDs.get(i + 1);
+                    break;
+                }
+            }
+        }
+
+        if (nextNodeID != -1) {
+            return POSTAG.get(nextNodeID);
+        }
+
+        return "NO-NEXT-TOKEN-POS";
+    }
+
+    /**
      * returns token for the given node
      *
      * @param dependentNodeId
@@ -728,6 +834,10 @@ public class DependencyParse {
 
     public void setHeadNode(int headNode) {
         this.headNode = headNode;
+    }
+
+    public void setNodes(HashMap<Integer, String> nodes) {
+        this.nodes = nodes;
     }
 
     @Override
@@ -873,7 +983,7 @@ public class DependencyParse {
             return s1 + "-" + headPOS + "-" + s2;
         }
 
-        return "ThisNodeIsRoot";
+        return "NOT-DIRECT-SIBLING";
     }
 
     /**
@@ -896,5 +1006,10 @@ public class DependencyParse {
         }
 
         return nextTokens;
+    }
+    public void setPOSTag(Integer nodeId, String newPOSTag){
+        if(this.POSTAG.containsKey(nodeId)){
+            this.POSTAG.put(nodeId, newPOSTag);
+        }
     }
 }

@@ -6,6 +6,7 @@
 package de.citec.sc.qald;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,6 +19,8 @@ import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.expr.Expr;
 import org.apache.jena.sparql.expr.ExprAggregator;
+import org.apache.jena.sparql.expr.ExprList;
+import org.apache.jena.sparql.expr.ExprVar;
 import org.apache.jena.sparql.syntax.Element;
 import org.apache.jena.sparql.syntax.ElementFilter;
 import org.apache.jena.sparql.syntax.ElementGroup;
@@ -31,11 +34,11 @@ import org.apache.jena.sparql.syntax.ElementTriplesBlock;
  */
 public class SPARQLParser {
 
-    public static List<String> extractURIsFromQuery(String queryString) {
+    public static Set<String> extractURIsFromQuery(String queryString) {
 
-        List<String> uris = new ArrayList<>();
+        Set<String> uris = new HashSet<>();
 
-        List<Triple> triples = extractTriplesFromQuery(queryString);
+        Set<Triple> triples = extractTriplesFromQuery(queryString);
         for (Triple t : triples) {
 
             if (!t.IsReturnVariable()) {
@@ -72,8 +75,8 @@ public class SPARQLParser {
 //        }
         return uris;
     }
-
-    public static String getQuery(List<Triple> triples) {
+    
+    public static String getQuery(Set<Triple> triples, boolean removeCountPart) {
         String query = "";
 
         if (triples.isEmpty()) {
@@ -83,14 +86,28 @@ public class SPARQLParser {
 
         for (Triple t : triples) {
             if (t.IsReturnVariable()) {
-                returnVariables += t.toString();
+                
+                if(removeCountPart){
+                   returnVariables += "?"+t.getSubject().toString();
+                }
+                else{
+                    returnVariables += t.toString();
+                }
+                
+                
             } else {
                 query += t.toString() + "\n";
             }
         }
 
         if (!returnVariables.equals("")) {
-            query = "SELECT DISTINCT " + returnVariables + " WHERE {\n " + query + " }";
+            if(returnVariables.contains("COUNT")){
+                query = "SELECT " + returnVariables + " WHERE {\n " + query + " }";
+            }
+            else{
+                query = "SELECT DISTINCT " + returnVariables + " WHERE {\n " + query + " }";
+            }
+            
         } else {
             query = "ASK WHERE { " + query + " }";
         }
@@ -98,7 +115,7 @@ public class SPARQLParser {
         return query;
     }
 
-    public static List<Triple> extractTriplesFromQuery(String queryString) {
+    public static Set<Triple> extractTriplesFromQuery(String queryString) {
 
         try {
             //replaces SELECT COUNT ?x with SELECT (COUNT ?x AS ?count) => because jena can't parse the first one
@@ -120,11 +137,27 @@ public class SPARQLParser {
         } catch (Exception e) {
         }
 
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 
     private static String preprocessQuery(String q) {
 
+        q = q.replace("\n", " ");
+        
+        if(q.toLowerCase().contains("count") && q.toLowerCase().contains("as") ){
+            return q;
+        }
+        
+        if(q.contains("COUNT")){
+            if(q.contains("SELECT DISTINCT")){
+                q = q.replace("DISTINCT", "");
+                
+                if(q.contains("(COUNT")){
+                    q = q.replaceAll("[)]\\s+WHERE", " AS ?count) WHERE");
+                }
+            }
+        }
+        
         String p1 = "^[S][E][L][E][C][T]\\s*\\w*\\s*[C][O][U][N][T]\\s*[(](.*)";
 
         //remove namespaces
@@ -168,43 +201,49 @@ public class SPARQLParser {
         //add all namespaces
         q = getNamespaces() + "\n" + q;
 
+        
         return q;
     }
 
-    private static List<Triple> countQuery(Query query) {
-        List<Triple> triples = new ArrayList<>();
+    private static Set<Triple> countQuery(Query query) {
+        Set<Triple> triples = new HashSet<>();
 
         try {
 
             String returnVariable = "";
 
-            Triple count = new Triple();
-
-            count.setPredicate(new Predicate("type", false));
-            count.setSubject(new Variable("?VAR_COUNT"));
-            count.setObject(new Constant("COUNT"));
-
-            count.setIsReturnVariable(true);
-
-            triples.add(count);
+            
 
             List<ExprAggregator> aggregators = query.getAggregators();
             for (ExprAggregator a : aggregators) {
-                returnVariable = a.getAggVar().getVarName();
-//                returnVariable = a.getAggregator()..getExpr().getVarName();
+                Set<Var> varList = a.getAggregator().getExprList().getVarsMentioned();
 
-                Triple t = new Triple();
-
-                t.setPredicate(new Predicate("type", false));
-                t.setSubject(new Variable(returnVariable));
-                t.setObject(new Constant("RETURN_VARIABLE"));
-
-                t.setIsReturnVariable(true);
-
-                triples.add(t);
+                for (Var v : varList) {
+                    returnVariable = v.getVarName();
+                }
             }
 
-            List<Triple> predicates = new ArrayList<>();
+            Triple t = new Triple();
+
+            t.setPredicate(new Predicate("type", false));
+            t.setSubject(new Variable(returnVariable));
+            t.setObject(new Constant("COUNT"));
+
+            t.setIsReturnVariable(true);
+
+            triples.add(t);
+            
+//            Triple count = new Triple();
+//
+//            count.setPredicate(new Predicate("type", false));
+//            count.setSubject(new Variable("?VAR_COUNT"));
+//            count.setObject(new Constant("COUNT"));
+//
+//            count.setIsReturnVariable(true);
+//
+//            triples.add(count);
+
+            Set<Triple> predicates = new HashSet<>();
 
             predicates = getPredicates(query);
 
@@ -221,8 +260,8 @@ public class SPARQLParser {
         return triples;
     }
 
-    private static List<Triple> standardQuery(Query query) {
-        List<Triple> triples = new ArrayList<>();
+    private static Set<Triple> standardQuery(Query query) {
+        Set<Triple> triples = new HashSet<>();
 
         try {
 
@@ -248,7 +287,7 @@ public class SPARQLParser {
                 triples.add(t);
             }
 
-            List<Triple> predicates = new ArrayList<>();
+            Set<Triple> predicates = new HashSet<>();
 
             predicates = getPredicates(query);
 
@@ -269,8 +308,8 @@ public class SPARQLParser {
      * @return all triples as Atoms
      * @param SPARQL query
      */
-    private static List<Triple> getPredicates(Query query) {
-        List<Triple> triples = new ArrayList<>();
+    private static Set<Triple> getPredicates(Query query) {
+        Set<Triple> triples = new HashSet<>();
 
         if (query.getQueryPattern() instanceof ElementGroup) {
             triples.addAll(getPredicatesFromElementGroup(query));
@@ -288,8 +327,8 @@ public class SPARQLParser {
         return triples;
     }
 
-    private static List<Triple> getPredicatesFromElementGroup(Query query) {
-        List<Triple> triples = new ArrayList<>();
+    private static Set<Triple> getPredicatesFromElementGroup(Query query) {
+        Set<Triple> triples = new HashSet<>();
 
         ElementGroup body = (ElementGroup) query.getQueryPattern();
 

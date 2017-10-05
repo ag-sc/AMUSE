@@ -7,7 +7,7 @@ package de.citec.sc.template;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.utils.DBpediaEndpoint;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.variable.URIVariable;
 import de.citec.sc.variable.SlotVariable;
 
 import de.citec.sc.variable.State;
@@ -46,7 +46,7 @@ public class QAEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, S
 
         for (Integer key : state.getDocument().getParse().getNodes().keySet()) {
 
-            HiddenVariable a = state.getHiddenVariables().get(key);
+            URIVariable a = state.getHiddenVariables().get(key);
 
             factors.add(new StateFactorScope<>(this, state));
         }
@@ -66,7 +66,7 @@ public class QAEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, S
             Integer dudeID = state.getHiddenVariables().get(slotVar.getTokenID()).getDudeId();
             Integer parentDudeID = state.getHiddenVariables().get(slotVar.getParentTokenID()).getDudeId();
 
-            HiddenVariable headVar = null;
+            URIVariable headVar = null;
             String token = "";
 
             if (specialSemanticTypes.containsKey(dudeID)) {

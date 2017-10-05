@@ -103,10 +103,14 @@ public class Triple {
         if (IsReturnVariable()) {
             //return var *
             //don't add ? to the *
-            if (subject.toString().equals("*")) {
-                s += subject.toString();
+            if (object.toString().equals("COUNT")) {
+                s+= "COUNT(DISTINCT ?"+ subject.toString()+")";
             } else {
-                s += "?" + subject.toString() + " ";
+                if (subject.toString().equals("*")) {
+                    s += subject.toString();
+                } else {
+                    s += "?" + subject.toString() + " ";
+                }
             }
 
         } else {

@@ -6,7 +6,7 @@
 package de.citec.sc.learning;
 
 import de.citec.sc.dudes.rdf.RDFDUDES;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.variable.URIVariable;
 import de.citec.sc.variable.SlotVariable;
 import de.citec.sc.variable.State;
 

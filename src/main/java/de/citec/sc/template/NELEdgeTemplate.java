@@ -10,7 +10,8 @@ import de.citec.sc.main.Main;
 import de.citec.sc.query.DBpediaLabelRetriever;
 import de.citec.sc.utils.DBpediaEndpoint;
 import de.citec.sc.utils.ProjectConfiguration;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.utils.StringSimilarityUtils;
+import de.citec.sc.variable.URIVariable;
 
 import de.citec.sc.variable.State;
 import factors.Factor;
@@ -22,9 +23,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import learning.Vector;
 import net.ricecode.similarity.SimilarityStrategy;
 import net.ricecode.similarity.StringSimilarityMeasures;
+import org.eclipse.jetty.util.ConcurrentHashSet;
 import templates.AbstractTemplate;
 
 /**
@@ -38,9 +41,18 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
     private Map<Integer, String> semanticTypes;
 
     public NELEdgeTemplate(Set<String> validPOSTags, Set<String> edges, Map<Integer, String> s) {
-        this.validPOSTags = validPOSTags;
-        this.semanticTypes = s;
-        this.validEdges = edges;
+        semanticTypes = new ConcurrentHashMap<>();
+        for (Integer key : s.keySet()) {
+            semanticTypes.put(key, s.get(key));
+        }
+        this.validPOSTags = new ConcurrentHashSet<>();
+        for (String v : validPOSTags) {
+            this.validPOSTags.add(v);
+        }
+        this.validEdges = new ConcurrentHashSet<>();
+        for (String v : edges) {
+            this.validEdges.add(v);
+        }
     }
 
     @Override
@@ -49,7 +61,7 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
 
         for (Integer key : state.getDocument().getParse().getNodes().keySet()) {
 
-            HiddenVariable a = state.getHiddenVariables().get(key);
+            URIVariable a = state.getHiddenVariables().get(key);
 
             factors.add(new StateFactorScope<>(this, state));
         }
@@ -62,20 +74,19 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
         State state = factor.getFactorScope().getState();
 
         Vector featureVector = factor.getFeatureVector();
-        
+
         String featureGroup = ProjectConfiguration.getFeatureGroup();
 
         Map<String, Double> depFeatures = getDependencyFeatures(state, featureGroup);
-        Map<String, Double> siblingFeatures = getSiblingFeatures(state, featureGroup);
+//        Map<String, Double> siblingFeatures = getSiblingFeatures(state, featureGroup);
 
         for (String k : depFeatures.keySet()) {
             featureVector.addToValue(k, depFeatures.get(k));
         }
 
-        for (String k : siblingFeatures.keySet()) {
-            featureVector.addToValue(k, siblingFeatures.get(k));
-        }
-
+//        for (String k : siblingFeatures.keySet()) {
+//            featureVector.addToValue(k, siblingFeatures.get(k));
+//        }
     }
 
     /**
@@ -99,7 +110,6 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
 //            if (headURI.equals("EMPTY_STRING")) {
 //                continue;
 //            }
-
             List<Integer> dependentNodes = state.getDocument().getParse().getDependentEdges(tokenID, validPOSTags);
 
             if (!dependentNodes.isEmpty()) {
@@ -109,7 +119,14 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
                     String depURI = state.getHiddenVariables().get(depNodeID).getCandidate().getUri();
                     String depPOS = state.getDocument().getParse().getPOSTag(depNodeID);
                     Integer depDudeID = state.getHiddenVariables().get(depNodeID).getDudeId();
-                    String depRelation = state.getDocument().getParse().getDependencyRelation(depNodeID);
+                    String depRelation = "";
+                    //if it's parent-child relation, if not then it's sibling relation
+                    if (state.getDocument().getParse().getHeadNode() == tokenID) {
+                        depRelation = state.getDocument().getParse().getDependencyRelation(depNodeID);
+                    } else {
+                        depRelation = state.getDocument().getParse().getSiblingDependencyRelation(depNodeID, tokenID);
+                    }
+
                     String depDudeName = "EMPTY";
                     String slotNumber = state.getSlot(depNodeID, tokenID);
 
@@ -120,7 +137,6 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
 //                    if (depURI.equals("EMPTY_STRING")) {
 //                        continue;
 //                    }
-
                     //GROUP 1
                     if (featureGroup.contains("1")) {
                         features.put("NEL  GROUP 1 PARENT : Lemma & URI : " + headToken + " & " + headURI, 1.0);
@@ -130,106 +146,332 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
                         features.put("NEL  GROUP 1 CHILD : POS & SEM-TYPE : " + depPOS + " & " + depDudeName, 1.0);
                         features.put("NEL  GROUP 1 DEP-REL & SLOT : " + depRelation + " & " + slotNumber, 1.0);
 
+                        features.put("NEL  GROUP 1 PARENT POS & PARENT LEMMA & CHILD POS & CHILD LEMMA: " + headPOS + " & " + headToken + " & " + depPOS + " & " + depToken, 1.0);
+
+//                        features.put("NEL  GROUP 2 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & DEP-REL : " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + depRelation, 1.0);
+//                        features.put("NEL  GROUP 2 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT : " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber, 1.0);
+                        features.put("NEL GROUP 1 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & DEP-REL & SLOT : " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + depRelation + " & " + slotNumber, 1.0);
                     }
 
                     //GROUP 2
                     if (featureGroup.contains("2")) {
-                        features.put("NEL  GROUP 2 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE : " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName, 1.0);
-                        features.put("NEL  GROUP 2 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & DEP-REL : " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + depRelation, 1.0);
-                        features.put("NEL  GROUP 2 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT : " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber, 1.0);
-                        features.put("NEL  GROUP 2 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & DEP-REL & SLOT : " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + depRelation + " & " + slotNumber, 1.0);
+                        double headSimilarityScore = StringSimilarityUtils.getSimilarityScore(headToken, headURI);
+                        double depSimilarityScore = StringSimilarityUtils.getSimilarityScore(depToken, depURI);
+
+                        if (dudeName.equals("Property")) {
+                            if (headURI.contains("ontology")) {
+
+                                if (headSimilarityScore > 0.8) {
+                                    features.put("NEL GROUP 2 PARENT SIM > 0.8 : ONTOLOGY " + dudeName, 1.0);
+                                }
+                                if (headSimilarityScore > 0.9) {
+                                    features.put("NEL GROUP 2 PARENT SIM > 0.9 : ONTOLOGY " + dudeName, 1.0);
+                                }
+                                if (headSimilarityScore > 0.95) {
+                                    features.put("NEL GROUP 2 PARENT SIM > 0.95 : ONTOLOGY " + dudeName, 1.0);
+                                }
+                                if (headSimilarityScore == 1.0) {
+                                    features.put("NEL GROUP 2 PARENT SIM = 1.0 : ONTOLOGY " + dudeName, 1.0);
+                                }
+                            } else {
+                                if (headSimilarityScore > 0.8) {
+                                    features.put("NEL GROUP 2 PARENT SIM > 0.8 : RDF " + dudeName, 1.0);
+                                }
+                                if (headSimilarityScore > 0.9) {
+                                    features.put("NEL GROUP 2 PARENT SIM > 0.9 : RDF " + dudeName, 1.0);
+                                }
+                                if (headSimilarityScore > 0.95) {
+                                    features.put("NEL GROUP 2 PARENT SIM > 0.95 : RDF " + dudeName, 1.0);
+                                }
+                                if (headSimilarityScore == 1.0) {
+                                    features.put("NEL GROUP 2 PARENT SIM = 1.0 : RDF " + dudeName, 1.0);
+                                }
+                            }
+                        } else {
+                            if (headSimilarityScore > 0.8) {
+                                features.put("NEL GROUP 2 PARENT SIM > 0.8 : " + dudeName, 1.0);
+                            }
+                            if (headSimilarityScore > 0.9) {
+                                features.put("NEL GROUP 2 PARENT SIM > 0.9 : " + dudeName, 1.0);
+                            }
+                            if (headSimilarityScore > 0.95) {
+                                features.put("NEL GROUP 2 PARENT SIM > 0.95 : " + dudeName, 1.0);
+                            }
+                            if (headSimilarityScore == 1.0) {
+                                features.put("NEL GROUP 2 PARENT SIM = 1.0 : " + dudeName, 1.0);
+                            }
+                        }
+
+                        //depDudeName
+                        if (depDudeName.equals("Property")) {
+                            if (depURI.contains("ontology")) {
+
+                                if (depSimilarityScore > 0.8) {
+                                    features.put("NEL GROUP 2 CHILD SIM > 0.8 : ONTOLOGY " + depDudeName, 1.0);
+                                }
+                                if (depSimilarityScore > 0.9) {
+                                    features.put("NEL GROUP 2 CHILD SIM > 0.9 : ONTOLOGY " + depDudeName, 1.0);
+                                }
+                                if (depSimilarityScore > 0.95) {
+                                    features.put("NEL GROUP 2 CHILD SIM > 0.95 : ONTOLOGY " + depDudeName, 1.0);
+                                }
+                                if (depSimilarityScore == 1.0) {
+                                    features.put("NEL GROUP 2 CHILD SIM = 1.0 : ONTOLOGY " + depDudeName, 1.0);
+                                }
+                            } else {
+                                if (depSimilarityScore > 0.8) {
+                                    features.put("NEL GROUP 2 CHILD SIM > 0.8 : RDF " + depDudeName, 1.0);
+                                }
+                                if (depSimilarityScore > 0.9) {
+                                    features.put("NEL GROUP 2 CHILD SIM > 0.9 : RDF " + depDudeName, 1.0);
+                                }
+                                if (depSimilarityScore > 0.95) {
+                                    features.put("NEL GROUP 2 CHILD SIM > 0.95 : RDF " + depDudeName, 1.0);
+                                }
+                                if (depSimilarityScore == 1.0) {
+                                    features.put("NEL GROUP 2 CHILD SIM = 1.0 : RDF " + depDudeName, 1.0);
+                                }
+                            }
+                        } else {
+                            if (depSimilarityScore > 0.8) {
+                                features.put("NEL GROUP 2 CHILD SIM > 0.8 : " + depDudeName, 1.0);
+                            }
+                            if (depSimilarityScore > 0.9) {
+                                features.put("NEL GROUP 2 CHILD SIM > 0.9 : " + depDudeName, 1.0);
+                            }
+                            if (depSimilarityScore > 0.95) {
+                                features.put("NEL GROUP 2 CHILD SIM > 0.95 : " + depDudeName, 1.0);
+                            }
+                            if (depSimilarityScore == 1.0) {
+                                features.put("NEL GROUP 2 CHILD SIM = 1.0 : " + depDudeName, 1.0);
+                            }
+                        }
+
+                        // features.put("NEL  GROUP 4 SIM (PARENT URI, PARENT LEMMA) : ", headSimilarityScore);
+                        // features.put("NEL  GROUP 4 SIM (CHILD URI, CHILD LEMMA) : ", depSimilarityScore);
+//                        if (headSimilarityScore > 0.8) {
+//                            features.put("NEL GROUP 2 PARENT SIM > 0.8 : ", 1.0);
+//                        }
+//                        if (depSimilarityScore > 0.8) {
+//                            features.put("NEL GROUP 2 CHILD SIM > 0.8 " + depDudeName, 1.0);
+//                        }
+//
+//                        if (headSimilarityScore > 0.9) {
+//                            features.put("NEL GROUP 2 PARENT SIM > 0.9 : ", 1.0);
+//                        }
+//                        if (depSimilarityScore > 0.9) {
+//                            features.put("NEL GROUP 2 CHILD SIM > 0.9 " + depDudeName, 1.0);
+//                        }
+//
+//                        if (headSimilarityScore == 1.0) {
+//                            features.put("NEL GROUP 2 PARENT SIM = 1.0 ", 1.0);
+//                        }
+//                        if (depSimilarityScore == 1.0) {
+//                            features.put("NEL GROUP 2 CHILD SIM == 1.0 " + depDudeName, 1.0);
+//                        }
                     }
 
                     //GROUP 3
                     if (featureGroup.contains("3")) {
-                        features.put("NEL  GROUP 3 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & PARENT URI: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + headURI, 1.0);
-                        features.put("NEL  GROUP 3 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & CHILD URI: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + depURI, 1.0);
-                        features.put("NEL  GROUP 3 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & PARENT URI & CHILD URI: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + headURI + " & " + depURI, 1.0);
+
+                        if (dudeName.equals("Property")) {
+                            String range = DBpediaEndpoint.getRange(headURI);
+                            String domain = DBpediaEndpoint.getDomain(headURI);
+
+                            if (slotNumber.equals("1")) {
+
+                                if (headURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPACE : PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT & DOMAIN: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + domain, 1.0);
+                                } else {
+                                    features.put("NEL GROUP 3 RDF NAMESPACE : PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT & NO_DOMAIN: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber, 1.0);
+
+                                }
+
+                            } else if (slotNumber.equals("2")) {
+
+                                if (headURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPACE : PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT & RANGE: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + range, 1.0);
+                                } else {
+                                    features.put("NEL GROUP 3 RDF NAMESPACE : PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT & NO_RANGE: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber, 1.0);
+                                }
+
+                            }
+                        }
+
+                        if (depDudeName.equals("Property")) {
+                            String range = DBpediaEndpoint.getRange(depURI);
+                            String domain = DBpediaEndpoint.getDomain(depURI);
+
+                            if (slotNumber.equals("1")) {
+                                if (depURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPANCE : CHILD POS & CHILD SEM-TYPE & PARENT POS & PARENT SEM-TYPE & SLOT & DOMAIN: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + domain, 1.0);
+                                } else {
+                                    features.put("NEL GROUP 3 RDF NAMESPANCE : CHILD POS & CHILD SEM-TYPE & PARENT POS & PARENT SEM-TYPE & SLOT & NO_DOMAIN: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber, 1.0);
+                                }
+
+                            } else if (slotNumber.equals("2")) {
+                                if (depURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPANCE : CHILD POS & CHILD SEM-TYPE & PARENT POS & PARENT SEM-TYPE & SLOT & RANGE: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + range, 1.0);
+                                } else {
+                                    features.put("NEL GROUP 3 RDF NAMESPANCE : CHILD POS & CHILD SEM-TYPE & PARENT POS & PARENT SEM-TYPE & SLOT & NO_RANGE: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber, 1.0);
+                                }
+
+                            }
+                        }
                     }
 
                     //GROUP 4
                     if (featureGroup.contains("4")) {
-                        double headSimilarityScore = getSimilarityScore(headToken, headURI);
-                        double depSimilarityScore = getSimilarityScore(depToken, depURI);
+                        double depFrequencyScore = 0;
+                        double headFrequency = 0;
 
-                        features.put("NEL  GROUP 4 SIM (PARENT URI, PARENT LEMMA) : ", headSimilarityScore);
-                        features.put("NEL  GROUP 4 SIM (CHILD URI, CHILD LEMMA) : ", depSimilarityScore);
+                        if (depDudeName.equals("Individual")) {
+                            depFrequencyScore = state.getHiddenVariables().get(depNodeID).getCandidate().getDbpediaScore();
+                        } else if (depDudeName.equals("Property")) {
+                            depFrequencyScore = state.getHiddenVariables().get(depNodeID).getCandidate().getMatollScore();
+                        }
+
+                        if (dudeName.equals("Individual")) {
+                            headFrequency = state.getHiddenVariables().get(tokenID).getCandidate().getDbpediaScore();
+                        } else if (dudeName.equals("Property")) {
+                            headFrequency = state.getHiddenVariables().get(tokenID).getCandidate().getMatollScore();
+                        }
+
+                        double headSimilarityScore = StringSimilarityUtils.getSimilarityScore(headToken, headURI);
+                        double depSimilarityScore = StringSimilarityUtils.getSimilarityScore(depToken, depURI);
+
+                        double score = (Math.max(depSimilarityScore, depFrequencyScore)) * 0.7 + 0.3 * (Math.max(headFrequency, headSimilarityScore));
+
+//                        if (score > 0.6) {
+//                            features.put("NEL GROUP 4 JOINT SIM > 0.6 : ", 1.0);
+//                        }
+//                        if (score > 0.7) {
+//                            features.put("NEL GROUP 4 JOINT SIM > 0.7 : ", 1.0);
+//                        }
+                        if (score > 0.8) {
+                            features.put("NEL GROUP 4 JOINT SIM > 0.8 : ", 1.0);
+                        }
+                        if (score > 0.9) {
+                            features.put("NEL GROUP 4 JOINT SIM > 0.9 : ", 1.0);
+                        }
+                        if (score > 0.95) {
+                            features.put("NEL GROUP 4 JOINT SIM > 0.95 : ", 1.0);
+                        }
+
+//                        if (Math.max(headFrequency, headSimilarityScore) > 0.8) {
+//                            features.put("NEL GROUP 4 PARENT SIM > 0.8 : ", 1.0);
+//                        }
+//                        if (Math.max(depSimilarityScore, depFrequencyScore) > 0.8) {
+//                            features.put("NEL GROUP 4 CHILD SIM > 0.8 " + depDudeName, 1.0);
+//                        }
+//
+//                        if (Math.max(headFrequency, headSimilarityScore) > 0.9) {
+//                            features.put("NEL GROUP 4 PARENT SIM > 0.9 : ", 1.0);
+//                        }
+//                        if (Math.max(depSimilarityScore, depFrequencyScore) > 0.9) {
+//                            features.put("NEL GROUP 4 CHILD SIM > 0.9 "+ depDudeName, 1.0);
+//                        }
+//
+//                        if (Math.max(headFrequency, headSimilarityScore) == 1.0) {
+//                            features.put("NEL GROUP 4 PARENT SIM = 1.0 ", 1.0);
+//                        }
+//                        if (Math.max(depSimilarityScore, depFrequencyScore) == 1.0) {
+//                            features.put("NEL GROUP 4 CHILD SIM == 1.0 "+depDudeName, 1.0);
+//                        }
+//                        if(depURI.contains("ontology") || headURI.contains("ontology")){
+////                            features.put("NEL GROUP 4 - DEP FEATURE: ONTOLOGY Namespace " + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", score);
+//                        }
+//                        else{
+////                            features.put("NEL GROUP 4 - DEP FEATURE: RDF Namespace " + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", score);
+//                        }
+//                        if (depDudeName.equals("Individual")) {
+//                            double individualScore = depFrequencyScore * 0.3 + depSimilarityScore * 0.7;
+//
+//                            features.put("NEL EDGE - DEP FEATURE: Individual" + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", individualScore);
+//                        }
+//
+//                        if (dudeName.equals("Property")&& headURI.contains("ontology")) {
+//
+//                            features.put("NEL EDGE - DEP FEATURE: ONTOLOGY Namespace " + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", score);
+//                        } 
+//                        else if (dudeName.equals("Property")&& headURI.contains("property")) {
+//
+//                            features.put("NEL EDGE - DEP FEATURE: RDF Namespace" + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", score);
+//                        } 
+//                        else {
+//
+//                            features.put("NEL EDGE - DEP FEATURE: RDF Namespace" + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", score);
+//                        }
+//                        if (headFrequency > 0.8) {
+//                            features.put("NEL GROUP 4 PARENT KB SCORE > 0.8 : ", 1.0);
+//                        }
+//                        if (depFrequencyScore > 0.8) {
+//                            features.put("NEL GROUP 4 CHILD KB SCORE > 0.8 : ", 1.0);
+//                        }
+//
+//                        if (headFrequency > 0.9) {
+//                            features.put("NEL GROUP 4 PARENT KB SCORE > 0.9 : ", 1.0);
+//                        }
+//                        if (depFrequencyScore > 0.9) {
+//                            features.put("NEL GROUP 4 CHILD KB SCORE > 0.9 : ", 1.0);
+//                        }
+//
+//                        if (headFrequency == 1.0) {
+//                            features.put("NEL GROUP 4 PARENT KB SCORE = 1.0 : ", 1.0);
+//                        }
+//                        if (depFrequencyScore == 1.0) {
+//                            features.put("NEL GROUP 4 CHILD KB SCORE == 1.0 : ", 1.0);
+//                        }
                     }
 
                     //GROUP 5
                     if (featureGroup.contains("5")) {
-                        
+
                         if (dudeName.equals("Property")) {
                             String range = DBpediaEndpoint.getRange(headURI);
                             String domain = DBpediaEndpoint.getDomain(headURI);
-                            
-                            if(slotNumber.equals("1")){
-                                features.put("NEL  GROUP 5 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT & DOMAIN: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber +" & "+ domain, 1.0);
-                            }
-                            else if(slotNumber.equals("2")){
-                                features.put("NEL  GROUP 5 PARENT POS & PARENT SEM-TYPE & CHILD POS & CHILD SEM-TYPE & SLOT & RANGE: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber +" & "+ range, 1.0);
-                            }
-                        }                        
-                    }
-                    
-                    //GROUP 6
-                    if (featureGroup.contains("6")) {
-                        double depFrequencyScore = 0;
-                        double headFrequency = 0;
-                        
-                        
-                        if(depDudeName.equals("Individual")){
-                            depFrequencyScore = state.getHiddenVariables().get(depNodeID).getCandidate().getDbpediaScore();
-                        }
-                        else if(depDudeName.equals("Property")){
-                            depFrequencyScore = state.getHiddenVariables().get(depNodeID).getCandidate().getMatollScore();
-                        }
-                        
-                        if(depDudeName.equals("Individual")){
-                            headFrequency = state.getHiddenVariables().get(tokenID).getCandidate().getDbpediaScore();
-                        }
-                        else if(depDudeName.equals("Property")){
-                            headFrequency = state.getHiddenVariables().get(tokenID).getCandidate().getMatollScore();
-                        }
-                        
-                        
-                        features.put("NEL  GROUP 6 PARENT FREQUENCY SCORE : ", headFrequency);
-                        features.put("NEL  GROUP 6 CHILD FREQUENCY SCORE : ", depFrequencyScore);
-                    }
 
-//                    Set<String> mergedIntervalPOSTAGs = state.getDocument().getParse().getIntervalPOSTagsMerged(tokenID, depNodeID);
-//
-//                    double depSimilarityScore = getSimilarityScore(depToken, depURI);
-//                    double depDBpediaScore = state.getHiddenVariables().get(depNodeID).getCandidate().getDbpediaScore();
-//
-//                    double headSimilarityScore = getSimilarityScore(headToken, headURI);
-//                    double headMatollScore = state.getHiddenVariables().get(tokenID).getCandidate().getMatollScore();
-//
-//                    double score = (Math.max(depSimilarityScore, depDBpediaScore)) * 0.7 + 0.3 * (Math.max(headMatollScore, headSimilarityScore));
-//
-//                    if (depDudeName.equals("Individual")) {
-//                        double individualScore = depDBpediaScore * 0.3 + depSimilarityScore * 0.7;
-//
-////                        featureVector.addToValue("NEL EDGE - DEP FEATURE: Individual" + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", individualScore);
-//                    }
-//
-//                    if (headURI.contains("ontology")) {
-//
-//                        features.put("NEL EDGE - DEP FEATURE: ONTOLOGY Namespace " + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", score);
-//
-//                        //mayor of Tel-Aviv, headquarters of MI6
-//                        // NN(s) IN NNP
-//                        for (String pattern : mergedIntervalPOSTAGs) {
-//                            features.put("NEL EDGE - DEP FEATURE: ONTOLOGY Namespace " + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " Pattern = " + pattern, 1.0);
-//                        }
-//                    } else {
-//
-//                        features.put("NEL EDGE - DEP FEATURE: RDF Namespace" + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " score = ", score);
-//
-//                        for (String pattern : mergedIntervalPOSTAGs) {
-//                            features.put("NEL EDGE - DEP FEATURE: RDF Namespace " + " head: " + dudeName + ":" + headPOS + "   dep: " + depDudeName + ":" + depPOS + " dep-relation: " + depRelation + " Pattern = " + pattern, 1.0);
-//                        }
-//                    }
+                            String prevPOS = state.getDocument().getParse().getPreviousPOSTag(tokenID);
+                            String nextPOS = state.getDocument().getParse().getNextPOSTag(tokenID);
+
+                            if (slotNumber.equals("1")) {
+
+                                if (headURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPACE : PARENT POS & PARENT SEM-TYPE & PREV POS & NEXT POS & CHILD POS & CHILD SEM-TYPE & SLOT & DOMAIN: " + headPOS + " & " + dudeName + " & " + prevPOS + " & " + nextPOS + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + domain, 1.0);
+                                } else {
+
+                                }
+
+                            } else if (slotNumber.equals("2")) {
+
+                                if (headURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPACE : PARENT POS & PARENT SEM-TYPE & PREV POS & NEXT POS & CHILD POS & CHILD SEM-TYPE & SLOT & RANGE: " + headPOS + " & " + dudeName + " & " + prevPOS + " & " + nextPOS + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + range, 1.0);
+                                } else {
+                                }
+                            }
+                        }
+
+                        if (depDudeName.equals("Property")) {
+                            String range = DBpediaEndpoint.getRange(depURI);
+                            String domain = DBpediaEndpoint.getDomain(depURI);
+
+                            String prevPOS = state.getDocument().getParse().getPreviousPOSTag(depNodeID);
+                            String nextPOS = state.getDocument().getParse().getNextPOSTag(depNodeID);
+
+                            if (slotNumber.equals("1")) {
+                                if (depURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPANCE : CHILD POS & CHILD SEM-TYPE & PREV POS & NEXT POS & PARENT POS & PARENT SEM-TYPE & SLOT & DOMAIN: " + headPOS + " & " + dudeName + " & " + prevPOS + " & " + nextPOS + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + domain, 1.0);
+                                } else {
+                                }
+
+                            } else if (slotNumber.equals("2")) {
+                                if (depURI.contains("ontology")) {
+                                    features.put("NEL GROUP 3 ONTOLOGY NAMESPANCE : CHILD POS & CHILD SEM-TYPE & PREV POS & NEXT POS & PARENT POS & PARENT SEM-TYPE & SLOT & RANGE: " + headPOS + " & " + dudeName + " & " + prevPOS + " & " + nextPOS + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + range, 1.0);
+                                } else {
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -254,7 +496,6 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
 //            if (headURI.equals("EMPTY_STRING")) {
 //                continue;
 //            }
-
             List<Integer> siblings = state.getDocument().getParse().getSiblings(tokenID, validPOSTags);
 
             if (!siblings.isEmpty()) {
@@ -271,7 +512,6 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
                         depDudeName = semanticTypes.get(depDudeID);
                     }
 
-                    
                     //GROUP 1
                     if (featureGroup.contains("1")) {
                         features.put("NEL  GROUP 1 BROTHER : Lemma & URI : " + headToken + " & " + headURI, 1.0);
@@ -300,8 +540,8 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
 
                     //GROUP 4
                     if (featureGroup.contains("4")) {
-                        double headSimilarityScore = getSimilarityScore(headToken, headURI);
-                        double depSimilarityScore = getSimilarityScore(depToken, depURI);
+                        double headSimilarityScore = StringSimilarityUtils.getSimilarityScore(headToken, headURI);
+                        double depSimilarityScore = StringSimilarityUtils.getSimilarityScore(depToken, depURI);
 
                         features.put("NEL  GROUP 4 SIM (BROTHER URI, PARENT LEMMA) : ", headSimilarityScore);
                         features.put("NEL  GROUP 4 SIM (SIBLING URI, SIBLING LEMMA) : ", depSimilarityScore);
@@ -309,49 +549,43 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
 
                     //GROUP 5
                     if (featureGroup.contains("5")) {
-                        
+
                         if (dudeName.equals("Property")) {
                             String range = DBpediaEndpoint.getRange(headURI);
                             String domain = DBpediaEndpoint.getDomain(headURI);
-                            
-                            if(slotNumber.equals("1")){
-                                features.put("NEL  GROUP 5 BROTHER POS & BROTHER SEM-TYPE & SIBLING POS & SIBLING SEM-TYPE & SLOT & DOMAIN: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber +" & "+ domain, 1.0);
+
+                            if (slotNumber.equals("1")) {
+                                features.put("NEL  GROUP 5 BROTHER POS & BROTHER SEM-TYPE & SIBLING POS & SIBLING SEM-TYPE & SLOT & DOMAIN: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + domain, 1.0);
+                            } else if (slotNumber.equals("2")) {
+                                features.put("NEL  GROUP 5 BROTHER POS & BROTHER SEM-TYPE & SIBLING POS & SIBLING SEM-TYPE & SLOT & RANGE: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber + " & " + range, 1.0);
                             }
-                            else if(slotNumber.equals("2")){
-                                features.put("NEL  GROUP 5 BROTHER POS & BROTHER SEM-TYPE & SIBLING POS & SIBLING SEM-TYPE & SLOT & RANGE: " + headPOS + " & " + dudeName + " & " + depPOS + " & " + depDudeName + " & " + slotNumber +" & "+ range, 1.0);
-                            }
-                        }                        
+                        }
                     }
-                    
+
                     //GROUP 6
                     if (featureGroup.contains("6")) {
                         double depFrequencyScore = 0;
                         double headFrequency = 0;
-                        
-                        
-                        if(depDudeName.equals("Individual")){
+
+                        if (depDudeName.equals("Individual")) {
                             depFrequencyScore = state.getHiddenVariables().get(depNodeID).getCandidate().getDbpediaScore();
-                        }
-                        else if(depDudeName.equals("Property")){
+                        } else if (depDudeName.equals("Property")) {
                             depFrequencyScore = state.getHiddenVariables().get(depNodeID).getCandidate().getMatollScore();
                         }
-                        
-                        if(depDudeName.equals("Individual")){
+
+                        if (depDudeName.equals("Individual")) {
                             headFrequency = state.getHiddenVariables().get(tokenID).getCandidate().getDbpediaScore();
-                        }
-                        else if(depDudeName.equals("Property")){
+                        } else if (depDudeName.equals("Property")) {
                             headFrequency = state.getHiddenVariables().get(tokenID).getCandidate().getMatollScore();
                         }
-                        
-                        
+
                         features.put("NEL  GROUP 6 BROTHER FREQUENCY SCORE : ", headFrequency);
                         features.put("NEL  GROUP 6 SIBLING FREQUENCY SCORE : ", depFrequencyScore);
                     }
-                    
+
 //                    if (depURI.equals("EMPTY_STRING")) {
 //                        continue;
 //                    }
-
 //                    Set<String> mergedIntervalPOSTAGs = state.getDocument().getParse().getIntervalPOSTagsMerged(tokenID, depNodeID);
 //
 //                    double depSimilarityScore = getSimilarityScore(depToken, depURI);
@@ -396,19 +630,6 @@ public class NELEdgeTemplate extends AbstractTemplate<AnnotatedDocument, State, 
         }
 
         return features;
-    }
-
-    /**
-     * levenstein sim
-     */
-    private double getSimilarityScore(String node, String uri) {
-
-        String label = DBpediaLabelRetriever.getLabel(uri, Main.lang);
-
-        //compute levenstein edit distance similarity and normalize
-        final double weightedEditSimilarity = StringSimilarityMeasures.score(label, node);
-
-        return weightedEditSimilarity;
     }
 
 }

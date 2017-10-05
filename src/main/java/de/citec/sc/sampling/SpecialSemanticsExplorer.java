@@ -12,7 +12,7 @@ import de.citec.sc.query.ManualLexicon;
 import de.citec.sc.query.Search;
 import de.citec.sc.utils.DBpediaEndpoint;
 import de.citec.sc.utils.Stopwords;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.variable.URIVariable;
 import de.citec.sc.variable.State;
 
 import java.util.ArrayList;

@@ -7,7 +7,9 @@ package de.citec.sc.sampling;
 
 import de.citec.sc.query.Candidate;
 import de.citec.sc.query.Instance;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.utils.ProjectConfiguration;
+import de.citec.sc.variable.QueryTypeVariable;
+import de.citec.sc.variable.URIVariable;
 import de.citec.sc.variable.State;
 
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class QCEdgeExplorer implements Explorer<State> {
                 continue;
             }
 
-            HiddenVariable headVar = currentState.getHiddenVariables().get(indexOfNode);
+            URIVariable headVar = currentState.getHiddenVariables().get(indexOfNode);
 
             String dudeName = semanticTypes.get(headVar.getDudeId());
 
@@ -95,7 +97,7 @@ public class QCEdgeExplorer implements Explorer<State> {
             headNodes.add(headNode);
 
             boolean hasValidSpecialNode = false;
-            
+
             for (Integer depNodeIndex : depNodes) {
 
                 //greedy exploring, skip nodes with assigned URI
@@ -105,8 +107,8 @@ public class QCEdgeExplorer implements Explorer<State> {
 
                 String depNode = currentState.getDocument().getParse().getNodes().get(depNodeIndex);
                 String depPOS = currentState.getDocument().getParse().getPOSTag(depNodeIndex);
-                
-                if(!validPOSTags.contains(depPOS)){
+
+                if (!validPOSTags.contains(depPOS)) {
                     continue;
                 }
 
@@ -118,16 +120,36 @@ public class QCEdgeExplorer implements Explorer<State> {
 
                     List<Integer> usedSlots = currentState.getUsedSlots(indexOfNode);
 
+                    String depDudeName = specialSemanticTypes.get(indexOfDepDude);
+
                     if (usedSlots.contains(1) && usedSlots.contains(2)) {
-                        State s = new State(currentState);
 
-                        Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
+                        if (depDudeName.equals("Which")) {
 
-                        s.addHiddenVariable(depNodeIndex, indexOfDepDude, emptyInstance);
+                            State s = new State(currentState);
 
-                        if (!s.equals(currentState) && !newStates.contains(s)) {
-                            newStates.add(s);
+                            Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
+
+                            //add as slot 2 since 1 taken by another node
+                            s.addSlotVariable(depNodeIndex, indexOfNode, 1);
+                            s.addHiddenVariable(depNodeIndex, indexOfDepDude, emptyInstance);
+
+                            if (!s.equals(currentState) && !newStates.contains(s)) {
+                                newStates.add(s);
+                            }
+                        } else {
+
+                            State s = new State(currentState);
+
+                            Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
+
+                            s.addHiddenVariable(depNodeIndex, indexOfDepDude, emptyInstance);
+
+                            if (!s.equals(currentState) && !newStates.contains(s)) {
+                                newStates.add(s);
+                            }
                         }
+
                     } else if (usedSlots.contains(1) && !usedSlots.contains(2)) {
                         State s = new State(currentState);
 
@@ -187,10 +209,10 @@ public class QCEdgeExplorer implements Explorer<State> {
                 }
 
                 String hNodeToken = currentState.getDocument().getParse().getNodes().get(hNode);
-                
+
                 String depPOS = currentState.getDocument().getParse().getPOSTag(hNode);
-                
-                if(!validPOSTags.contains(depPOS)){
+
+                if (!validPOSTags.contains(depPOS)) {
                     continue;
                 }
 
@@ -198,17 +220,35 @@ public class QCEdgeExplorer implements Explorer<State> {
                 hasValidSpecialNode = true;
                 for (Integer indexOfDepDude : specialSemanticTypes.keySet()) {
 
+                    String depDudeName = specialSemanticTypes.get(indexOfDepDude);
+
                     List<Integer> usedSlots = currentState.getUsedSlots(indexOfNode);
 
                     if (usedSlots.contains(1) && usedSlots.contains(2)) {
-                        State s = new State(currentState);
+                        if (depDudeName.equals("Which")) {
 
-                        Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
+                            State s = new State(currentState);
 
-                        s.addHiddenVariable(hNode, indexOfDepDude, emptyInstance);
+                            Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
 
-                        if (!s.equals(currentState) && !newStates.contains(s)) {
-                            newStates.add(s);
+                            //add as slot 2 since 1 taken by another node
+                            s.addSlotVariable(hNode, indexOfNode, 1);
+                            s.addHiddenVariable(hNode, indexOfDepDude, emptyInstance);
+
+                            if (!s.equals(currentState) && !newStates.contains(s)) {
+                                newStates.add(s);
+                            }
+                        } else {
+
+                            State s = new State(currentState);
+
+                            Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
+
+                            s.addHiddenVariable(hNode, indexOfDepDude, emptyInstance);
+
+                            if (!s.equals(currentState) && !newStates.contains(s)) {
+                                newStates.add(s);
+                            }
                         }
                     } else if (usedSlots.contains(1) && !usedSlots.contains(2)) {
                         State s = new State(currentState);
@@ -265,17 +305,35 @@ public class QCEdgeExplorer implements Explorer<State> {
 
                     for (Integer indexOfDepDude : specialSemanticTypes.keySet()) {
 
+                        String depDudeName = specialSemanticTypes.get(indexOfDepDude);
+
                         List<Integer> usedSlots = currentState.getUsedSlots(indexOfNode);
 
                         if (usedSlots.contains(1) && usedSlots.contains(2)) {
-                            State s = new State(currentState);
+                            if (depDudeName.equals("Which")) {
 
-                            Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
+                                State s = new State(currentState);
 
-                            s.addHiddenVariable(indexOfNode1, indexOfDepDude, emptyInstance);
+                                Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
 
-                            if (!s.equals(currentState) && !newStates.contains(s)) {
-                                newStates.add(s);
+                                //add as slot 2 since 1 taken by another node
+                                s.addSlotVariable(indexOfNode1, indexOfNode, 1);
+                                s.addHiddenVariable(indexOfNode1, indexOfDepDude, emptyInstance);
+
+                                if (!s.equals(currentState) && !newStates.contains(s)) {
+                                    newStates.add(s);
+                                }
+                            } else {
+
+                                State s = new State(currentState);
+
+                                Candidate emptyInstance = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
+
+                                s.addHiddenVariable(indexOfNode1, indexOfDepDude, emptyInstance);
+
+                                if (!s.equals(currentState) && !newStates.contains(s)) {
+                                    newStates.add(s);
+                                }
                             }
                         } else if (usedSlots.contains(1) && !usedSlots.contains(2)) {
                             State s = new State(currentState);
@@ -322,8 +380,55 @@ public class QCEdgeExplorer implements Explorer<State> {
                 }
             }
         }
+        
+        List<State> sampedStatesWithQueryTypes = sampleQueryTypes(newStates);
 
-        return newStates;
+        return sampedStatesWithQueryTypes;//newStates
+    }
+    
+    private List<State> sampleQueryTypes(List<State> states){
+        Set<State> sampledStates = new HashSet<>();
+        
+        for(State s : states){
+            int currentType = s.getQueryTypeVariable().getType();
+            
+            switch(currentType){
+                case 1:
+                    State sampledState1 = new State(s);
+                    sampledState1.setQueryTypeVariable(new QueryTypeVariable(2));
+                    
+                    State sampledState2 = new State(s);
+                    sampledState2.setQueryTypeVariable(new QueryTypeVariable(3));
+                    
+                    sampledStates.add(sampledState1);
+                    sampledStates.add(sampledState2);
+                    break;
+                case 2:
+                    State sampledState3 = new State(s);
+                    sampledState3.setQueryTypeVariable(new QueryTypeVariable(1));
+                    
+                    State sampledState4 = new State(s);
+                    sampledState4.setQueryTypeVariable(new QueryTypeVariable(3));
+                    
+                    sampledStates.add(sampledState3);
+                    sampledStates.add(sampledState4);
+                    break;
+                case 3:
+                    State sampledState5 = new State(s);
+                    sampledState5.setQueryTypeVariable(new QueryTypeVariable(1));
+                    
+                    State sampledState6 = new State(s);
+                    sampledState6.setQueryTypeVariable(new QueryTypeVariable(2));
+                    
+                    sampledStates.add(sampledState5);
+                    sampledStates.add(sampledState6);
+                    break;
+            }
+            
+            sampledStates.add(s);
+        }
+        
+        return new ArrayList<>(sampledStates);
     }
 
 //    private List createNewtStates2(State currentState) {

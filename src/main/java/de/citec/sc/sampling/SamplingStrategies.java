@@ -29,45 +29,21 @@ public class SamplingStrategies {
                         getScore.apply(s2.getCandidateState())));
 
                 List<StatePair<StateT>> validPairs = new ArrayList<>();
-                
-//                String s = "";
-//                for (StatePair<StateT> pair : candidates) {
-//                    s += pair.getCandidateState() + "\n\n======================================================================\n";
-//                }
-//
-//                FileFactory.writeListToFile("statesTest.txt", s, false);
-                
+
+                String s = "";
+                int c = 0;
                 for (StatePair<StateT> pair : candidates) {
-                    State state = (State) pair.getCandidateState();
-                    String query = QueryConstructor.getSPARQLQuery(state);
-                    boolean isValidQuery = false;
+                    
+                    s += pair.getCandidateState() + "\n\n" +"======================================================================\n";
+                    c++;
 
-                    String questionString = state.getDocument().getQuestionString();
-
-                    if (questionString.startsWith("Did") || questionString.startsWith("Does") || questionString.startsWith("Do") || questionString.startsWith("Is") || questionString.startsWith("Were") || questionString.startsWith("Was") || questionString.startsWith("Are")) {
-                        if (query.contains("ASK")) {
-                            isValidQuery = true;
-                        }
-                    } else {
-                        if (query.contains("SELECT")) {
-                            isValidQuery = true;
-                        }
-                    }
-
-                    if (isValidQuery) {
-                        boolean returnsAnswer = DBpediaEndpoint.isValidQuery(query, true);
-
-                        if (returnsAnswer) {
-                            validPairs.add(pair);
-                        }
-                    }
-
-                    if (validPairs.size() == k) {
+                    if (candidates.size() > 1000 && c == 200) {
                         break;
                     }
                 }
 
-                return validPairs;
+                FileFactory.writeListToFile("states.txt", s, false);
+                return candidates.subList(0, Math.min(k, candidates.size()));
             }
 
             @Override
@@ -91,12 +67,18 @@ public class SamplingStrategies {
                 candidates.sort((s1, s2) -> -Double.compare(getScore.apply(s1.getCandidateState()),
                         getScore.apply(s2.getCandidateState())));
 
-//                String s = "";
-//                for (StatePair<StateT> pair : candidates) {
-//                    s += pair.getCandidateState() + "\n\n======================================================================\n";
-//                }
-//
-//                FileFactory.writeListToFile("states.txt", s, false);
+                String s = "";
+                int c = 0;
+                for (StatePair<StateT> pair : candidates) {
+                    s += pair.getCandidateState() + "\n\n" + "======================================================================\n";
+                    c++;
+
+                    if (candidates.size() > 1000 && c == 200) {
+                        break;
+                    }
+                }
+
+                FileFactory.writeListToFile("states.txt", s, false);
                 return candidates.subList(0, Math.min(k, candidates.size()));
             }
 

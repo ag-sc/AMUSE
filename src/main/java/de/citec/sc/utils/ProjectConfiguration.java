@@ -40,7 +40,49 @@ public class ProjectConfiguration {
     private static final String PARAM_SETTING_TEST_MAX_WORD_COUNT = "-w2";
     private static final String PARAM_SETTING_LANGUAGE = "-l";
     private static final String PARAM_SETTING_FEATURE_GROUP = "-f";
+    private static final String PARAM_SETTING_WORD_EMBEDDING = "-b";
+    private static final String PARAM_SETTING_USE_DBPEDIA_ENDPOINT = "-q";
+    private static final String PARAM_SETTING_DBPEDIA_ENDPOINT_SERVER = "-n";
+    private static final String PARAM_SETTING_API = "-api";
+    private static final String PARAM_SETTING_LINKING_SAMPLING_LEVEL = "-linkingSamplingLevel";
+    private static final String PARAM_SETTING_QA_SAMPLING_LEVEL = "-qaSamplingLevel";
+    
+    public static String getLinkingSamplingLevel() {
 
+        return PARAMETERS.get(PARAM_SETTING_LINKING_SAMPLING_LEVEL);
+    }
+    public static String getQASamplingLevel() {
+
+        return PARAMETERS.get(PARAM_SETTING_QA_SAMPLING_LEVEL);
+    }
+
+    public static boolean useRemoteDBpediaEndpoint() {
+
+        boolean useDBpediaEndpoint = "remote".equals(PARAMETERS.get(PARAM_SETTING_DBPEDIA_ENDPOINT_SERVER));
+
+        return useDBpediaEndpoint;
+    }
+    public static boolean startAPI(){
+
+        boolean startAPI = "true".equals(PARAMETERS.get(PARAM_SETTING_API));
+
+        return startAPI;
+    }
+    
+    public static boolean useDBpediaEndpoint() {
+
+        boolean useDBpediaEndpoint = "true".equals(PARAMETERS.get(PARAM_SETTING_USE_DBPEDIA_ENDPOINT));
+
+        return useDBpediaEndpoint;
+    }
+    
+    public static boolean useEmbeddingLexicon() {
+
+        boolean useEmbeddingLexicon = "true".equals(PARAMETERS.get(PARAM_SETTING_WORD_EMBEDDING));
+
+        return useEmbeddingLexicon;
+    }
+    
     public static String getIndex() {
 
         return PARAMETERS.get(PARAM_SETTING_INDEX);

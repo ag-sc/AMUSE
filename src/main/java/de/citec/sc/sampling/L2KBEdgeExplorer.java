@@ -7,6 +7,7 @@ package de.citec.sc.sampling;
 
 import de.citec.sc.main.Main;
 import de.citec.sc.query.Candidate;
+import de.citec.sc.query.EmbeddingLexicon;
 import de.citec.sc.query.Instance;
 import de.citec.sc.query.ManualLexicon;
 
@@ -17,6 +18,8 @@ import de.citec.sc.utils.Stopwords;
 import de.citec.sc.variable.State;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +32,10 @@ import sampling.Explorer;
  */
 public class L2KBEdgeExplorer implements Explorer<State> {
 
-    private Map<Integer, String> semanticTypes;
-    private Set<String> validPOSTags;
-    private Set<String> validEdges;
-    private static Set<String> wordsWithSpecialSemanticTypes;
+    private static Map<Integer, String> semanticTypes;
+    private static Set<String> validPOSTags;
+    private static Set<String> validEdges;
+    private static Set<String> acceptedDUDES;
 
     public L2KBEdgeExplorer(Map<Integer, String> assignedDUDES, Set<String> validPOSTags, Set<String> edges) {
         this.semanticTypes = assignedDUDES;
@@ -42,228 +45,342 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
     @Override
     public List getNextStates(State currentState) {
-        List<State> newStates = new ArrayList<>();
+        Set<State> newStates = new HashSet<>();
 
-        for (int indexOfNode : currentState.getDocument().getParse().getNodes().keySet()) {
-            String node = currentState.getDocument().getParse().getNodes().get(indexOfNode);
+        if (acceptedDUDES == null) {
+            acceptedDUDES = new HashSet<>();
+            acceptedDUDES.add("RestrictionClass");
+            acceptedDUDES.add("UnderSpecifiedClass");
+            acceptedDUDES.add("Property");
+            acceptedDUDES.add("When");
+        }
+        if (acceptedDUDES.isEmpty()) {
+            acceptedDUDES = new HashSet<>();
+            acceptedDUDES.add("RestrictionClass");
+            acceptedDUDES.add("UnderSpecifiedClass");
+            acceptedDUDES.add("Property");
+            acceptedDUDES.add("When");
+        }
 
-            String pos = currentState.getDocument().getParse().getPOSTag(indexOfNode);
+        for (int indexOfHeadNode : currentState.getDocument().getParse().getNodes().keySet()) {
+            String node = currentState.getDocument().getParse().getNodes().get(indexOfHeadNode);
+
+            String pos = currentState.getDocument().getParse().getPOSTag(indexOfHeadNode);
 
             if (!validPOSTags.contains(pos)) {
                 continue;
             }
             //assign all dudes
-            for (Integer indexOfDude : semanticTypes.keySet()) {
+            for (Integer indexOfHeadDude : semanticTypes.keySet()) {
 
-                String dudeName = semanticTypes.get(indexOfDude);
+                String headDudeName = semanticTypes.get(indexOfHeadDude);
 
-//                boolean hasUppercase = !node.equals(node.toLowerCase());
-                //Australian, Swedish, Danish => restriction classes
-//                    if (hasUppercase && pos.startsWith("JJ")) {
-//                        //add restriction, it can only be restriction class
-//                        if (!dudeName.equals("RestrictionClass")) {
-//                            continue;
-//                        }
-//                    }
-                Set<Candidate> headNodeCandidates = getDBpediaMatches(dudeName, node);
-                
-                if(node.equals("erfunden") && dudeName.equals("Property")){
-                    int z=2;
-                }
+                Set<Candidate> headNodeCandidates = getDBpediaMatches(headDudeName, node, pos);
 
                 if (headNodeCandidates.isEmpty()) {
                     continue;
                 }
+                
+                String samplingLevel = ProjectConfiguration.getLinkingSamplingLevel();
+                
+                //1 = direct children, 2 = children of children with 2 depth, 3 = siblings
 
-                List<Integer> childNodes = currentState.getDocument().getParse().getDependentEdges(indexOfNode, validPOSTags);
-                List<Integer> siblings = currentState.getDocument().getParse().getSiblings(indexOfNode, validPOSTags);
+                List<Integer> childNodes_Level_1 = new ArrayList<>();
+                List<Integer> childNodes_Level_2 = new ArrayList<>();
+                List<Integer> siblings = new ArrayList<>();
+                
+                if(samplingLevel.contains("1")){
+                    childNodes_Level_1 = currentState.getDocument().getParse().getDependentEdges(indexOfHeadNode, validPOSTags, 1);
+                }
+                if(samplingLevel.contains("2")){
+                    childNodes_Level_2 = currentState.getDocument().getParse().getDependentEdges(indexOfHeadNode, validPOSTags, 2);
+                }
+                if(samplingLevel.contains("3")){
+                    siblings = currentState.getDocument().getParse().getSiblings(indexOfHeadNode, validPOSTags);
+                }
+
 
                 boolean hasValidDepNode = false;
 
-                for (Integer depNodeIndex : childNodes) {
-
+                for (Integer indexOfDepNode : childNodes_Level_1) {
                     //greedy exploring, skip nodes with assigned URI
-                    if (!currentState.getHiddenVariables().get(depNodeIndex).getCandidate().getUri().equals("EMPTY_STRING")) {
-                        continue;
-                    }
-
+//                    if (!currentState.getHiddenVariables().get(depNodeIndex).getCandidate().getUri().equals("EMPTY_STRING")) {
+//                        continue;
+//                    }
                     //consider certain edges, skip others
-                    String depRelation = currentState.getDocument().getParse().getDependencyRelation(depNodeIndex);
+                    String depRelation = currentState.getDocument().getParse().getDependencyRelation(indexOfDepNode);
 
                     if (!validEdges.contains(depRelation)) {
                         continue;
                     }
 
-                    String depNode = currentState.getDocument().getParse().getNodes().get(depNodeIndex);
+                    String depNode = currentState.getDocument().getParse().getNodes().get(indexOfDepNode);
 
                     for (Integer indexOfDepDude : semanticTypes.keySet()) {
 
-                        String depDudeName = semanticTypes.get(indexOfDepDude);
+                        Set<State> statesFromEdge = getStatesFromEdge(depNode, indexOfDepNode, indexOfDepDude, headNodeCandidates, currentState, indexOfHeadNode, indexOfHeadDude, headDudeName);
 
-                        Set<Candidate> depNodeCandidates = getDBpediaMatches(depDudeName, depNode);
+                        newStates.addAll(statesFromEdge);
+                    }
+                }
 
-                        if (depNodeCandidates.isEmpty()) {
-                            continue;
-                        }
+                if (!newStates.isEmpty()) {
+                    continue;
+                }
 
-                        for (Candidate headNodeCandidate : headNodeCandidates) {
-                            for (Candidate depNodeCandidate : depNodeCandidates) {
+                for (Integer indexOfDepNode : siblings) {
+                    //greedy exploring, skip nodes with assigned URI
+//                    if (!currentState.getHiddenVariables().get(depNodeIndex).getCandidate().getUri().equals("EMPTY_STRING")) {
+//                        continue;
+//                    }
+                    //consider certain edges, skip others
+                    String depRelation = currentState.getDocument().getParse().getDependencyRelation(indexOfDepNode);
 
-                                boolean isSubject = DBpediaEndpoint.isSubjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
-                                boolean isObject = DBpediaEndpoint.isObjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
+                    if (!validEdges.contains(depRelation)) {
+                        continue;
+                    }
 
-                                if (headNodeCandidate.getUri().equals("http://dbpedia.org/ontology/creator") && depNodeCandidate.getUri().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type###http://dbpedia.org/ontology/TelevisionShow")) {
-                                    int z = 1;
-                                }
+                    String depNode = currentState.getDocument().getParse().getNodes().get(indexOfDepNode);
 
-                                if (isSubject) {
+                    for (Integer indexOfDepDude : semanticTypes.keySet()) {
 
-                                    //check if the slot 1 has been occupied before
-                                    List<Integer> usedSlots = currentState.getUsedSlots(indexOfNode);
+                        Set<State> statesFromEdge = getStatesFromEdge(depNode, indexOfDepNode, indexOfDepDude, headNodeCandidates, currentState, indexOfHeadNode, indexOfHeadDude, headDudeName);
 
-                                    State s = new State(currentState);
+                        newStates.addAll(statesFromEdge);
+                    }
+                }
 
-                                    s.addHiddenVariable(indexOfNode, indexOfDude, headNodeCandidate);
-                                    s.addHiddenVariable(depNodeIndex, indexOfDepDude, depNodeCandidate);
+                //if there are some states created from dependent nodes(level 1) and siblings no need to explore level2 dep nodes.
+                if (!newStates.isEmpty()) {
+                    continue;
+                }
 
-                                    //Argument is 1 => subj
-                                    if (depDudeName.equals("RestrictionClass") || depDudeName.equals("Property") || dudeName.equals("Property") || dudeName.equals("RestrictionClass")) {
+                for (Integer indexOfDepNode : childNodes_Level_2) {
+                    //consider certain edges, skip others
+                    String depRelation = currentState.getDocument().getParse().getDependencyRelation(indexOfDepNode);
 
-                                        if (usedSlots.contains(1)) {
+                    if (!validEdges.contains(depRelation)) {
+                        continue;
+                    }
 
-                                            s.addSlotVariable(depNodeIndex, indexOfNode, 2);
+                    String depNode = currentState.getDocument().getParse().getNodes().get(indexOfDepNode);
 
-                                        } else {
-                                            s.addSlotVariable(depNodeIndex, indexOfNode, 1);
-                                        }
-                                    }
+                    for (Integer indexOfDepDude : semanticTypes.keySet()) {
 
-                                    if (!s.equals(currentState) && !newStates.contains(s)) {
-                                        newStates.add(s);
-                                    }
+                        Set<State> statesFromEdge = getStatesFromEdge(depNode, indexOfDepNode, indexOfDepDude, headNodeCandidates, currentState, indexOfHeadNode, indexOfHeadDude, headDudeName);
 
-                                    hasValidDepNode = true;
-                                }
-                                if (isObject) {
-                                    List<Integer> usedSlots = currentState.getUsedSlots(indexOfNode);
-
-                                    State s = new State(currentState);
-
-                                    s.addHiddenVariable(indexOfNode, indexOfDude, headNodeCandidate);
-                                    s.addHiddenVariable(depNodeIndex, indexOfDepDude, depNodeCandidate);
-
-                                    //Argument number is 2 => obj
-                                    if (depDudeName.equals("RestrictionClass") || depDudeName.equals("Property") || dudeName.equals("Property") || dudeName.equals("RestrictionClass")) {
-
-                                        if (usedSlots.contains(2)) {
-                                            s.addSlotVariable(depNodeIndex, indexOfNode, 1);
-                                        } else {
-                                            s.addSlotVariable(depNodeIndex, indexOfNode, 2);
-                                        }
-                                    }
-
-                                    if (!s.equals(currentState) && !newStates.contains(s)) {
-                                        newStates.add(s);
-                                    }
-
-                                    hasValidDepNode = true;
-                                }
-                            }
-                        }
+                        newStates.addAll(statesFromEdge);
                     }
                 }
 
                 //if the dependent nodes have been explored, then no need to explore the siblings
-                if (!hasValidDepNode) {
-
-                    for (Integer depNodeIndex : siblings) {
-
-                        //greedy exploring, skip nodes with assigned URI
-                        if (!currentState.getHiddenVariables().get(depNodeIndex).getCandidate().getUri().equals("EMPTY_STRING")) {
-                            continue;
-                        }
-
-                        //consider certain edges, skip others
-                        String depRelation = currentState.getDocument().getParse().getDependencyRelation(depNodeIndex);
-
-                        if (!validEdges.contains(depRelation)) {
-                            continue;
-                        }
-
-                        String depNode = currentState.getDocument().getParse().getNodes().get(depNodeIndex);
-
-                        for (Integer indexOfDepDude : semanticTypes.keySet()) {
-
-                            String depDudeName = semanticTypes.get(indexOfDepDude);
-
-                            Set<Candidate> depNodeCandidates = getDBpediaMatches(depDudeName, depNode);
-
-                            if (depNodeCandidates.isEmpty()) {
-                                continue;
-                            }
-
-                            for (Candidate headNodeCandidate : headNodeCandidates) {
-                                for (Candidate depNodeCandidate : depNodeCandidates) {
-
-                                    if (headNodeCandidate.getUri().equals("http://dbpedia.org/ontology/field###http://dbpedia.org/resource/Oceanography") && depNodeCandidate.getUri().equals("http://dbpedia.org/ontology/birthPlace###http://dbpedia.org/resource/Sweden")) {
-                                        int z = 1;
-                                    }
-                                    boolean isSubject = DBpediaEndpoint.isSubjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
-                                    boolean isObject = DBpediaEndpoint.isObjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
-
-                                    if (isSubject) {
-                                        State s = new State(currentState);
-
-                                        s.addHiddenVariable(indexOfNode, indexOfDude, headNodeCandidate);
-                                        s.addHiddenVariable(depNodeIndex, indexOfDepDude, depNodeCandidate);
-
-                                        //Argument is 1 => subj
-                                        if (depDudeName.equals("RestrictionClass") || depDudeName.equals("Property") || dudeName.equals("Property") || dudeName.equals("RestrictionClass")) {
-                                            s.addSlotVariable(depNodeIndex, indexOfNode, 1);
-                                        }
-
-                                        if (!s.equals(currentState) && !newStates.contains(s)) {
-                                            newStates.add(s);
-                                        }
-
-                                        hasValidDepNode = true;
-                                    }
-                                    if (isObject) {
-                                        State s = new State(currentState);
-
-                                        s.addHiddenVariable(indexOfNode, indexOfDude, headNodeCandidate);
-                                        s.addHiddenVariable(depNodeIndex, indexOfDepDude, depNodeCandidate);
-
-                                        //Argument number is 2 => obj
-                                        if (depDudeName.equals("Property") || dudeName.equals("Property")) {
-                                            s.addSlotVariable(depNodeIndex, indexOfNode, 2);
-                                        }
-
-                                        if (!s.equals(currentState) && !newStates.contains(s)) {
-                                            newStates.add(s);
-                                        }
-
-                                        hasValidDepNode = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+//                if (!hasValidDepNode) {
+//                    for (Integer depNodeIndex : siblings) {
+//
+////                        //greedy exploring, skip nodes with assigned URI
+////                        if (!currentState.getHiddenVariables().get(depNodeIndex).getCandidate().getUri().equals("EMPTY_STRING")) {
+////                            continue;
+////                        }
+//                        //consider certain edges, skip others
+//                        String depRelation = currentState.getDocument().getParse().getDependencyRelation(depNodeIndex);
+//
+//                        if (!validEdges.contains(depRelation)) {
+//                            continue;
+//                        }
+//
+//                        String depNode = currentState.getDocument().getParse().getNodes().get(depNodeIndex);
+//
+//                        for (Integer indexOfDepDude : semanticTypes.keySet()) {
+//
+//                            String depDudeName = semanticTypes.get(indexOfDepDude);
+//
+//                            Set<Candidate> depNodeCandidates = getDBpediaMatches(depDudeName, depNode);
+//
+//                            if (depNodeCandidates.isEmpty()) {
+//                                continue;
+//                            }
+//
+//                            for (Candidate headNodeCandidate : headNodeCandidates) {
+//                                for (Candidate depNodeCandidate : depNodeCandidates) {
+//
+////                                    if(depNodeCandidate.getUri().equals("http://dbpedia.org/resource/Rolls-Royce_Motors") && headNodeCandidate.getUri().equals("http://dbpedia.org/ontology/owner")){
+////                                        int z=1;
+////                                    }
+//                                    boolean isSubject = DBpediaEndpoint.isSubjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
+//                                    boolean isObject = DBpediaEndpoint.isObjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
+//
+//                                    if (isSubject) {
+//
+//                                        List<Integer> usedSlots = currentState.getUsedSlots(indexOfNode);
+//
+//                                        State s = new State(currentState);
+//
+//                                        s.addHiddenVariable(indexOfNode, indexOfDude, headNodeCandidate);
+//                                        s.addHiddenVariable(depNodeIndex, indexOfDepDude, depNodeCandidate);
+//
+//                                        //Argument is 1 => subj
+//                                        if (depDudeName.equals("RestrictionClass") || depDudeName.equals("UnderSpecifiedClass") || depDudeName.equals("Property") || dudeName.equals("Property") || dudeName.equals("RestrictionClass") || dudeName.equals("UnderSpecifiedClass")) {
+//
+//                                            if (usedSlots.contains(1)) {
+//
+//                                                s.addSlotVariable(depNodeIndex, indexOfNode, 2);
+//
+//                                            } else {
+//                                                s.addSlotVariable(depNodeIndex, indexOfNode, 1);
+//                                            }
+//                                        }
+//
+//                                        if (!s.equals(currentState) && !newStates.contains(s)) {
+//                                            newStates.add(s);
+//                                        }
+//
+//                                        hasValidDepNode = true;
+//                                    }
+//                                    if (isObject) {
+//                                        List<Integer> usedSlots = currentState.getUsedSlots(indexOfNode);
+//
+//                                        State s = new State(currentState);
+//
+//                                        s.addHiddenVariable(indexOfNode, indexOfDude, headNodeCandidate);
+//                                        s.addHiddenVariable(depNodeIndex, indexOfDepDude, depNodeCandidate);
+//
+//                                        //Argument number is 2 => obj
+//                                        if (depDudeName.equals("RestrictionClass") || depDudeName.equals("UnderSpecifiedClass") || depDudeName.equals("Property") || dudeName.equals("Property") || dudeName.equals("RestrictionClass") || dudeName.equals("UnderSpecifiedClass")) {
+//
+//                                            if (usedSlots.contains(2)) {
+//                                                s.addSlotVariable(depNodeIndex, indexOfNode, 1);
+//                                            } else {
+//                                                s.addSlotVariable(depNodeIndex, indexOfNode, 2);
+//                                            }
+//                                        }
+//
+//                                        if (!s.equals(currentState) && !newStates.contains(s)) {
+//                                            newStates.add(s);
+//                                        }
+//
+//                                        hasValidDepNode = true;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
 
-        return newStates;
+//        Map<String, State> uniqueStates = new HashMap<>();
+//        for(State s1 : newStates){
+//            if(!uniqueStates.containsKey(s1.toString())){
+//                uniqueStates.put(s1.toString(), s1);
+//            }
+//        }
+        List<State> states = new ArrayList<>(newStates);
+
+        return states;
     }
 
-    private Set<Candidate> getDBpediaMatches(String dude, String node) {
+    private Set<State> getStatesFromEdge(String depNode, Integer indexOfDepNode, Integer indexOfDepDude, Set<Candidate> headNodeCandidates, State currentState, Integer indexOfHeadNode, Integer indexOfHeadDude, String headDUDEName) {
+
+        Set<State> states = new HashSet<>();
+
+        String depDudeName = semanticTypes.get(indexOfDepDude);
+
+        String depPOS = currentState.getDocument().getParse().getPOSTag(indexOfDepNode);
+
+        Set<Candidate> depNodeCandidates = getDBpediaMatches(depDudeName, depNode, depPOS);
+
+        if (depNodeCandidates.isEmpty()) {
+            return states;
+        }
+
+        for (Candidate headNodeCandidate : headNodeCandidates) {
+
+            for (Candidate depNodeCandidate : depNodeCandidates) {
+
+//                if (headNodeCandidate.getUri().equals("http://dbpedia.org/ontology/creator") && depNodeCandidate.getUri().equals("http://dbpedia.org/resource/Battle_of_Gettysburg")) {
+//                    int z = 2;
+//                }
+
+                boolean isChildSubject = DBpediaEndpoint.isSubjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
+                boolean isChildObject = DBpediaEndpoint.isObjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
+
+//                boolean isParentSubject = DBpediaEndpoint.isSubjectTriple(depNodeCandidate.getUri(), headNodeCandidate.getUri());
+//                boolean isParentObject = DBpediaEndpoint.isObjectTriple(depNodeCandidate.getUri(), headNodeCandidate.getUri());
+                Set<State> s1 = getValidStates(currentState, indexOfHeadNode, indexOfHeadDude, indexOfDepNode, indexOfDepDude, headDUDEName, depDudeName, headNodeCandidate, depNodeCandidate, isChildSubject, isChildObject);
+//                Set<State> s2 = getValidStates(currentState, indexOfHeadNode, indexOfHeadDude, indexOfDepNode, indexOfDepDude, headDUDEName, depDudeName, headNodeCandidate, depNodeCandidate, isParentSubject, isParentObject);
+
+                states.addAll(s1);
+//                states.addAll(s2);
+            }
+        }
+
+        return states;
+    }
+
+    private Set<State> getValidStates(State currentState, Integer indexOfHeadNode, Integer indexOfHeadDude, Integer indexOfDepNode, Integer indexOfDepDude, String headDUDEName, String depDudeName, Candidate headNodeCandidate, Candidate depNodeCandidate, boolean isSubject, boolean isObject) {
+
+        Set<State> states = new HashSet<>();
+        if (isSubject) {
+
+            //check if the slot 1 has been occupied before
+            List<Integer> usedSlots = currentState.getUsedSlots(indexOfHeadNode);
+
+            State s = new State(currentState);
+
+            s.addHiddenVariable(indexOfHeadNode, indexOfHeadDude, headNodeCandidate);
+            s.addHiddenVariable(indexOfDepNode, indexOfDepDude, depNodeCandidate);
+
+            //Argument is 1 => subj
+            if (acceptedDUDES.contains(headDUDEName) || acceptedDUDES.contains(depDudeName)) {
+
+//                if (usedSlots.contains(1)) {
+//
+//                    s.addSlotVariable(indexOfDepNode, indexOfHeadNode, 2);
+//
+//                } else {
+                s.addSlotVariable(indexOfDepNode, indexOfHeadNode, 1);
+//                }
+            }
+
+            if (!s.equals(currentState)) {
+                states.add(s);
+            }
+
+        }
+        if (isObject) {
+            List<Integer> usedSlots = currentState.getUsedSlots(indexOfHeadNode);
+
+            State s = new State(currentState);
+
+            s.addHiddenVariable(indexOfHeadNode, indexOfHeadDude, headNodeCandidate);
+            s.addHiddenVariable(indexOfDepNode, indexOfDepDude, depNodeCandidate);
+
+            //Argument number is 2 => obj
+            if (acceptedDUDES.contains(headDUDEName) || acceptedDUDES.contains(depDudeName)) {
+
+//                if (usedSlots.contains(2)) {
+//                    s.addSlotVariable(indexOfDepNode, indexOfHeadNode, 1);
+//                } else {
+                s.addSlotVariable(indexOfDepNode, indexOfHeadNode, 2);
+//                }
+            }
+
+            if (!s.equals(currentState)) {
+                states.add(s);
+            }
+        }
+
+        return states;
+    }
+
+    private Set<Candidate> getDBpediaMatches(String dude, String node, String pos) {
         //predicate DUDE
         Set<Candidate> uris = new LinkedHashSet<>();
 
         //check if given node is of datatype
         //if it's datatype return the node text as URI for the assigned dude
         if (isTokenDataType(node)) {
-            Candidate i = new Candidate(null, 0, 0, 0);
+            Candidate i = new Candidate(new Instance("EMPTY_STRING", 0), 0, 0, 0);
             uris.add(i);
 
             return uris;
@@ -273,20 +390,25 @@ public class L2KBEdgeExplorer implements Explorer<State> {
         boolean useWordNet = false;
         boolean mergePartialMatches = false;
 
-        int topK = 90;
+        int topK = 80;
 
-        String queryTerm = node.toLowerCase().trim();
+        String queryTerm = node;
+
+        Set<String> indexURIs = new HashSet<>();
 
         switch (dude) {
             case "Property":
                 useLemmatizer = true;
-                useWordNet = false;
+                useWordNet = true;
                 mergePartialMatches = false;
+
+                topK = 50;
 
                 if (!Stopwords.isStopWord(queryTerm)) {
                     Set<Candidate> propertyURIs = Search.getPredicates(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
-                    
-                    for(Candidate c : propertyURIs){
+
+                    for (Candidate c : propertyURIs) {
+                        indexURIs.add(c.getUri());
                         uris.add(c.clone());
                     }
                 }
@@ -295,19 +417,33 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getProperties(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
+
+                if (ProjectConfiguration.useEmbeddingLexicon() && (pos.equals("NOUN") || pos.equals("VERB"))) {
+
+                    Set<String> embeddingLexica = EmbeddingLexicon.getProperties(queryTerm, Main.lang);
+                    for (String d : embeddingLexica) {
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
+                    }
+                }
+
                 break;
 
             case "Class":
                 useLemmatizer = true;
                 mergePartialMatches = false;
-                useWordNet = false;
+                useWordNet = true;
                 if (!Stopwords.isStopWord(queryTerm)) {
                     Set<Candidate> classURIs = Search.getClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
 
-                    for(Candidate c : classURIs){
+                    for (Candidate c : classURIs) {
+                        indexURIs.add(c.getUri());
                         uris.add(c.clone());
                     }
                 }
@@ -316,7 +452,9 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getClasses(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;
@@ -325,10 +463,13 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 useWordNet = false;
                 mergePartialMatches = false;
 
+                topK = 20;
+
                 if (!Stopwords.isStopWord(queryTerm)) {
                     Set<Candidate> restrictionClassURIs = Search.getRestrictionClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
-                    
-                    for(Candidate c : restrictionClassURIs){
+
+                    for (Candidate c : restrictionClassURIs) {
+                        indexURIs.add(c.getUri());
                         uris.add(c.clone());
                     }
                 }
@@ -336,8 +477,15 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 //check manual lexicon for Restriction Classes
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getRestrictionClasses(queryTerm, Main.lang);
+
+                    if (queryTerm.equals("endangered")) {
+                        int z = 1;
+                    }
+
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;
@@ -350,36 +498,42 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 //extract resources
                 if (!Stopwords.isStopWord(queryTerm)) {
                     Set<Candidate> resourceURIs = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
-                    
+
                     //set some empty propertyy
                     for (Candidate c : resourceURIs) {
                         Candidate c2 = c.clone();
-                        c2.setUri("p###" + c2.getUri());
-                        
+
+                        indexURIs.add(c.getUri());
+
                         uris.add(c2);
                     }
-
-//                    uris.addAll(resourceURIs);
                 }
 
                 //check manual lexicon for Resources => to make underspecified class
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getResources(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance("p###" + d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;
             case "Individual":
-                topK = 5;
+                topK = 1;
                 useLemmatizer = false;
                 mergePartialMatches = false;
                 useWordNet = false;
+
                 if (!Stopwords.isStopWord(queryTerm)) {
-                    Set<Candidate> resourceURIs = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
-                    
-                    for(Candidate c : resourceURIs){
+                    Set<Candidate> resourceCandidates = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
+
+                    for (Candidate c : resourceCandidates) {
+                        if (c.getUri().contains("List_of")) {
+                            continue;
+                        }
                         uris.add(c.clone());
+                        indexURIs.add(c.getUri());
                     }
                 }
 
@@ -387,7 +541,9 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
                     Set<String> definedLexica = ManualLexicon.getResources(queryTerm, Main.lang);
                     for (String d : definedLexica) {
-                        uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        if (!indexURIs.contains(d)) {
+                            uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
+                        }
                     }
                 }
                 break;

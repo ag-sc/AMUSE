@@ -6,6 +6,7 @@
 package de.citec.sc.variable;
 
 import de.citec.sc.corpus.AnnotatedDocument;
+import de.citec.sc.learning.QueryConstructor;
 import de.citec.sc.query.Candidate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,20 +25,25 @@ public class State extends AbstractState<AnnotatedDocument> {
 
     private AnnotatedDocument document;
 
-    private Map<Integer, HiddenVariable> hiddenVariables;
+    private Map<Integer, URIVariable> hiddenVariables;
     private Map<Integer, SlotVariable> slotVariables;
+    private QueryTypeVariable queryTypeVariable;
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.document);
-        hash = 29 * hash + Objects.hashCode(this.hiddenVariables);
-        hash = 29 * hash + Objects.hashCode(this.slotVariables);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.document);
+        hash = 59 * hash + Objects.hashCode(this.hiddenVariables);
+        hash = 59 * hash + Objects.hashCode(this.slotVariables);
+        hash = 59 * hash + Objects.hashCode(this.queryTypeVariable);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
@@ -54,8 +60,13 @@ public class State extends AbstractState<AnnotatedDocument> {
         if (!Objects.equals(this.slotVariables, other.slotVariables)) {
             return false;
         }
+        if (!Objects.equals(this.queryTypeVariable, other.queryTypeVariable)) {
+            return false;
+        }
         return true;
     }
+
+    
 
     public Map<Integer, SlotVariable> getSlotVariables() {
         return slotVariables;
@@ -65,11 +76,11 @@ public class State extends AbstractState<AnnotatedDocument> {
         this.slotVariables = slotVariables;
     }
 
-    public Map<Integer, HiddenVariable> getHiddenVariables() {
+    public Map<Integer, URIVariable> getHiddenVariables() {
         return hiddenVariables;
     }
 
-    public void setHiddenVariables(Map<Integer, HiddenVariable> hiddenVariables) {
+    public void setHiddenVariables(Map<Integer, URIVariable> hiddenVariables) {
         this.hiddenVariables = hiddenVariables;
     }
 
@@ -78,6 +89,7 @@ public class State extends AbstractState<AnnotatedDocument> {
         this.document = (AnnotatedDocument) instance;
         this.hiddenVariables = new TreeMap<>();
         this.slotVariables = new HashMap<>();
+        this.queryTypeVariable = new QueryTypeVariable(1);
 
     }
 
@@ -87,7 +99,7 @@ public class State extends AbstractState<AnnotatedDocument> {
         this.setDocument(state.document);
 
         //clone dudes
-        HashMap<Integer, HiddenVariable> h = new HashMap<>();
+        HashMap<Integer, URIVariable> h = new HashMap<>();
         for (Integer d : state.hiddenVariables.keySet()) {
             h.put(d, state.hiddenVariables.get(d).clone());
         }
@@ -96,6 +108,8 @@ public class State extends AbstractState<AnnotatedDocument> {
         for (Integer d : state.slotVariables.keySet()) {
             s.put(d, state.slotVariables.get(d).clone());
         }
+        
+        this.queryTypeVariable = state.getQueryTypeVariable().clone();
 
         this.hiddenVariables = h;
         this.slotVariables = s;
@@ -103,7 +117,7 @@ public class State extends AbstractState<AnnotatedDocument> {
 
     public void addHiddenVariable(Integer indexOfNode, Integer indexOfDUDE, Candidate c) {
 
-        HiddenVariable v = new HiddenVariable(indexOfNode, indexOfDUDE, c);
+        URIVariable v = new URIVariable(indexOfNode, indexOfDUDE, c);
         this.hiddenVariables.put(indexOfNode, v);
 
     }
@@ -130,9 +144,15 @@ public class State extends AbstractState<AnnotatedDocument> {
         for (Integer d : slotVariables.keySet()) {
             state += slotVariables.get(d).toString() + "\n";
         }
+        
+        state+= "\n"+queryTypeVariable.toString()+"\n";
 
         state += "\nObjectiveScore: " + getObjectiveScore();
         state += "\nModelScore: " + getModelScore() + "\n";
+        
+        String query = QueryConstructor.getSPARQLQuery(this);
+        
+        state+="\nConstructed Query: \n\n"+query+"\n";
 
         return state;
     }
@@ -151,6 +171,8 @@ public class State extends AbstractState<AnnotatedDocument> {
         for (Integer d : slotVariables.keySet()) {
             state += slotVariables.get(d).toString() + "\n";
         }
+        
+        state+= "\n"+queryTypeVariable.toString()+"\n";
 
         state += "\nObjectiveScore: " + getObjectiveScore();
         state += "\nModelScore: " + getModelScore() + "\n";
@@ -198,6 +220,14 @@ public class State extends AbstractState<AnnotatedDocument> {
         }
 
         return slot;
+    }
+
+    public QueryTypeVariable getQueryTypeVariable() {
+        return queryTypeVariable;
+    }
+
+    public void setQueryTypeVariable(QueryTypeVariable queryTypeVariable) {
+        this.queryTypeVariable = queryTypeVariable;
     }
 
 }

@@ -5,8 +5,8 @@
  */
 package de.citec.sc.evaluator;
 
-import de.citec.sc.variable.State;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class BagOfLinksEvaluator {
 
-    public static double evaluate(List<String> derived, List<String> goldStandard) {
+    public static double evaluate(Set<String> derived, Set<String> goldStandard) {
 
         double recall = getIntersectionScore(derived, goldStandard);
         double precision = getIntersectionScore(goldStandard, derived);
@@ -29,15 +29,15 @@ public class BagOfLinksEvaluator {
         return f1;
     }
 
-    private static double getIntersectionScore(List<String> derived, List<String> goldStandard) {
+    private static double getIntersectionScore(Set<String> derived, Set<String> goldStandard) {
         double score = 0;
 
         int c = 0;
         for (String d : derived) {
             if (goldStandard.contains(d)) {
-                c++;
+                    c++;
+                }
             }
-        }
 
         score = c / (double) derived.size();
 

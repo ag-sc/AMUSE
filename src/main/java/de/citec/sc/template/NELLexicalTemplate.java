@@ -6,7 +6,7 @@
 package de.citec.sc.template;
 
 import de.citec.sc.corpus.AnnotatedDocument;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.variable.URIVariable;
 
 import de.citec.sc.variable.State;
 import factors.Factor;
@@ -44,7 +44,7 @@ public class NELLexicalTemplate extends AbstractTemplate<AnnotatedDocument, Stat
 
         for (Integer key : state.getDocument().getParse().getNodes().keySet()) {
 
-            HiddenVariable a = state.getHiddenVariables().get(key);
+            URIVariable a = state.getHiddenVariables().get(key);
 
             factors.add(new StateFactorScope<>(this, state));
         }

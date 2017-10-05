@@ -1,7 +1,7 @@
 package de.citec.sc.sampling;
 
 import de.citec.sc.utils.Performance;
-import de.citec.sc.variable.HiddenVariable;
+import de.citec.sc.variable.URIVariable;
 import de.citec.sc.variable.State;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -206,6 +206,10 @@ public class MyBeamSearchSampler<InstanceT, StateT extends AbstractState<Instanc
 
         log.info("\n\nStop sampling after step %s", step);
 
+        for (StateT s1 : generatedChain.get(generatedChain.size() - 1)) {
+            log.info(s1.toString() + "\n");
+        }
+
         return generatedChain;
     }
 
@@ -351,12 +355,24 @@ public class MyBeamSearchSampler<InstanceT, StateT extends AbstractState<Instanc
              * Generate possible successor states.
              */
             List<StateT> nextStates = explorer.getNextStates(currentState);
-            mapStates.put(c, nextStates);
-            allStateWithParent.put(currentState, nextStates);
+            List<StateT> filteredStates = new ArrayList<>();
+            
+            for(StateT s1 : nextStates){
+                if(!allStates.contains(s1)){
+                    filteredStates.add(s1);
+                }
+            }
+            
+            if(filteredStates.isEmpty()){
+                continue;
+            }
+            
+            mapStates.put(c, filteredStates);
+            allStateWithParent.put(currentState, filteredStates);
 
-            allStates.addAll(nextStates);
+            allStates.addAll(filteredStates);
             allNextStatePairs.addAll(
-                    nextStates.stream().map(s -> new StatePair<>(currentState, s)).collect(Collectors.toList()));
+                    filteredStates.stream().map(s -> new StatePair<>(currentState, s)).collect(Collectors.toList()));
             c++;
         }
 
