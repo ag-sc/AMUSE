@@ -8,9 +8,12 @@ import org.apache.logging.log4j.Logger;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.SampledMultipleInstance;
+import de.citec.sc.learning.FeatureMapData;
+import de.citec.sc.learning.LibSVMRegressionScorer;
 import de.citec.sc.learning.NELObjectiveFunction;
 import de.citec.sc.learning.NELHybridSamplingStrategyCallback;
 import de.citec.sc.learning.NELTrainer;
+import de.citec.sc.learning.NELTrainer.InstanceCallback;
 import de.citec.sc.learning.QAHybridSamplingStrategyCallback;
 import de.citec.sc.learning.QAObjectiveFunction;
 import de.citec.sc.learning.QATrainer;
@@ -50,6 +53,7 @@ import sampling.samplingstrategies.AcceptStrategies;
 import sampling.samplingstrategies.BeamSearchSamplingStrategies;
 import sampling.stoppingcriterion.BeamSearchStoppingCriterion;
 import templates.AbstractTemplate;
+import variables.AbstractState;
 
 /**
  *
@@ -76,8 +80,9 @@ public class Pipeline {
     public static Scorer scorer;
     private static Explorer nelExplorer;
     private static Explorer qaExplorer;
+    private static final FeatureMapData featureMapData = new FeatureMapData();
 
-    public static void initialize(Set<String> v1,Set<String> v2, Map<Integer, String> s, Map<Integer, String> st, Set<String> edges) {
+    public static void initialize(Set<String> v1, Set<String> v2, Map<Integer, String> s, Map<Integer, String> st, Set<String> edges) {
         linkingValidPOSTags = v1;
         qaValidPOSTags = v2;
         semanticTypes = s;
@@ -91,17 +96,18 @@ public class Pipeline {
         BEAM_SIZE_QA_TEST = ProjectConfiguration.getQATestBeamSize();
         BEAM_SIZE_NEL_TEST = ProjectConfiguration.getNELTestBeamSize();
 
-        scorer = new DefaultScorer();
+//        scorer = new DefaultScorer();
+        scorer = new LibSVMRegressionScorer();
 
         nelTemplates = new ArrayList<>();
         nelTemplates.add(new NELEdgeTemplate(linkingValidPOSTags, validEdges, semanticTypes));
 
         qaTemplates = new ArrayList<>();
-        qaTemplates.add(new QAEdgeAdvTemplate(qaValidPOSTags, validEdges,semanticTypes, specialSemanticTypes));
-        
+        qaTemplates.add(new QAEdgeAdvTemplate(qaValidPOSTags, validEdges, semanticTypes, specialSemanticTypes));
+
         queryTypeTemplates = new ArrayList<>();
-        queryTypeTemplates.add(new QueryTypeTemplate(qaValidPOSTags, validEdges,semanticTypes, specialSemanticTypes));
-        
+        queryTypeTemplates.add(new QueryTypeTemplate(qaValidPOSTags, validEdges, semanticTypes, specialSemanticTypes));
+
         nelExplorer = new EntityBasedSingleNodeExplorer(semanticTypes, linkingValidPOSTags);
 //        nelExplorer = new L2KBEdgeExplorer(semanticTypes, linkingValidPOSTags, validEdges);
         qaExplorer = new QCEdgeExplorer(semanticTypes, specialSemanticTypes, qaValidPOSTags, validEdges);
@@ -118,7 +124,7 @@ public class Pipeline {
 
         Model<AnnotatedDocument, State> qaModel = null;
         List<SampledMultipleInstance<AnnotatedDocument, String, State>> qaStates = new ArrayList<>();
-        
+
         Model<AnnotatedDocument, State> queryTypeModel = null;
         List<SampledMultipleInstance<AnnotatedDocument, String, State>> queryTypeStates = new ArrayList<>();
 
@@ -139,14 +145,13 @@ public class Pipeline {
             qaModel = m;
             qaStates = qaPair.get(m);
         }
-        
+
 //        Map<Model<AnnotatedDocument, State>, List<SampledMultipleInstance<AnnotatedDocument, String, State>>> queryTypePair = trainQueryType(qaStates);
 //
 //        for (Model<AnnotatedDocument, State> m : queryTypePair.keySet()) {
 //            queryTypeModel = m;
 //            queryTypeStates = queryTypePair.get(m);
 //        }
-
         List<Model<AnnotatedDocument, State>> models = new ArrayList<>();
         models.add(nelModel);
         models.add(qaModel);
@@ -171,7 +176,7 @@ public class Pipeline {
         List<SampledMultipleInstance<AnnotatedDocument, String, State>> nelInstances = testNEL(nelModel, testDocuments);
 
         List<SampledMultipleInstance<AnnotatedDocument, String, State>> qaInstances = testQA(qaModel, nelInstances);
-        
+
 //        List<SampledMultipleInstance<AnnotatedDocument, String, State>> queryTypeInstances = testQueryType(queryTypeModel, qaInstances);
 //      
         long endTime = System.currentTimeMillis();
@@ -185,10 +190,9 @@ public class Pipeline {
         //test results for qa task
         System.out.println("QA task : \n\n");
         Performance.logQATest(qaInstances, qaObjectiveFunction);
-        
+
 //        System.out.println("Query Type task : \n\n");
 //        Performance.logQueryTypeTest(queryTypeInstances, qaObjectiveFunction);
-
         long avgTime = (endTime - startTime) / testDocuments.size();
         System.out.println(avgTime + " ms per test instance.");
 
@@ -198,7 +202,7 @@ public class Pipeline {
         /*
          * Setup all necessary components for training and testing.
          */
-        /*
+ /*
          * Define an objective function that guides the training procedure.
          */
         ObjectiveFunction<State, String> objective = new NELObjectiveFunction();
@@ -244,7 +248,7 @@ public class Pipeline {
          * trigger weight updates during training.
          */
 
-        /*
+ /*
          * Stopping criterion for the sampling process. If you set this value
          * too small, the sampler can not reach the optimal solution. Large
          * values, however, increase computation time.
@@ -289,6 +293,19 @@ public class Pipeline {
         nelSampler.setTrainSamplingStrategy(SamplingStrategies.greedyBeamSearchSamplingStrategyByObjective(BEAM_SIZE_NEL_TRAINING, s -> s.getObjectiveScore()));
         nelSampler.setTrainAcceptStrategy(AcceptStrategies.strictObjectiveAccept());
 
+        nelSampler.addStepCallback(new MyBeamSearchSampler.StepCallback() {
+            @Override
+            public <InstanceT, StateT extends AbstractState<InstanceT>> void onEndStep(MyBeamSearchSampler<InstanceT, StateT, ?> sampler, int step, int e, int numberOfExplorers, List<StateT> initialStates, List<StateT> currentStates) {
+
+                for (final StateT stateT : currentStates) {
+
+                    featureMapData
+                            .addFeatureDataPoint(((State) stateT).toTrainingPoint(featureMapData, true));
+                }
+            }
+
+        });
+
 //        MySampler<AnnotatedDocument, State, String> sampler = new MySampler<>(model, objective, explorers,
 //                stoppingCriterion);
 //        sampler.setTrainingSamplingStrategy(SamplingStrategies.greedyObjectiveStrategy());
@@ -307,6 +324,18 @@ public class Pipeline {
          * Additionally, it can invoke predictions on new data.
          */
         NELTrainer neltrainer = new NELTrainer();
+        neltrainer.addInstanceCallback(new InstanceCallback() {
+
+            @Override
+            public <InstanceT, StateT extends AbstractState<InstanceT>> void onEndInstance(NELTrainer caller,
+                    InstanceT instance, int indexOfInstance, StateT finalState, int numberOfInstances, int epoch,
+                    int numberOfEpochs) {
+
+                if (scorer instanceof LibSVMRegressionScorer) {
+                    ((LibSVMRegressionScorer) scorer).svmTrain(featureMapData);
+                }
+            }
+        });
         //hybrid training procedure, switches every epoch to another scoring method {objective or model}
         neltrainer.addEpochCallback(new NELHybridSamplingStrategyCallback(nelSampler, BEAM_SIZE_NEL_TRAINING));
 
@@ -328,7 +357,7 @@ public class Pipeline {
         /*
          * Setup all necessary components for training and testing.
          */
-        /*
+ /*
          * Define an objective function that guides the training procedure.
          */
         ObjectiveFunction<State, String> objective = new QAObjectiveFunction();
@@ -369,7 +398,7 @@ public class Pipeline {
          * trigger weight updates during training.
          */
 
-        /*
+ /*
          * Stopping criterion for the sampling process. If you set this value
          * too small, the sampler can not reach the optimal solution. Large
          * values, however, increase computation time.
@@ -414,6 +443,19 @@ public class Pipeline {
         sampler.setTrainSamplingStrategy(SamplingStrategies.greedyBeamSearchSamplingStrategyByObjective(BEAM_SIZE_QA_TRAINING, s -> s.getObjectiveScore()));
         sampler.setTrainAcceptStrategy(AcceptStrategies.strictObjectiveAccept());
 
+        sampler.addStepCallback(new QABeamSearchSampler.StepCallback() {
+            @Override
+            public <InstanceT, StateT extends AbstractState<InstanceT>> void onEndStep(QABeamSearchSampler<InstanceT, StateT, ?> sampler, int step, int e, int numberOfExplorers, List<StateT> initialStates, List<StateT> currentStates) {
+
+                for (final StateT stateT : currentStates) {
+
+                    featureMapData
+                            .addFeatureDataPoint(((State) stateT).toTrainingPoint(featureMapData, true));
+                }
+            }
+
+        });
+
 //        MySampler<AnnotatedDocument, State, String> sampler = new MySampler<>(model, objective, explorers,
 //                stoppingCriterion);
 //        sampler.setTrainingSamplingStrategy(SamplingStrategies.greedyObjectiveStrategy());
@@ -434,6 +476,15 @@ public class Pipeline {
         QATrainer trainer = new QATrainer();
         //hybrid training procedure, switches every epoch to another scoring method {objective or model}
         trainer.addEpochCallback(new QAHybridSamplingStrategyCallback(sampler, BEAM_SIZE_QA_TRAINING));
+
+        trainer.addInstanceCallback(new QATrainer.InstanceCallback() {
+            @Override
+            public <InstanceT, StateT extends AbstractState<InstanceT>> void onEndInstance(QATrainer caller, InstanceT instance, int indexOfInstance, StateT finalState, int numberOfInstances, int epoch, int numberOfEpochs) {
+                if (scorer instanceof LibSVMRegressionScorer) {
+                    ((LibSVMRegressionScorer) scorer).svmTrain(featureMapData);
+                }
+            }
+        });
 
         //set objective scores to 0
         for (SampledMultipleInstance<AnnotatedDocument, String, State> triple : nelInstances) {
@@ -459,11 +510,12 @@ public class Pipeline {
         return pair;
 
     }
+
     private static Map<Model<AnnotatedDocument, State>, List<SampledMultipleInstance<AnnotatedDocument, String, State>>> trainQueryType(List<SampledMultipleInstance<AnnotatedDocument, String, State>> qaInstances) {
         /*
          * Setup all necessary components for training and testing.
          */
-        /*
+ /*
          * Define an objective function that guides the training procedure.
          */
         ObjectiveFunction<State, String> objective = new QueryTypeObjectiveFunction();
@@ -504,7 +556,7 @@ public class Pipeline {
          * trigger weight updates during training.
          */
 
-        /*
+ /*
          * Stopping criterion for the sampling process. If you set this value
          * too small, the sampler can not reach the optimal solution. Large
          * values, however, increase computation time.
@@ -599,7 +651,7 @@ public class Pipeline {
         /*
          * Setup all necessary components for training and testing.
          */
-        /*
+ /*
          * Define an objective function that guides the training procedure.
          */
         ObjectiveFunction<State, String> objective = new NELObjectiveFunction();
@@ -641,7 +693,7 @@ public class Pipeline {
          * trigger weight updates during training.
          */
 
-        /*
+ /*
          * Stopping criterion for the sampling process. If you set this value
          * too small, the sampler can not reach the optimal solution. Large
          * values, however, increase computation time.
@@ -701,7 +753,7 @@ public class Pipeline {
         /*
          * Setup all necessary components for training and testing.
          */
-        /*
+ /*
          * Define an objective function that guides the training procedure.
          */
         ObjectiveFunction<State, String> objective = new QAObjectiveFunction();
@@ -734,7 +786,7 @@ public class Pipeline {
          * trigger weight updates during training.
          */
 
-        /*
+ /*
          * Stopping criterion for the sampling process. If you set this value
          * too small, the sampler can not reach the optimal solution. Large
          * values, however, increase computation time.
@@ -798,11 +850,12 @@ public class Pipeline {
 
         return testResults;
     }
+
     private static List<SampledMultipleInstance<AnnotatedDocument, String, State>> testQueryType(Model<AnnotatedDocument, State> model, List<SampledMultipleInstance<AnnotatedDocument, String, State>> qaInstances) {
         /*
          * Setup all necessary components for training and testing.
          */
-        /*
+ /*
          * Define an objective function that guides the training procedure.
          */
         ObjectiveFunction<State, String> objective = new QueryTypeObjectiveFunction();
@@ -835,7 +888,7 @@ public class Pipeline {
          * trigger weight updates during training.
          */
 
-        /*
+ /*
          * Stopping criterion for the sampling process. If you set this value
          * too small, the sampler can not reach the optimal solution. Large
          * values, however, increase computation time.

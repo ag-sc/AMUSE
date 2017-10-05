@@ -44,7 +44,7 @@ public class MyBeamSearchSampler<InstanceT, StateT extends AbstractState<Instanc
 
         default <InstanceT, StateT extends AbstractState<InstanceT>> void onEndStep(
                 MyBeamSearchSampler<InstanceT, StateT, ?> sampler, int step, int e, int numberOfExplorers,
-                List<StateT> initialStates, List<StateT> currentState) {
+                List<StateT> initialStates, List<StateT> currentStates) {
 
         }
     }

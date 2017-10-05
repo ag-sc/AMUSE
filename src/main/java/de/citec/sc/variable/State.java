@@ -6,12 +6,18 @@
 package de.citec.sc.variable;
 
 import de.citec.sc.corpus.AnnotatedDocument;
+import de.citec.sc.learning.FeatureMapData;
+import de.citec.sc.learning.FeatureMapData.FeatureDataPoint;
 import de.citec.sc.learning.QueryConstructor;
 import de.citec.sc.query.Candidate;
+import exceptions.MissingFactorException;
+import factors.Factor;
+import factors.FactorScope;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.TreeMap;
 import utility.StateID;
@@ -66,8 +72,6 @@ public class State extends AbstractState<AnnotatedDocument> {
         return true;
     }
 
-    
-
     public Map<Integer, SlotVariable> getSlotVariables() {
         return slotVariables;
     }
@@ -108,7 +112,7 @@ public class State extends AbstractState<AnnotatedDocument> {
         for (Integer d : state.slotVariables.keySet()) {
             s.put(d, state.slotVariables.get(d).clone());
         }
-        
+
         this.queryTypeVariable = state.getQueryTypeVariable().clone();
 
         this.hiddenVariables = h;
@@ -144,15 +148,15 @@ public class State extends AbstractState<AnnotatedDocument> {
         for (Integer d : slotVariables.keySet()) {
             state += slotVariables.get(d).toString() + "\n";
         }
-        
-        state+= "\n"+queryTypeVariable.toString()+"\n";
+
+        state += "\n" + queryTypeVariable.toString() + "\n";
 
         state += "\nObjectiveScore: " + getObjectiveScore();
         state += "\nModelScore: " + getModelScore() + "\n";
-        
+
         String query = QueryConstructor.getSPARQLQuery(this);
-        
-        state+="\nConstructed Query: \n\n"+query+"\n";
+
+        state += "\nConstructed Query: \n\n" + query + "\n";
 
         return state;
     }
@@ -171,8 +175,8 @@ public class State extends AbstractState<AnnotatedDocument> {
         for (Integer d : slotVariables.keySet()) {
             state += slotVariables.get(d).toString() + "\n";
         }
-        
-        state+= "\n"+queryTypeVariable.toString()+"\n";
+
+        state += "\n" + queryTypeVariable.toString() + "\n";
 
         state += "\nObjectiveScore: " + getObjectiveScore();
         state += "\nModelScore: " + getModelScore() + "\n";
@@ -230,4 +234,18 @@ public class State extends AbstractState<AnnotatedDocument> {
         this.queryTypeVariable = queryTypeVariable;
     }
 
+    public FeatureDataPoint toTrainingPoint(FeatureMapData data, boolean training) {
+
+        final Map<String, Double> features = new HashMap<>();
+        try {
+            for (Factor<? extends FactorScope> factor : getFactorGraph().getFactors()) {
+                for (Entry<String, Double> f : factor.getFeatureVector().getFeatures().entrySet()) {
+                    features.put(f.getKey(), features.getOrDefault(f.getKey(), 0d) + f.getValue());
+                }
+            }
+        } catch (MissingFactorException e) {
+            e.printStackTrace();
+        }
+        return new FeatureDataPoint(data, features, getObjectiveScore(), training);
+    }
 }

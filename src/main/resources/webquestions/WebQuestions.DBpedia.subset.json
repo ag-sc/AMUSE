@@ -1,0 +1,11 @@
+{"name":"WebQuestions.DBpedia.test","questions":[{
+
+"questionText":"where does the atlanta braves play?",
+
+"query":"SELECT DISTINCT ?o WHERE { ?o <http://dbpedia.org/ontology/operator> <http://dbpedia.org/resource/Atlanta_Braves> . }",
+
+"answers":["http://dbpedia.org/resource/SunTrust_Park", "http://dbpedia.org/resource/Turner_Field"]
+
+}
+]
+}

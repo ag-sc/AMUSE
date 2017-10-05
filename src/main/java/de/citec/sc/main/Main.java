@@ -51,9 +51,9 @@ public class Main {
 
             args = new String[42];
             args[0] = "-d1";//query dataset
-            args[1] = "webQuestionsSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
+            args[1] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
             args[2] = "-d2";  //test dataset
-            args[3] = "webQuestionsSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain    webQuestionsTest webQuestionsSubset
+            args[3] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain    webQuestionsTest webQuestionsSubset
             args[4] = "-m1";//manual lexicon
             args[5] = "true";//true, false
             args[6] = "-m2";//matoll
