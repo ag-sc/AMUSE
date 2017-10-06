@@ -5,6 +5,7 @@
  */
 package de.citec.sc.utils;
 
+import de.citec.sc.main.Main;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,50 +20,63 @@ public class ProjectConfiguration {
 
         //read parameters
         readParamsFromCommandLine(args);
-
     }
 
     private static final Map<String, String> PARAMETERS = new HashMap<>();
 
     private static final String PARAMETER_PREFIX = "-";
-    private static final String PARAM_SETTING_DATASET = "-d1";
-    private static final String PARAM_SETTING_TEST_DATASET = "-d2";
-    private static final String PARAM_SETTING_MANUAL_LEXICON = "-m1";
-    private static final String PARAM_SETTING_MATOLL = "-m2";
-    private static final String PARAM_SETTING_EPOCHS = "-e";
-    private static final String PARAM_SETTING_SAMPLING_STEPS = "-s";
-    private static final String PARAM_SETTING_BEAMSIZE_TRAINING_NEL = "-k1";
-    private static final String PARAM_SETTING_BEAMSIZE_TRAINING_QA = "-k2";
-    private static final String PARAM_SETTING_BEAMSIZE_TEST_NEL = "-l1";
-    private static final String PARAM_SETTING_BEAMSIZE_TEST_QA = "-l2";
-    private static final String PARAM_SETTING_INDEX = "-i";
-    private static final String PARAM_SETTING_TRAIN_MAX_WORD_COUNT = "-w1";
-    private static final String PARAM_SETTING_TEST_MAX_WORD_COUNT = "-w2";
-    private static final String PARAM_SETTING_LANGUAGE = "-l";
-    private static final String PARAM_SETTING_FEATURE_GROUP = "-f";
-    private static final String PARAM_SETTING_WORD_EMBEDDING = "-b";
-    private static final String PARAM_SETTING_USE_DBPEDIA_ENDPOINT = "-q";
-    private static final String PARAM_SETTING_DBPEDIA_ENDPOINT_SERVER = "-n";
-    private static final String PARAM_SETTING_API = "-api";
+    private static final String PARAM_SETTING_TRAIN_DATASET = "-trainDataset";
+    private static final String PARAM_SETTING_TEST_DATASET = "-testDataset";
+    private static final String PARAM_SETTING_MANUAL_LEXICON = "-includeManualLexicon";
+    private static final String PARAM_SETTING_MATOLL = "-includeMatollLexicon";
+    private static final String PARAM_SETTING_EPOCHS = "-epochs";
+    private static final String PARAM_SETTING_SAMPLING_STEPS = "-samplingSteps";
+    private static final String PARAM_SETTING_BEAMSIZE_TRAINING_NEL = "-nelBeamSize";
+    private static final String PARAM_SETTING_BEAMSIZE_TRAINING_QA = "-qaBeamSize";
+    private static final String PARAM_SETTING_INDEX = "-indexType";
+    private static final String PARAM_SETTING_TRAIN_MAX_WORD_COUNT = "-maxWordCountTrain";
+    private static final String PARAM_SETTING_TEST_MAX_WORD_COUNT = "-maxWordCountTrain";
+    private static final String PARAM_SETTING_LANGUAGE = "-language";
+    private static final String PARAM_SETTING_FEATURE_GROUP = "-featureLevel";
+    private static final String PARAM_SETTING_WORD_EMBEDDING = "-includeEmbeddingLexicon";
+    private static final String PARAM_SETTING_USE_DBPEDIA_ENDPOINT = "-useDBpedia";
+    private static final String PARAM_SETTING_DBPEDIA_ENDPOINT_SERVER = "-dbpediaEndpoint";
+    private static final String PARAM_SETTING_API = "-runAsAPI";
     private static final String PARAM_SETTING_LINKING_SAMPLING_LEVEL = "-linkingSamplingLevel";
     private static final String PARAM_SETTING_QA_SAMPLING_LEVEL = "-qaSamplingLevel";
     
     public static String getLinkingSamplingLevel() {
 
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
         return PARAMETERS.get(PARAM_SETTING_LINKING_SAMPLING_LEVEL);
     }
     public static String getQASamplingLevel() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
 
         return PARAMETERS.get(PARAM_SETTING_QA_SAMPLING_LEVEL);
     }
 
     public static boolean useRemoteDBpediaEndpoint() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
 
         boolean useDBpediaEndpoint = "remote".equals(PARAMETERS.get(PARAM_SETTING_DBPEDIA_ENDPOINT_SERVER));
 
         return useDBpediaEndpoint;
     }
     public static boolean startAPI(){
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
 
         boolean startAPI = "true".equals(PARAMETERS.get(PARAM_SETTING_API));
 
@@ -70,6 +84,10 @@ public class ProjectConfiguration {
     }
     
     public static boolean useDBpediaEndpoint() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
 
         boolean useDBpediaEndpoint = "true".equals(PARAMETERS.get(PARAM_SETTING_USE_DBPEDIA_ENDPOINT));
 
@@ -77,6 +95,10 @@ public class ProjectConfiguration {
     }
     
     public static boolean useEmbeddingLexicon() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
 
         boolean useEmbeddingLexicon = "true".equals(PARAMETERS.get(PARAM_SETTING_WORD_EMBEDDING));
 
@@ -84,29 +106,47 @@ public class ProjectConfiguration {
     }
     
     public static String getIndex() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
 
         return PARAMETERS.get(PARAM_SETTING_INDEX);
     }
     public static String getFeatureGroup() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
 
         return PARAMETERS.get(PARAM_SETTING_FEATURE_GROUP);
     }
     public static String getLanguage() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
 
         return PARAMETERS.get(PARAM_SETTING_LANGUAGE);
     }
 
     public static String getTrainingDatasetName() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
 
-        return PARAMETERS.get(PARAM_SETTING_DATASET);
+        return PARAMETERS.get(PARAM_SETTING_TRAIN_DATASET);
     }
 
     public static String getTestDatasetName() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
 
         return PARAMETERS.get(PARAM_SETTING_TEST_DATASET);
     }
 
     public static boolean useManualLexicon() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
 
         boolean useManualLexicon = "true".equals(PARAMETERS.get(PARAM_SETTING_MANUAL_LEXICON));
 
@@ -114,6 +154,9 @@ public class ProjectConfiguration {
     }
 
     public static boolean useMatoll() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
 
         boolean useMatoll = "true".equals(PARAMETERS.get(PARAM_SETTING_MATOLL));
 
@@ -121,49 +164,56 @@ public class ProjectConfiguration {
     }
 
     public static int getNumberOfEpochs() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
         int numberOfEpochs = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_EPOCHS));
 
         return numberOfEpochs;
     }
 
     public static int getTrainMaxWordCount() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
         int numberOfEpochs = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_TRAIN_MAX_WORD_COUNT));
 
         return numberOfEpochs;
     }
 
     public static int getTestMaxWordCount() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
         int numberOfEpochs = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_TEST_MAX_WORD_COUNT));
 
         return numberOfEpochs;
     }
 
     public static int getNumberOfSamplingSteps() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
         int numberOfSamplingSteps = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_SAMPLING_STEPS));
 
         return numberOfSamplingSteps;
     }
 
     public static int getNELTrainingBeamSize() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
         int numberKSamples = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_BEAMSIZE_TRAINING_NEL));
 
         return numberKSamples;
     }
 
     public static int getQATrainingBeamSize() {
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
         int numberKSamples = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_BEAMSIZE_TRAINING_QA));
-
-        return numberKSamples;
-    }
-
-    public static int getNELTestBeamSize() {
-        int numberKSamples = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_BEAMSIZE_TEST_NEL));
-
-        return numberKSamples;
-    }
-
-    public static int getQATestBeamSize() {
-        int numberKSamples = Integer.parseInt(PARAMETERS.get(PARAM_SETTING_BEAMSIZE_TEST_QA));
 
         return numberKSamples;
     }

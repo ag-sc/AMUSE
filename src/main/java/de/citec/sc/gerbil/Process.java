@@ -33,7 +33,7 @@ public class Process {
         boolean onlyDBO = true;
         boolean isHybrid = true;
 
-        Main.lang = CandidateRetriever.Language.EN;
+        CandidateRetriever.Language lang = CandidateRetriever.Language.EN;
 
         QALDCorpus corpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 

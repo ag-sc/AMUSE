@@ -10,7 +10,9 @@ import de.citec.sc.main.Main;
 
 import de.citec.sc.parser.DependencyParse;
 import de.citec.sc.qald.Question;
+import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetriever.Language;
+import de.citec.sc.utils.ProjectConfiguration;
 import java.util.Objects;
 
 /**
@@ -30,7 +32,7 @@ public class AnnotatedDocument implements LabeledInstance<AnnotatedDocument, Str
 
     @Override
     public String toString() {
-        return "\nID:" + qaldInstance.getId() + "\n\n" + qaldInstance.getQuestionText().get(Main.lang) + "\n\n" + qaldInstance.getQueryText() + "\n\n" + parse + "\n\n";
+        return "\nID:" + qaldInstance.getId() + "\n\n" + qaldInstance.getQuestionText().get(CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage())) + "\n\n" + qaldInstance.getQueryText() + "\n\n" + parse + "\n\n";
     }
 
     public DependencyParse getParse() {
@@ -42,7 +44,7 @@ public class AnnotatedDocument implements LabeledInstance<AnnotatedDocument, Str
     }
 
     public String getQuestionString() {
-        return qaldInstance.getQuestionText().get(Main.lang);
+        return qaldInstance.getQuestionText().get(CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
     }
 
     public Question getQaldInstance() {

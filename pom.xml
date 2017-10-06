@@ -126,6 +126,21 @@
             <artifactId>libsvm</artifactId>
             <version>3.17</version>
         </dependency>
+        <dependency>
+            <groupId>org.languagetool</groupId>
+            <artifactId>language-de</artifactId>
+            <version>3.9-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.languagetool</groupId>
+            <artifactId>language-en</artifactId>
+            <version>3.9-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.languagetool</groupId>
+            <artifactId>language-es</artifactId>
+            <version>3.9-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

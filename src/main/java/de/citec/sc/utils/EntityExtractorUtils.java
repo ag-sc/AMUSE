@@ -8,7 +8,6 @@ package de.citec.sc.utils;
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.main.Main;
-import static de.citec.sc.main.Main.lang;
 import de.citec.sc.qald.QALDCorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
@@ -52,7 +51,7 @@ public class EntityExtractorUtils {
             
             for (String n : ngrams) {
 
-                if (Stopwords.isStopWord(n)) {
+                if (Stopwords.isStopWord(n, CandidateRetriever.Language.EN)) {
                     continue;
                 }
 
@@ -93,11 +92,11 @@ public class EntityExtractorUtils {
 
                     ngram = StringPreprocessor.preprocess(ngram, CandidateRetriever.Language.EN);
 
-                    if (Stopwords.isStopWord(ngram)) {
+                    if (Stopwords.isStopWord(ngram, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
                         continue;
                     }
 
-                    List<Instance> instances = retriever.getAllResources(ngram, 10, CandidateRetriever.Language.EN);
+                    List<Instance> instances = retriever.getAllResources(ngram, 10, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
                     if (instances.isEmpty()) {
                         continue;
                     }

@@ -7,6 +7,8 @@ package de.citec.sc.template;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.main.Main;
+import de.citec.sc.query.CandidateRetriever;
+import de.citec.sc.utils.ProjectConfiguration;
 import de.citec.sc.variable.URIVariable;
 
 import de.citec.sc.variable.State;
@@ -403,7 +405,7 @@ public class NodeSimilarityTemplate extends AbstractTemplate<AnnotatedDocument, 
 
         String node = doc.getParse().getToken(u.getTokenId());
         String uri = u.getCandidate().getUri();
-        String inputQuestion = doc.getQaldInstance().getQuestionText().get(Main.lang);
+        String inputQuestion = doc.getQaldInstance().getQuestionText().get(CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
         String pos = doc.getParse().getPOSTag(u.getTokenId());
 

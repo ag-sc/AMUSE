@@ -6,6 +6,7 @@
 package de.citec.sc.utils;
 
 import de.citec.sc.main.Main;
+import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.DBpediaLabelRetriever;
 import net.ricecode.similarity.StringSimilarityMeasures;
 
@@ -19,7 +20,7 @@ public class StringSimilarityUtils {
      */
     public static double getSimilarityScore(String node, String uri) {
 
-        String label = DBpediaLabelRetriever.getLabel(uri, Main.lang);
+        String label = DBpediaLabelRetriever.getLabel(uri, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
         //compute levenstein edit distance similarity and normalize
         final double weightedEditSimilarity = StringSimilarityMeasures.score(label, node);

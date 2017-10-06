@@ -49,7 +49,6 @@ public class AnnotateManualLexicon {
         Set<String> prevContent = FileFactory.readFile("Manual_Lexicon.txt");
 
         for (CandidateRetriever.Language l : languages) {
-            Main.lang = l;
 
             Set<String> coveredTrainIds = new HashSet<>();
             Set<String> coveredTestIds = new HashSet<>();

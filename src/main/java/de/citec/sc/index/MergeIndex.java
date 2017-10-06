@@ -198,7 +198,7 @@ public class MergeIndex {
 
         for (Language l : languages) {
 
-            Main.lang = l;
+            CandidateRetriever.Language lang = l;
 
             boolean includeYAGO = true;
             boolean includeAggregation = true;
@@ -228,7 +228,7 @@ public class MergeIndex {
                         String token = d1.getParse().getNodes().get(nodeID).toLowerCase();
                         String pos = d1.getParse().getPOSTag(nodeID);
 
-                        if (Stopwords.isStopWord(token)) {
+                        if (Stopwords.isStopWord(token, l)) {
                             continue;
                         }
 

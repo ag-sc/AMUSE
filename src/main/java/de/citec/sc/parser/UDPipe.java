@@ -264,7 +264,7 @@ public class UDPipe {
 
         String content = "";
         for (Language l : languages) {
-            Main.lang = l;
+            CandidateRetriever.Language lang = l;
 
             QALDCorpus corpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
             QALDCorpus corpus2 = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);

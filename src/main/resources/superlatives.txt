@@ -1,2 +1,0 @@
-second SUPERLATIVE	dbo:elevation
-SUPERLATIVE

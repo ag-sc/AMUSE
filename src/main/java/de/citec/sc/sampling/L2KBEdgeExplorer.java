@@ -7,6 +7,7 @@ package de.citec.sc.sampling;
 
 import de.citec.sc.main.Main;
 import de.citec.sc.query.Candidate;
+import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.EmbeddingLexicon;
 import de.citec.sc.query.Instance;
 import de.citec.sc.query.ManualLexicon;
@@ -80,25 +81,23 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 if (headNodeCandidates.isEmpty()) {
                     continue;
                 }
-                
-                String samplingLevel = ProjectConfiguration.getLinkingSamplingLevel();
-                
-                //1 = direct children, 2 = children of children with 2 depth, 3 = siblings
 
+                String samplingLevel = ProjectConfiguration.getLinkingSamplingLevel();
+
+                //1 = direct children, 2 = children of children with 2 depth, 3 = siblings
                 List<Integer> childNodes_Level_1 = new ArrayList<>();
                 List<Integer> childNodes_Level_2 = new ArrayList<>();
                 List<Integer> siblings = new ArrayList<>();
-                
-                if(samplingLevel.contains("1")){
+
+                if (samplingLevel.contains("1")) {
                     childNodes_Level_1 = currentState.getDocument().getParse().getDependentEdges(indexOfHeadNode, validPOSTags, 1);
                 }
-                if(samplingLevel.contains("2")){
+                if (samplingLevel.contains("2")) {
                     childNodes_Level_2 = currentState.getDocument().getParse().getDependentEdges(indexOfHeadNode, validPOSTags, 2);
                 }
-                if(samplingLevel.contains("3")){
+                if (samplingLevel.contains("3")) {
                     siblings = currentState.getDocument().getParse().getSiblings(indexOfHeadNode, validPOSTags);
                 }
-
 
                 boolean hasValidDepNode = false;
 
@@ -300,7 +299,6 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 //                if (headNodeCandidate.getUri().equals("http://dbpedia.org/ontology/creator") && depNodeCandidate.getUri().equals("http://dbpedia.org/resource/Battle_of_Gettysburg")) {
 //                    int z = 2;
 //                }
-
                 boolean isChildSubject = DBpediaEndpoint.isSubjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
                 boolean isChildObject = DBpediaEndpoint.isObjectTriple(headNodeCandidate.getUri(), depNodeCandidate.getUri());
 
@@ -404,8 +402,8 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 topK = 50;
 
-                if (!Stopwords.isStopWord(queryTerm)) {
-                    Set<Candidate> propertyURIs = Search.getPredicates(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
+                if (!Stopwords.isStopWord(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
+                    Set<Candidate> propertyURIs = Search.getPredicates(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
                     for (Candidate c : propertyURIs) {
                         indexURIs.add(c.getUri());
@@ -415,7 +413,7 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 //retrieve manual lexicon even if it's in stop word list
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
-                    Set<String> definedLexica = ManualLexicon.getProperties(queryTerm, Main.lang);
+                    Set<String> definedLexica = ManualLexicon.getProperties(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
                     for (String d : definedLexica) {
                         if (!indexURIs.contains(d)) {
                             uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
@@ -425,7 +423,7 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 if (ProjectConfiguration.useEmbeddingLexicon() && (pos.equals("NOUN") || pos.equals("VERB"))) {
 
-                    Set<String> embeddingLexica = EmbeddingLexicon.getProperties(queryTerm, Main.lang);
+                    Set<String> embeddingLexica = EmbeddingLexicon.getProperties(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
                     for (String d : embeddingLexica) {
                         if (!indexURIs.contains(d)) {
                             uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
@@ -439,8 +437,8 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 useLemmatizer = true;
                 mergePartialMatches = false;
                 useWordNet = true;
-                if (!Stopwords.isStopWord(queryTerm)) {
-                    Set<Candidate> classURIs = Search.getClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
+                if (!Stopwords.isStopWord(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
+                    Set<Candidate> classURIs = Search.getClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
                     for (Candidate c : classURIs) {
                         indexURIs.add(c.getUri());
@@ -450,7 +448,7 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 //retrieve manual lexicon even if it's in stop word list
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
-                    Set<String> definedLexica = ManualLexicon.getClasses(queryTerm, Main.lang);
+                    Set<String> definedLexica = ManualLexicon.getClasses(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
                     for (String d : definedLexica) {
                         if (!indexURIs.contains(d)) {
                             uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
@@ -465,8 +463,8 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 topK = 20;
 
-                if (!Stopwords.isStopWord(queryTerm)) {
-                    Set<Candidate> restrictionClassURIs = Search.getRestrictionClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
+                if (!Stopwords.isStopWord(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
+                    Set<Candidate> restrictionClassURIs = Search.getRestrictionClasses(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
                     for (Candidate c : restrictionClassURIs) {
                         indexURIs.add(c.getUri());
@@ -476,7 +474,7 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 //check manual lexicon for Restriction Classes
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
-                    Set<String> definedLexica = ManualLexicon.getRestrictionClasses(queryTerm, Main.lang);
+                    Set<String> definedLexica = ManualLexicon.getRestrictionClasses(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
                     if (queryTerm.equals("endangered")) {
                         int z = 1;
@@ -496,8 +494,8 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 useWordNet = false;
 
                 //extract resources
-                if (!Stopwords.isStopWord(queryTerm)) {
-                    Set<Candidate> resourceURIs = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
+                if (!Stopwords.isStopWord(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
+                    Set<Candidate> resourceURIs = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
                     //set some empty propertyy
                     for (Candidate c : resourceURIs) {
@@ -511,7 +509,7 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 //check manual lexicon for Resources => to make underspecified class
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
-                    Set<String> definedLexica = ManualLexicon.getResources(queryTerm, Main.lang);
+                    Set<String> definedLexica = ManualLexicon.getResources(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
                     for (String d : definedLexica) {
                         if (!indexURIs.contains(d)) {
                             uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));
@@ -525,8 +523,8 @@ public class L2KBEdgeExplorer implements Explorer<State> {
                 mergePartialMatches = false;
                 useWordNet = false;
 
-                if (!Stopwords.isStopWord(queryTerm)) {
-                    Set<Candidate> resourceCandidates = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, Main.lang);
+                if (!Stopwords.isStopWord(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
+                    Set<Candidate> resourceCandidates = Search.getResources(queryTerm, topK, useLemmatizer, mergePartialMatches, useWordNet, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
                     for (Candidate c : resourceCandidates) {
                         if (c.getUri().contains("List_of")) {
@@ -539,7 +537,7 @@ public class L2KBEdgeExplorer implements Explorer<State> {
 
                 //check manual lexicon
                 if (ManualLexicon.useManualLexicon || ProjectConfiguration.getTrainingDatasetName().toLowerCase().contains("train")) {
-                    Set<String> definedLexica = ManualLexicon.getResources(queryTerm, Main.lang);
+                    Set<String> definedLexica = ManualLexicon.getResources(queryTerm, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
                     for (String d : definedLexica) {
                         if (!indexURIs.contains(d)) {
                             uris.add(new Candidate(new Instance(d, 10000), 0, 1.0, 1.0));

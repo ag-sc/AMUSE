@@ -1,7 +1,9 @@
 package de.citec.sc.parser;
 
 import de.citec.sc.main.Main;
+import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.Search;
+import de.citec.sc.utils.ProjectConfiguration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -172,7 +174,7 @@ public class DependencyParse {
                                 continue;
                             }
 
-                            boolean b = Search.matches(mergedTokens.toLowerCase(), Main.lang);
+                            boolean b = Search.matches(mergedTokens.toLowerCase(), CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
                             
                             //if matches then remove nodes
                             if (b) {
@@ -365,7 +367,7 @@ public class DependencyParse {
             if (mergedTokens.isEmpty()) {
                 continue;
             }
-            boolean b = Search.matches(mergedTokens, Main.lang);
+            boolean b = Search.matches(mergedTokens, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
             //if matches then remove nodes
             if (b) {

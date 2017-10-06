@@ -46,7 +46,7 @@ public class FixAnnotateManualLexicon {
         String content = "";
 
         for (CandidateRetriever.Language l : languages) {
-            Main.lang = l;
+            
 
             Set<String> prevContent = FileFactory.readFile(l.name() + "_lexicon.txt");
 

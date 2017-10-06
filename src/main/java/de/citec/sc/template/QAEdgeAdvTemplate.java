@@ -466,7 +466,7 @@ public class QAEdgeAdvTemplate extends AbstractTemplate<AnnotatedDocument, State
      */
     private double getSimilarityScore(String node, String uri) {
 
-        String label = DBpediaLabelRetriever.getLabel(uri, Main.lang);
+        String label = DBpediaLabelRetriever.getLabel(uri, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
         //compute levenstein edit distance similarity and normalize
         final double weightedEditSimilarity = StringSimilarityMeasures.score(label, node);

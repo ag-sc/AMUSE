@@ -13,8 +13,11 @@ import de.citec.sc.nel.EntityAnnotation;
 import de.citec.sc.parser.DependencyParse;
 import de.citec.sc.parser.StanfordParser;
 import de.citec.sc.parser.UDPipe;
+import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.query.Search;
+import de.citec.sc.utils.Lemmatizer;
+import de.citec.sc.utils.ProjectConfiguration;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,18 +33,21 @@ import org.json.simple.parser.JSONParser;
  * @author sherzod
  */
 public class QALDCorpusLoader {
+    
+    private static String outputDirectoryQALD = QALDCorpusLoader.class.getClassLoader().getResource("qald").getPath();
+    private static String outputDirectoryWebQuestions = QALDCorpusLoader.class.getClassLoader().getResource("webquestions").getPath();
 
-    private static final String qald4FileTrain = "src/main/resources/qald-4_multilingual_train_withanswers.xml";
-    private static final String qald4FileTest = "src/main/resources/qald-4_multilingual_test_withanswers.xml";
-    private static final String qald5FileTrain = "src/main/resources/qald-5_train.xml";
-    private static final String qald6FileTrain = "src/main/resources/qald-6-train-multilingual.json";
-    private static final String qald7FileTrain = "src/main/resources/qald-7-train-multilingual.json";
-    private static final String qald6FileTest = "src/main/resources/qald-6-test-multilingual.json";
-    private static final String qald5FileTest = "src/main/resources/qald-5_test.xml";
-    private static final String qaldSubset = "src/main/resources/qald_test.xml";
-    private static final String webQuestionsTrain = "src/main/resources/webquestions/WebQuestions.DBpedia.train.json";
-    private static final String webQuestionsTest = "src/main/resources/webquestions/WebQuestions.DBpedia.test.json";
-    private static final String webQuestionsSubset = "src/main/resources/webquestions/WebQuestions.DBpedia.subset.json";
+    private static final String qald4FileTrain = outputDirectoryQALD+"/qald-4_multilingual_train_withanswers.xml";
+    private static final String qald4FileTest = outputDirectoryQALD+"/qald-4_multilingual_test_withanswers.xml";
+    private static final String qald5FileTrain = outputDirectoryQALD+"/qald-5_train.xml";
+    private static final String qald6FileTrain = outputDirectoryQALD+"/qald-6-train-multilingual.json";
+    private static final String qald7FileTrain = outputDirectoryQALD+"/qald-7-train-multilingual.json";
+    private static final String qald6FileTest = outputDirectoryQALD+"/qald-6-test-multilingual.json";
+    private static final String qald5FileTest = outputDirectoryQALD+"/qald-5_test.xml";
+    private static final String qaldSubset = outputDirectoryQALD+"/qald_test.xml";
+    private static final String webQuestionsTrain = outputDirectoryWebQuestions+"/WebQuestions.DBpedia.train.json";
+    private static final String webQuestionsTest = outputDirectoryWebQuestions+"/WebQuestions.DBpedia.test.json";
+    private static final String webQuestionsSubset = outputDirectoryWebQuestions+"/WebQuestions.DBpedia.subset.json";
 
     public enum Dataset {
 
@@ -126,7 +132,7 @@ public class QALDCorpusLoader {
 
         for (Question q : questions) {
 
-            String text = q.getQuestionText().get(Main.lang);
+            String text = q.getQuestionText().get(CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
             String replacedText = text;
 
@@ -147,7 +153,7 @@ public class QALDCorpusLoader {
                     replacedMap.put("Barack_Obama_N"+annotations.indexOf(e1), entityText+"");
                 }
 
-                parse = UDPipe.parse(replacedText, Main.lang);
+                parse = UDPipe.parse(replacedText, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
                 //replace the Barack_Obama_N_index with it's real value, add also replace the POSTAG with PROPN
                 if (parse != null) {
@@ -171,7 +177,7 @@ public class QALDCorpusLoader {
                 }
             }
             else{
-                parse = UDPipe.parse(replacedText, Main.lang);
+                parse = UDPipe.parse(replacedText, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
             }
             
 

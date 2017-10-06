@@ -93,8 +93,8 @@ public class Pipeline {
         NUMBER_OF_EPOCHS = ProjectConfiguration.getNumberOfEpochs();
         BEAM_SIZE_NEL_TRAINING = ProjectConfiguration.getNELTrainingBeamSize();
         BEAM_SIZE_QA_TRAINING = ProjectConfiguration.getQATrainingBeamSize();
-        BEAM_SIZE_QA_TEST = ProjectConfiguration.getQATestBeamSize();
-        BEAM_SIZE_NEL_TEST = ProjectConfiguration.getNELTestBeamSize();
+        BEAM_SIZE_QA_TEST = ProjectConfiguration.getQATrainingBeamSize();
+        BEAM_SIZE_NEL_TEST = ProjectConfiguration.getNELTrainingBeamSize();
 
 //        scorer = new DefaultScorer();
         scorer = new LibSVMRegressionScorer();

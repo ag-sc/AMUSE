@@ -1,6 +1,7 @@
 package de.citec.sc.nel;
 
 import de.citec.sc.query.CandidateRetriever;
+import de.citec.sc.utils.ProjectConfiguration;
 import de.citec.sc.utils.Stopwords;
 import de.citec.sc.utils.StringPreprocessor;
 import java.text.Normalizer;
@@ -59,7 +60,7 @@ public class NGramExtractor {
                     ngram = ngram.replaceAll("[!?,.;:'\"]", "");
 //                    ngram = StringPreprocessor.preprocess(ngram, CandidateRetriever.Language.EN);
 //
-                    if (Stopwords.isStopWord(ngram)) {
+                    if (Stopwords.isStopWord(ngram, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
                         continue;
                     }
 

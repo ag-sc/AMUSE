@@ -17,7 +17,6 @@ import de.citec.sc.learning.QAHybridSamplingStrategyCallback;
 import de.citec.sc.learning.QAObjectiveFunction;
 import de.citec.sc.learning.QATrainer;
 import de.citec.sc.learning.QueryConstructor;
-import static de.citec.sc.main.Main.lang;
 import de.citec.sc.parser.DependencyParse;
 import de.citec.sc.parser.UDPipe;
 import de.citec.sc.qald.Question;
@@ -105,7 +104,7 @@ public class APIPipeline {
         System.out.println("Testing index: " + retriever.getAllResources("john f. kennedy", 10, CandidateRetriever.Language.EN));
         System.out.println("Testing index: " + retriever.getAllResources("goofy", 10, CandidateRetriever.Language.DE));
         System.out.println("Testing index: " + retriever.getAllPredicates("erfunden", 10, CandidateRetriever.Language.DE));
-        System.out.println("Testing manual: " + ManualLexicon.getProperties("erfunden", lang));
+        System.out.println("Testing manual: " + ManualLexicon.getProperties("erfunden", CandidateRetriever.Language.DE));
 
         //semantic types to sample from
         semanticTypes = new LinkedHashMap<>();
@@ -230,13 +229,13 @@ public class APIPipeline {
         //detect the language
         String language = LanguageDetector.detect(text);
 
-        Main.lang = CandidateRetriever.Language.valueOf(language);
+       CandidateRetriever.Language lang = CandidateRetriever.Language.valueOf(language);
 
         List<AnnotatedDocument> documents = new ArrayList<>();
 
         //dependency parse 
-        DependencyParse parseTree = UDPipe.parse(text, Main.lang);
-        Question qaldInstance = new Question(Main.lang, text, "SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Goofy> <http://dbpedia.org/ontology/creator> ?uri . }");
+        DependencyParse parseTree = UDPipe.parse(text, lang);
+        Question qaldInstance = new Question(lang, text, "SELECT DISTINCT ?uri WHERE {  <http://dbpedia.org/resource/Goofy> <http://dbpedia.org/ontology/creator> ?uri . }");
 
         //created annotated document
         AnnotatedDocument doc = new AnnotatedDocument(parseTree, qaldInstance);

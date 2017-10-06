@@ -22,9 +22,10 @@ public class Stopwords {
     /**
      * A set of English stopwords.
      */
-    private static final Set<String> ENGLISH_STOP_WORDS = readLines("EN");
-    private static final Set<String> GERMAN_STOP_WORDS = readLines("DE");
-    private static final Set<String> SPANISH_STOP_WORDS = readLines("ES");
+    private static Set<String> ENGLISH_STOP_WORDS;
+    private static Set<String> GERMAN_STOP_WORDS;
+    private static Set<String> SPANISH_STOP_WORDS;
+    private static String outputDirectory;
 
     /**
      * Read stopwords from file.
@@ -33,9 +34,9 @@ public class Stopwords {
      */
     private static Set<String> readLines(String lang) {
         try {
-            List<String> lines = Files.readAllLines(Paths.get("src/main/resources/stopwords_"+lang+".txt"));
+            List<String> lines = Files.readAllLines(Paths.get(outputDirectory + "/stopwords_" + lang + ".txt"));
             Set<String> stopwords = new HashSet<>();
-            for(String s : lines){
+            for (String s : lines) {
                 stopwords.add(s.toLowerCase());
             }
             return stopwords;
@@ -45,17 +46,26 @@ public class Stopwords {
         return null;
     }
 
-    public static boolean isStopWord(String word) {
-        
+    public static boolean isStopWord(String word, CandidateRetriever.Language lang) {
+
         word = word.toLowerCase();
 
-        if (Main.lang.equals(CandidateRetriever.Language.EN) && ENGLISH_STOP_WORDS.contains(word)) {
+        //load
+        if (ENGLISH_STOP_WORDS == null) {
+            outputDirectory = Stopwords.class.getClassLoader().getResource("stopwords").getPath();
+
+            ENGLISH_STOP_WORDS = readLines("EN");
+            GERMAN_STOP_WORDS = readLines("DE");
+            SPANISH_STOP_WORDS = readLines("ES");
+        }
+
+        if (lang.equals(CandidateRetriever.Language.EN) && ENGLISH_STOP_WORDS.contains(word)) {
             return true;
         }
-        if (Main.lang.equals(CandidateRetriever.Language.DE) && GERMAN_STOP_WORDS.contains(word)) {
+        if (lang.equals(CandidateRetriever.Language.DE) && GERMAN_STOP_WORDS.contains(word)) {
             return true;
         }
-        if (Main.lang.equals(CandidateRetriever.Language.ES) && SPANISH_STOP_WORDS.contains(word)) {
+        if (lang.equals(CandidateRetriever.Language.ES) && SPANISH_STOP_WORDS.contains(word)) {
             return true;
         }
 

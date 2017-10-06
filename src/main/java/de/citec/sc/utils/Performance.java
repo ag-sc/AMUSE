@@ -237,11 +237,11 @@ public class Performance {
 
         FileFactory.writeListToFile(outputDir + "/states_" + fileName + ".txt", allStatesAsString, false);
 
-        String result = "Test results with Top-k: " + ProjectConfiguration.getNELTestBeamSize()+"\n";// + "\n\nExact Match: " + c + "/" + testResults.size() + " = " + correct;
+        String result = "Test results with Top-k: " + ProjectConfiguration.getNELTrainingBeamSize()+"\n";// + "\n\nExact Match: " + c + "/" + testResults.size() + " = " + correct;
 //        result += "\nIncorrect predictions: " + (testResults.size() - c) + "/" + testResults.size() + " = " + inCorrect;
 //        result += "\nMACRO F1: " + MACROF1 + "\n\n";
 
-        int topKStateNumber = ProjectConfiguration.getNELTestBeamSize();
+        int topKStateNumber = ProjectConfiguration.getNELTrainingBeamSize();
 
         for (int i = 1; i <= topKStateNumber; i++) {
             String resultAsString = getCorrectInstanceNumber(testResults, "NEL", i);
@@ -367,10 +367,10 @@ public class Performance {
         //states
         FileFactory.writeListToFile(outputDir + "/states_" + fileName + ".txt", allStatesAsString, false);
 
-        String result = "Test results with Top-k: " + ProjectConfiguration.getQATestBeamSize() + "\n";
+        String result = "Test results with Top-k: " + ProjectConfiguration.getQATrainingBeamSize() + "\n";
 //        result += "\nMACRO F1: " + MACROF1 + "\n\n";
 
-        int topKStateNumber = ProjectConfiguration.getQATestBeamSize();
+        int topKStateNumber = ProjectConfiguration.getQATrainingBeamSize();
 
         for (int i = 1; i <= topKStateNumber; i++) {
             String resultAsString = getCorrectInstanceNumber(testResults, "QA", i);
@@ -497,10 +497,10 @@ public class Performance {
         //states
         FileFactory.writeListToFile(outputDir + "/states_" + fileName + ".txt", allStatesAsString, false);
 
-        String result = "Test results with Top-k: " + ProjectConfiguration.getQATestBeamSize() + "\n\n";
+        String result = "Test results with Top-k: " + ProjectConfiguration.getQATrainingBeamSize() + "\n\n";
         result += "\nMACRO F1: " + MACROF1 + "\n\n";
 
-        int topKStateNumber = ProjectConfiguration.getQATestBeamSize();
+        int topKStateNumber = ProjectConfiguration.getQATrainingBeamSize();
 
         for (int i = 1; i <= topKStateNumber; i++) {
                         String resultAsString = getCorrectInstanceNumber(testResults, "QA", i);

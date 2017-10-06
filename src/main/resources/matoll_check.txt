@@ -1,2 +1,0 @@
-produced in	dbo:assembly
-graduated	dbo:almaMater

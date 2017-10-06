@@ -7,6 +7,7 @@ package de.citec.sc.query;
 
 import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.utils.FileFactory;
+import de.citec.sc.utils.Lemmatizer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -62,7 +63,9 @@ public class ManualLexicon {
 
         if (useManualLexicon) {
 
-            Set<String> content = FileFactory.readFile("Manual_Lexicon.txt");
+            String filePath = ManualLexicon.class.getClassLoader().getResource("Manual_Lexicon.txt").getPath();
+            
+            Set<String> content = FileFactory.readFile(filePath);
 
             for (String c : content) {
                 String[] data = c.split("\t");

@@ -117,7 +117,8 @@ public class QueryConstructorTest {
         edges.add("xcomp");
         edges.add("vocative");
         
-        Main.lang = Language.EN;
+        CandidateRetriever.Language lang = Language.EN;
+        
 
         QueryConstructor.initialize(specialSemanticTypes, semanticTypes, validPOSTags, edges);
 
@@ -266,7 +267,9 @@ public class QueryConstructorTest {
 
         parseTree.setHeadNode(3);
         
-        Main.lang = Language.EN;
+        CandidateRetriever.Language l = Language.EN;
+        
+        
 
         Map<Language, String> qMap = new HashMap<Language, String>();
         qMap.put(Language.EN, "How tall is Michael Jordan?");

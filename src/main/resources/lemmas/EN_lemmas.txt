@@ -1,0 +1,361 @@
+pope
+german
+inhabitants	inhabitant
+electronics	electronic
+year
+buried	bury
+marry
+presidents	president
+parliament
+carrot cake
+professional
+record labels
+companies	company
+mountain
+music
+protein
+record
+english	English
+empire
+surfers	surfer
+chocolate chip cookie
+programming language
+released	release
+czech	Czech
+shortest	short
+height
+using	use
+grow
+mayor
+james bond
+active
+countries	country
+inspired	inspire
+completed	complete
+ancient
+former
+official languages
+subsidiary
+critically
+actors	actor
+mission
+islands	island
+highest	high
+graduated	graduate
+difference
+bridge
+much
+wine
+succeeded	succeed
+discovered	discover
+tallest	tall
+reside
+least	less	little
+students	student
+how
+democrat
+artists	artist
+beverage
+ingredients	ingredient
+where
+currency
+musician
+b
+website
+casted
+participate
+contain
+star
+languages	language
+video game
+manager
+founder
+elon musk
+founded	found
+launch
+team
+politicians	politician
+many
+abbreviation
+people	person
+connected	connect
+actor
+proinsulin
+pads	pad
+oldest	old
+series
+missions	mission
+fish
+birthdays	birthday
+river
+operation
+country
+die
+first season
+pillars	pillar
+tv
+hovercrafts	hovercraft
+astronauts	astronaut
+attend
+endangered	endanger
+official
+developed	develop
+japanese	Japanese
+museums	museum
+holidays	holiday
+won	win
+ethnic groups
+houses	house
+basketball player
+airlines	airline
+military
+tall
+written	write
+frogs	frog
+battle chess
+death place
+budget
+films	film
+chess
+grandchildren	grandchild
+need
+wrote	write
+pay
+first album
+often
+bridges	bridge
+list
+jfk
+television series
+airports	airport
+computer scientist
+museum
+involved	involve
+trumpet
+buildings	building
+name
+parties	parti	party
+employees	employee
+region
+party
+higher	high
+full
+cosmonauts	cosmonaut
+child
+grapes	grape
+deep
+color
+scientist
+book
+show
+exhibits	exhibit
+bach
+seine
+video
+shot	shoot
+largest city
+conflicts	conflict
+company
+end
+poet
+live
+owner	own
+greek	Greek
+spanish	Spanish
+directed	direct
+grunge
+total population
+types	type
+start
+war
+calories	calory	calorie
+label
+grand
+swimmers	swimmer
+killed	kill
+form
+skateboarders	skateboarder
+short
+well
+location
+time
+president
+play
+career
+called	call
+software
+developers	developer
+bandleaders	bandleader
+canadian	Canadian
+erupted	erupt
+type
+amphibian
+when
+movies	movie
+climb
+instruments	instrument
+children	child
+last movie
+metalcore bands
+games	game
+stadium
+princess
+animals	animal
+flow
+home stadium
+song
+oscar	Oscar
+soundtrack
+give
+area code
+still
+sitecore
+players	player
+caves	cave	cafe
+wife
+swiss
+come
+ice hockey
+musicals	musical
+ever
+books	book
+winner
+pro-european
+doctoral supervisor
+coach
+longest	long	longe
+alive
+city
+queen
+oceanographers	oceanographer
+serves	serf	serve
+direct
+australian	Australian
+youngest	young
+non-profit
+operated	operate
+foundation
+net income
+volcanos	volcano
+16th
+sparkling	sparkle
+taikonauts
+world
+government
+composed	compose
+same place
+known	know
+physics	physic
+brewery
+official language
+federal
+speak
+theme
+nobel prize
+stand
+programme
+rivers	river
+editor
+danish
+creator
+famous
+gothic
+piccadilly	Piccadilly
+tom cruise
+television
+stores	store
+bigger	big
+born	bear
+breweries	brewery
+produce
+esa
+songs	song
+highest mountain
+forbes	Forbes
+sides	side
+located	locate
+birth name
+married	marry
+indian	Indian
+first
+span
+date
+desserts	dessert
+capital
+expresses	express
+race driver
+rockets	rocket
+serve
+programming languages
+seats	seat
+launched	launch
+second
+basketball
+high
+son
+pages	page
+shows	show
+biggest	big
+earlier	early
+zone
+members	member
+host
+rhine
+baguette
+episodes	episode
+swedish	Swedish
+cocoa beans
+cities	city
+king
+created	create
+kind
+published	publish
+ramones
+produced	produce
+visitors	visitor
+headquarters	headquarter
+scientists	scientist
+races	race
+produces	produce
+daughter
+lake
+canadians	Canadian
+parents	parent
+commence
+largest	large
+game
+belong
+death
+lighthouse
+influenced	influence
+timezone
+university
+suriname
+frequent
+cause
+died	die
+autobiography
+meters	meter
+television shows
+clubs	club
+extinct
+win
+designed	design
+aldi
+chemist
+player
+soccer
+cost
+assassinated	assassinate
+nonprofit organizations
+album
+volcanoes	volcano
+cross
+prodigy
+also
+writers	writer
+played	play
+awards	award
+organizations	organization
+spoken	speak
+starring	star

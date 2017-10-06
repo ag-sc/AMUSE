@@ -40,65 +40,17 @@ import org.apache.logging.log4j.Logger;
 public class Main {
 
     private static final Logger log = LogManager.getFormatterLogger();
-
-    public static Language lang = Language.EN;
-
+    
+    
     public static void main(String[] args) {
 
         if (args.length > 0) {
+            ProjectConfiguration.loadConfigurations(args);
 
         } else {
 
-            args = new String[44];
-            args[0] = "-d1";//query dataset
-            args[1] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
-            args[2] = "-d2";  //test dataset
-            args[3] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain    webQuestionsTest webQuestionsSubset
-            args[4] = "-m1";//manual lexicon
-            args[5] = "true";//true, false
-            args[6] = "-m2";//matoll
-            args[7] = "true";//true, false
-            args[8] = "-e";//epochs
-            args[9] = "" + 10;
-            args[10] = "-s";//sampling steps
-            args[11] = "" + 15;
-            args[12] = "-k1";//top k samples to select from during training NEL
-            args[13] = "" + 10;
-            args[14] = "-k2";//top k samples to select from during training for QA
-            args[15] = "" + 10;
-            args[16] = "-l1";//top k samples to select from during testing for NEL
-            args[17] = "" + 10;
-            args[18] = "-l2";//top k samples to select from during testing for QA
-            args[19] = "" + 10;
-            args[20] = "-w1";//max word count - train
-            args[21] = "" + 30;
-            args[22] = "-w2";//max word count - test
-            args[23] = "" + 30;
-            args[24] = "-i";//index
-            args[25] = "lucene";//lucene, memory
-            args[26] = "-l";//language
-            args[27] = "EN";//EN,DE,ES
-            args[28] = "-f";//features
-            args[29] = "1,2,3,4,5";//1,2,3,4,5,6,7
-            args[30] = "-b";// use embedding
-            args[31] = "true"; // true, false
-            args[32] = "-q";// use DBpedia endpoint, query evaluator vs. answer evaluator
-            args[33] = "true"; // true, false
-            args[34] = "-n";// DBpedia endpoint 
-            args[35] = "local"; // local, remote
-            args[36] = "-api";// run the api
-            args[37] = "false"; // false, true
-            args[38] = "-linkingSamplingLevel";// run the api
-            args[39] = "1+2+3"; // 1 = direct children, 2=include children of children, 3 = include siblings
-            args[40] = "-qaSamplingLevel";// run the api
-            args[41] = "1+2+3"; // 1 = direct children, 2=include children of children, 3 = include siblings
-            args[42] = "-scorer";// run the api
-            args[43] = "default"; // svm, neural
+            initializeProjectConfiguration();
         }
-
-//        int cores = Runtime.getRuntime().availableProcessors();
-//        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", (cores - 5) + "");
-        ProjectConfiguration.loadConfigurations(args);
 
         if (ProjectConfiguration.startAPI()) {
 
@@ -125,15 +77,12 @@ public class Main {
                     List<Model<AnnotatedDocument, State>> trainedModels = Pipeline.train(trainDocuments);
 
                     for (Model<AnnotatedDocument, State> m1 : trainedModels) {
+                        //nel model at index 0, qa at 1
                         if (trainedModels.indexOf(m1) == 0) {
                             m1.saveModelToFile("models", "model_nel_" + ProjectConfiguration.getLanguage());
-                            
                         } else if (trainedModels.indexOf(m1) == 1) {
                             m1.saveModelToFile("models", "model_qa_" + ProjectConfiguration.getLanguage());
                         }
-//                        else if (trainedModels.indexOf(m1) == 2) {
-//                            m1.saveModelToFile("models", "model_queryType_" + ProjectConfiguration.getLanguage());
-//                        }
                     }
 
                     Pipeline.test(trainedModels, testDocuments);
@@ -171,8 +120,6 @@ public class Main {
 
         System.out.println("Initialization process has started ....");
 
-        lang = Language.valueOf(ProjectConfiguration.getLanguage());
-
         CandidateRetriever retriever = null;
 
         if (ProjectConfiguration.getIndex().equals("lucene")) {
@@ -191,7 +138,7 @@ public class Main {
         System.out.println("Testing index: " + retriever.getAllResources("john f. kennedy", 10, CandidateRetriever.Language.EN));
         System.out.println("Testing index: " + retriever.getAllResources("goofy", 10, CandidateRetriever.Language.DE));
         System.out.println("Testing index: " + retriever.getAllPredicates("erfunden", 10, CandidateRetriever.Language.DE));
-        System.out.println("Testing manual: " + ManualLexicon.getProperties("erfunden", lang));
+        System.out.println("Testing manual: " + ManualLexicon.getProperties("erfunden", CandidateRetriever.Language.DE));
 
         //semantic types to sample from
         Map<Integer, String> semanticTypes = new LinkedHashMap<>();
@@ -258,7 +205,7 @@ public class Main {
         edges.add("name");
         edges.add("discourse");
 
-        DBpediaLabelRetriever.load(Main.lang);
+        DBpediaLabelRetriever.load(CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
 
         if (ProjectConfiguration.useRemoteDBpediaEndpoint()) {
             DBpediaEndpoint.setToRemote();
@@ -304,7 +251,6 @@ public class Main {
                     d1.getParse().removePunctuations();
 
 //                    String after = d1.getParse().toString();
-
 //                    if (!before.equals(after)) {
 //                        System.out.println("Before:\n" + before);
 //                        System.out.println("\nAfter:\n" + d1.getParse());
@@ -326,7 +272,6 @@ public class Main {
                         d1.getParse().removePunctuations();
 
 //                        String after = d1.getParse().toString();
-
 //                    if (!before.equals(after)) {
 //                        System.out.println("Before:\n" + before);
 //                        System.out.println("\nAfter:\n" + d1.getParse());
@@ -350,7 +295,59 @@ public class Main {
 
         Collections.shuffle(documents);
 
-        
         return documents;
+    }
+    
+    public static void initializeProjectConfiguration(){
+        String[] args = new String[0];
+        
+        if (args.length > 0) {
+
+        } else {
+
+            args = new String[40];
+            args[0] = "-trainDataset";//query dataset
+            args[1] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
+            args[2] = "-testDataset";  //test dataset
+            args[3] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain    webQuestionsTest webQuestionsSubset
+            args[4] = "-includeManualLexicon";//manual lexicon
+            args[5] = "true";//true, false
+            args[6] = "-includeMatollLexicon";//matoll
+            args[7] = "true";//true, false
+            args[8] = "-includeEmbeddingLexicon";// use embedding
+            args[9] = "true"; // true, false
+            args[10] = "-epochs";//epochs
+            args[11] = "" + 10;
+            args[12] = "-samplingSteps";//sampling steps
+            args[13] = "" + 15;
+            args[14] = "-nelBeamSize";//top k samples to select from during training NEL
+            args[15] = "" + 10;
+            args[16] = "-qaBeamSize";//top k samples to select from during training for QA
+            args[17] = "" + 10;
+            args[18] = "-maxWordCountTrain";//max word count - train
+            args[19] = "" + 30;
+            args[20] = "-maxWordCountTest";//max word count - test
+            args[21] = "" + 30;
+            args[22] = "-featureLevel";//feature levels
+            args[23] = "1,2,3,4,5";//1,2,3,4,5,6,7
+            args[24] = "-linkingSamplingLevel";// run the api
+            args[25] = "1+2+3"; // 1 = direct children, 2=include children of children, 3 = include siblings
+            args[26] = "-qaSamplingLevel";// run the api
+            args[27] = "1+2+3"; // 1 = direct children, 2=include children of children, 3 = include siblings
+            args[28] = "-scorer";// scorer for ranking states
+            args[29] = "default"; // svm_regression, neural
+            args[30] = "-indexType";//index type for retrieval
+            args[31] = "lucene";//lucene, memory
+            args[32] = "-language";//language
+            args[33] = "EN";//EN,DE,ES
+            args[34] = "-useDBpedia";// use DBpedia endpoint, query evaluator vs. answer evaluator
+            args[35] = "true"; // true, false
+            args[36] = "-dbpediaEndpoint";// DBpedia endpoint 
+            args[37] = "local"; // local, remote
+            args[38] = "-runAsAPI";// run the api
+            args[39] = "false"; // false, true
+        }
+
+        ProjectConfiguration.loadConfigurations(args);
     }
 }

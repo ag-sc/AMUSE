@@ -49,7 +49,7 @@ public class W2VInput {
 
         for (Language l : languages) {
             
-            Main.lang = l;
+            CandidateRetriever.Language lang = l;
             
             Set<String> tokens = new HashSet<>();
             
@@ -81,7 +81,7 @@ public class W2VInput {
                             String token = d1.getParse().getNodes().get(nodeID).toLowerCase();
                             String pos = d1.getParse().getPOSTag(nodeID);
                             
-                            if(Stopwords.isStopWord(token)){
+                            if(Stopwords.isStopWord(token, l)){
                                 continue;
                             }
                             
