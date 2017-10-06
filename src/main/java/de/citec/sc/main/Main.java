@@ -49,7 +49,7 @@ public class Main {
 
         } else {
 
-            args = new String[42];
+            args = new String[44];
             args[0] = "-d1";//query dataset
             args[1] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
             args[2] = "-d2";  //test dataset
@@ -92,6 +92,8 @@ public class Main {
             args[39] = "1+2+3"; // 1 = direct children, 2=include children of children, 3 = include siblings
             args[40] = "-qaSamplingLevel";// run the api
             args[41] = "1+2+3"; // 1 = direct children, 2=include children of children, 3 = include siblings
+            args[42] = "-scorer";// run the api
+            args[43] = "default"; // svm, neural
         }
 
 //        int cores = Runtime.getRuntime().availableProcessors();
@@ -125,6 +127,7 @@ public class Main {
                     for (Model<AnnotatedDocument, State> m1 : trainedModels) {
                         if (trainedModels.indexOf(m1) == 0) {
                             m1.saveModelToFile("models", "model_nel_" + ProjectConfiguration.getLanguage());
+                            
                         } else if (trainedModels.indexOf(m1) == 1) {
                             m1.saveModelToFile("models", "model_qa_" + ProjectConfiguration.getLanguage());
                         }
