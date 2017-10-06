@@ -25,16 +25,10 @@ import sampling.Explorer;
  */
 public class QueryTypeExplorer implements Explorer<State> {
 
-    private Map<Integer, String> semanticTypes;
-    private Map<Integer, String> specialSemanticTypes;
-    private Set<String> validPOSTags;
-    private Set<String> validEdges;
+    
 
-    public QueryTypeExplorer(Map<Integer, String> s, Map<Integer, String> sp, Set<String> validPOSTags, Set<String> edges) {
-        this.specialSemanticTypes = sp;
-        this.semanticTypes = s;
-        this.validPOSTags = validPOSTags;
-        this.validEdges = edges;
+    public QueryTypeExplorer() {
+    
     }
 
     @Override

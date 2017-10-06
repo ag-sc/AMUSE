@@ -93,6 +93,7 @@ public class State extends AbstractState<AnnotatedDocument> {
         this.document = (AnnotatedDocument) instance;
         this.hiddenVariables = new TreeMap<>();
         this.slotVariables = new HashMap<>();
+        //select query type
         this.queryTypeVariable = new QueryTypeVariable(1);
 
     }

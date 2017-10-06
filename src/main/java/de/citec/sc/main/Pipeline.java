@@ -79,6 +79,7 @@ public class Pipeline {
     public static List<AbstractTemplate<AnnotatedDocument, State, ?>> queryTypeTemplates;
     public static Scorer scorer;
     private static Explorer nelExplorer;
+    private static Explorer queryTypeExplorer;
     private static Explorer qaExplorer;
     private static final FeatureMapData featureMapData = new FeatureMapData();
 
@@ -96,8 +97,14 @@ public class Pipeline {
         BEAM_SIZE_QA_TEST = ProjectConfiguration.getQATrainingBeamSize();
         BEAM_SIZE_NEL_TEST = ProjectConfiguration.getNELTrainingBeamSize();
 
-//        scorer = new DefaultScorer();
-        scorer = new LibSVMRegressionScorer();
+        switch (ProjectConfiguration.getScorer()) {
+            case "svm_regression":
+                scorer = new LibSVMRegressionScorer();
+                break;
+            default:
+                scorer = new DefaultScorer();
+                break;
+        }
 
         nelTemplates = new ArrayList<>();
         nelTemplates.add(new NELEdgeTemplate(linkingValidPOSTags, validEdges, semanticTypes));
@@ -109,6 +116,8 @@ public class Pipeline {
         queryTypeTemplates.add(new QueryTypeTemplate(qaValidPOSTags, validEdges, semanticTypes, specialSemanticTypes));
 
         nelExplorer = new EntityBasedSingleNodeExplorer(semanticTypes, linkingValidPOSTags);
+
+        queryTypeExplorer = new QueryTypeExplorer();
 //        nelExplorer = new L2KBEdgeExplorer(semanticTypes, linkingValidPOSTags, validEdges);
         qaExplorer = new QCEdgeExplorer(semanticTypes, specialSemanticTypes, qaValidPOSTags, validEdges);
 
@@ -549,7 +558,7 @@ public class Pipeline {
          */
         List<Explorer<State>> explorers = new ArrayList<>();
 //        explorers.add(new SingleNodeExplorer(semanticTypes, frequentWordsToExclude, validPOSTags));
-        explorers.add(new QueryTypeExplorer(semanticTypes, specialSemanticTypes, qaValidPOSTags, validEdges));
+        explorers.add(queryTypeExplorer);
 //        explorers.add(new EntityBasedSingleNodeExplorer(semanticTypes, qaValidPOSTags));
         /*
          * Create a sampler that generates sampling chains with which it will
@@ -882,7 +891,7 @@ public class Pipeline {
          */
         List<Explorer<State>> explorers = new ArrayList<>();
 //        explorers.add(new SingleNodeExplorer(semanticTypes, frequentWordsToExclude, validPOSTags));
-        explorers.add(new QueryTypeExplorer(semanticTypes, specialSemanticTypes, qaValidPOSTags, validEdges));
+        explorers.add(queryTypeExplorer);
         /*
          * Create a sampler that generates sampling chains with which it will
          * trigger weight updates during training.

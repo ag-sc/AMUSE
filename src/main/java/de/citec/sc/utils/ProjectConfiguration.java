@@ -44,6 +44,7 @@ public class ProjectConfiguration {
     private static final String PARAM_SETTING_API = "-runAsAPI";
     private static final String PARAM_SETTING_LINKING_SAMPLING_LEVEL = "-linkingSamplingLevel";
     private static final String PARAM_SETTING_QA_SAMPLING_LEVEL = "-qaSamplingLevel";
+    private static final String PARAM_SETTING_SCORER = "-scorer";
     
     public static String getLinkingSamplingLevel() {
 
@@ -52,6 +53,14 @@ public class ProjectConfiguration {
         }
         
         return PARAMETERS.get(PARAM_SETTING_LINKING_SAMPLING_LEVEL);
+    }
+    public static String getScorer() {
+
+        if(PARAMETERS.isEmpty()){
+            Main.initializeProjectConfiguration();
+        }
+        
+        return PARAMETERS.get(PARAM_SETTING_SCORER);
     }
     public static String getQASamplingLevel() {
         if(PARAMETERS.isEmpty()){
