@@ -116,9 +116,10 @@ public class Pipeline {
         queryTypeTemplates.add(new QueryTypeTemplate(qaValidPOSTags, validEdges, semanticTypes, specialSemanticTypes));
 
         nelExplorer = new EntityBasedSingleNodeExplorer(semanticTypes, linkingValidPOSTags);
-
+        //        nelExplorer = new L2KBEdgeExplorer(semanticTypes, linkingValidPOSTags, validEdges);
+        
         queryTypeExplorer = new QueryTypeExplorer();
-//        nelExplorer = new L2KBEdgeExplorer(semanticTypes, linkingValidPOSTags, validEdges);
+
         qaExplorer = new QCEdgeExplorer(semanticTypes, specialSemanticTypes, qaValidPOSTags, validEdges);
 
         QATemplateFactory.initialize(linkingValidPOSTags, qaValidPOSTags, validEdges, semanticTypes, specialSemanticTypes);

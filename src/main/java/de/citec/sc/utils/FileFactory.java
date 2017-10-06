@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashSet;
@@ -41,6 +42,26 @@ public class FileFactory {
             br.close();
         } catch (Exception e) {
             System.err.println("Error reading the file: " + file.getPath() + "\n" + e.getMessage());
+        }
+
+        return content;
+    }
+    
+    public static Set<String> readFile(InputStream inputStream) {
+        Set<String> content = new LinkedHashSet<>();
+        try {
+            DataInputStream in = new DataInputStream(inputStream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            String strLine;
+
+            while ((strLine = br.readLine()) != null) {
+                content.add(strLine);
+            }
+            inputStream.close();
+            in.close();
+            br.close();
+        } catch (Exception e) {
+            System.err.println("Error reading the file: inputStream: " + "\n" + e.getMessage());
         }
 
         return content;

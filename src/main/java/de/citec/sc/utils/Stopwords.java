@@ -3,6 +3,7 @@ package de.citec.sc.utils;
 import de.citec.sc.main.Main;
 import de.citec.sc.query.CandidateRetriever;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ public class Stopwords {
     private static Set<String> ENGLISH_STOP_WORDS;
     private static Set<String> GERMAN_STOP_WORDS;
     private static Set<String> SPANISH_STOP_WORDS;
-    private static String outputDirectory;
+    private static String outputDirectory  = "stopwords";
 
     /**
      * Read stopwords from file.
@@ -33,17 +34,13 @@ public class Stopwords {
      * @return
      */
     private static Set<String> readLines(String lang) {
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(outputDirectory + "/stopwords_" + lang + ".txt"));
-            Set<String> stopwords = new HashSet<>();
-            for (String s : lines) {
-                stopwords.add(s.toLowerCase());
-            }
-            return stopwords;
-        } catch (IOException e) {
-            e.printStackTrace();
+        InputStream inputStream = Stopwords.class.getClassLoader().getResourceAsStream(outputDirectory + "/stopwords_" + lang + ".txt");
+        Set<String> content = FileFactory.readFile(inputStream);
+        Set<String> stopwords = new HashSet<>();
+        for (String s : content) {
+            stopwords.add(s.toLowerCase());
         }
-        return null;
+        return stopwords;
     }
 
     public static boolean isStopWord(String word, CandidateRetriever.Language lang) {
@@ -52,7 +49,6 @@ public class Stopwords {
 
         //load
         if (ENGLISH_STOP_WORDS == null) {
-            outputDirectory = Stopwords.class.getClassLoader().getResource("stopwords").getPath();
 
             ENGLISH_STOP_WORDS = readLines("EN");
             GERMAN_STOP_WORDS = readLines("DE");

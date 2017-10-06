@@ -5,6 +5,7 @@
  */
 package de.citec.sc.utils;
 
+import de.citec.sc.qald.QALDCorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import java.io.File;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,8 +44,7 @@ public class Lemmatizer {
     private static GermanTagger germanTagger;
     private static EnglishTagger englishTagger;
     private static SpanishTagger spanishTagger;
-    private static final String outputDirectory = Lemmatizer.class.getClassLoader().getResource("lemmas").getPath();
-//    private static final String outputDirectory = "lemmas";
+    private static final String outputDirectory = "lemmas";
 
     /**
      * writes lemmas to the file
@@ -80,7 +81,9 @@ public class Lemmatizer {
         lemmaMapES = new HashMap<>();
         lemmaMapDE = new HashMap<>();
 
-        Set<String> content = FileFactory.readFile(outputDirectory + "/DE_lemmas.txt");
+        InputStream inputStream = Lemmatizer.class.getClassLoader().getResourceAsStream(outputDirectory + "/DE_lemmas.txt");
+         
+        Set<String> content = FileFactory.readFile(inputStream);
         for (String c : content) {
             String[] data = c.split("\t");
 
@@ -96,7 +99,9 @@ public class Lemmatizer {
             lemmaMapDE.put(token, lemmas);
         }
 
-        content = FileFactory.readFile(outputDirectory + "/EN_lemmas.txt");
+        inputStream = Lemmatizer.class.getClassLoader().getResourceAsStream(outputDirectory + "/EN_lemmas.txt");
+        
+        content = FileFactory.readFile(inputStream);
         for (String c : content) {
             String[] data = c.split("\t");
 
@@ -112,7 +117,9 @@ public class Lemmatizer {
             lemmaMapEN.put(token, lemmas);
         }
 
-        content = FileFactory.readFile(outputDirectory + "/ES_lemmas.txt");
+        inputStream = Lemmatizer.class.getClassLoader().getResourceAsStream(outputDirectory + "/ES_lemmas.txt");
+        
+        content = FileFactory.readFile(inputStream);
         for (String c : content) {
             String[] data = c.split("\t");
 

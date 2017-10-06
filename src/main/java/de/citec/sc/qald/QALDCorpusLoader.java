@@ -18,7 +18,10 @@ import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.query.Search;
 import de.citec.sc.utils.Lemmatizer;
 import de.citec.sc.utils.ProjectConfiguration;
+import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +37,8 @@ import org.json.simple.parser.JSONParser;
  */
 public class QALDCorpusLoader {
     
-    private static String outputDirectoryQALD = QALDCorpusLoader.class.getClassLoader().getResource("qald").getPath();
-    private static String outputDirectoryWebQuestions = QALDCorpusLoader.class.getClassLoader().getResource("webquestions").getPath();
+    private static String outputDirectoryQALD = "qald";//QALDCorpusLoader.class.getClassLoader().getResource("qald").getFile();
+    private static String outputDirectoryWebQuestions = "webquestions"; // QALDCorpusLoader.class.getClassLoader().getResource("webquestions").getFile();
 
     private static final String qald4FileTrain = outputDirectoryQALD+"/qald-4_multilingual_train_withanswers.xml";
     private static final String qald4FileTest = outputDirectoryQALD+"/qald-4_multilingual_test_withanswers.xml";
@@ -227,8 +230,11 @@ public class QALDCorpusLoader {
         JSONParser parser = new JSONParser();
 
         try {
+            
+            InputStream inputStream = QALDCorpusLoader.class.getClassLoader().getResourceAsStream(filePath);
+            
 
-            HashMap obj = (HashMap) parser.parse(new FileReader(filePath));
+            HashMap obj = (HashMap) parser.parse(new InputStreamReader(inputStream));
 
             JSONArray questions = (JSONArray) obj.get("questions");
             for (int i = 0; i < questions.size(); i++) {
