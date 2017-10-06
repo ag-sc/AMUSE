@@ -159,7 +159,7 @@ public class QAEdgeAdvTemplate extends AbstractTemplate<AnnotatedDocument, State
 //            if (headURI.equals("EMPTY_STRING")) {
 //                continue;
 //            }
-            List<Integer> dependentNodes = state.getDocument().getParse().getDependentEdges(tokenID, validPOSTags);
+            List<Integer> dependentNodes = state.getDocument().getParse().getDependentNodes(tokenID, validPOSTags);
 
             if (!dependentNodes.isEmpty()) {
 

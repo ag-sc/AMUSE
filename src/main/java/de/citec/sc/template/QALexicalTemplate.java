@@ -75,7 +75,7 @@ public class QALexicalTemplate extends AbstractTemplate<AnnotatedDocument, State
                 continue;
             }
 
-            List<Integer> childNodes = state.getDocument().getParse().getDependentEdges(tokenID);
+            List<Integer> childNodes = state.getDocument().getParse().getDependentNodes(tokenID);
             List<Integer> siblingNodes = state.getDocument().getParse().getSiblings(tokenID);
 
             Set<Integer> dependentNodes = new HashSet<>();
@@ -83,13 +83,13 @@ public class QALexicalTemplate extends AbstractTemplate<AnnotatedDocument, State
             Set<Integer> headNodes = new HashSet<>();
 
             for (Integer childNode : childNodes) {
-                List<Integer> childOfChildNodes = state.getDocument().getParse().getDependentEdges(childNode);
+                List<Integer> childOfChildNodes = state.getDocument().getParse().getDependentNodes(childNode);
 
                 dependentNodes.addAll(childOfChildNodes);
                 dependentNodes.add(childNode);
             }
             for (Integer sibling : siblingNodes) {
-                List<Integer> childOfSiblingNodes = state.getDocument().getParse().getDependentEdges(sibling);
+                List<Integer> childOfSiblingNodes = state.getDocument().getParse().getDependentNodes(sibling);
 
                 siblings.addAll(childOfSiblingNodes);
                 siblings.add(sibling);

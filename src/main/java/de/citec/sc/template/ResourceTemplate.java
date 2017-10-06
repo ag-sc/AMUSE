@@ -79,7 +79,7 @@ public class ResourceTemplate extends AbstractTemplate<AnnotatedDocument, State,
                 featureVector.addToValue("RESOURCE FEATURE:  EXCLUDE THIS WORD: URI: " + headURI + " TOKEN: " + headToken + " POS : " + headPOS, 1.0);
             }
 
-            List<Integer> dependentNodes = state.getDocument().getParse().getDependentEdges(tokenID);
+            List<Integer> dependentNodes = state.getDocument().getParse().getDependentNodes(tokenID);
 
             //add lexical feature only for nouns, noun phrases etc.
             if (dependentNodes.isEmpty() && headPOS.startsWith("NN")) {

@@ -53,7 +53,7 @@ public class SemanticComposition {
         //loop over all slot arguments and join them
         for (Integer depNode : state.getSlotVariables().keySet()) {
 
-            if (state.getDocument().getParse().getDependentEdges(depNode, validPOSTags).size() > 0) {
+            if (state.getDocument().getParse().getDependentNodes(depNode, validPOSTags).size() > 0) {
                 continue;
             }
 
@@ -92,7 +92,7 @@ public class SemanticComposition {
     private static RDFDUDES mergeChildNodes(State state, Integer headNode) {
         //get dependent nodes
 
-        List<Integer> childNodes = state.getDocument().getParse().getDependentEdges(headNode);
+        List<Integer> childNodes = state.getDocument().getParse().getDependentNodes(headNode);
 
         for (Integer depNodeIndex : childNodes) {
 

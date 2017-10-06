@@ -559,7 +559,7 @@ public class DependencyParse {
      * @param headNode
      * @return List of dependent nodes
      */
-    public List<Integer> getDependentEdges(int headNode) {
+    public List<Integer> getDependentNodes(int headNode) {
 
         List<Integer> list = new ArrayList<>();
         for (Integer k : relations.keySet()) {
@@ -580,7 +580,7 @@ public class DependencyParse {
      * @param acceptedPOSTAGs set of postags
      * @return List of dependent nodes
      */
-    public List<Integer> getDependentEdges(int headNode, Set<String> acceptedPOSTAGs) {
+    public List<Integer> getDependentNodes(int headNode, Set<String> acceptedPOSTAGs) {
 
         Set<Integer> set = new HashSet<>();
         for (Integer k : relations.keySet()) {
@@ -650,7 +650,7 @@ public class DependencyParse {
         Integer parentNode = getParentNode(nodeId);
 
         if (parentNode != null) {
-            List<Integer> allChildren = getDependentEdges(parentNode);
+            List<Integer> allChildren = getDependentNodes(parentNode);
 
             for (Integer s : allChildren) {
 
@@ -683,7 +683,7 @@ public class DependencyParse {
         Integer parentNode = getParentNode(nodeId);
 
         if (parentNode != null) {
-            List<Integer> allChildren = getDependentEdges(parentNode);
+            List<Integer> allChildren = getDependentNodes(parentNode);
 
             for (Integer s : allChildren) {
                 if (!s.equals(nodeId)) {

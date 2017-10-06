@@ -66,7 +66,7 @@ public class QCEdgeExplorer implements Explorer<State> {
                 continue;
             }
 
-            List<Integer> childNodes = currentState.getDocument().getParse().getDependentEdges(indexOfNode);
+            List<Integer> childNodes = currentState.getDocument().getParse().getDependentNodes(indexOfNode);
             List<Integer> siblings = currentState.getDocument().getParse().getSiblings(indexOfNode);
 
             Set<Integer> depNodes = new HashSet<>();
@@ -74,13 +74,13 @@ public class QCEdgeExplorer implements Explorer<State> {
             //loop over each dependent node and get the dependent nodes of those
             //add the child node itself
             for (Integer childNode : childNodes) {
-                List<Integer> childOfChildNodes = currentState.getDocument().getParse().getDependentEdges(childNode);
+                List<Integer> childOfChildNodes = currentState.getDocument().getParse().getDependentNodes(childNode);
 
                 depNodes.addAll(childOfChildNodes);
                 depNodes.add(childNode);
             }
             for (Integer sibling : siblings) {
-                List<Integer> childOfSiblingNodes = currentState.getDocument().getParse().getDependentEdges(sibling);
+                List<Integer> childOfSiblingNodes = currentState.getDocument().getParse().getDependentNodes(sibling);
 
                 depNodes.addAll(childOfSiblingNodes);
                 depNodes.add(sibling);

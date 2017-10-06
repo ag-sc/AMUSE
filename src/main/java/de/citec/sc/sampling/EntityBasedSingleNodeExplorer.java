@@ -127,6 +127,33 @@ public class EntityBasedSingleNodeExplorer implements Explorer<State> {
         Set<State> newStates = new LinkedHashSet<>();
 
         for (URIVariable entityHiddenVar : entityURIs) {
+            Integer entityNodeId = entityHiddenVar.getTokenId();
+            
+            boolean hasDependencyRelation = false;
+            boolean hasParentRelation = false;
+            List<Integer> dependentNodes = currentState.getDocument().getParse().getDependentNodes(indexOfNode);
+            List<Integer> siblingNodes = currentState.getDocument().getParse().getSiblings(indexOfNode);
+            List<Integer> dependentNodesOfEntity = currentState.getDocument().getParse().getDependentNodes(entityNodeId);
+            
+            //check if the node has any relation to the entity
+            if(dependentNodes.contains(entityNodeId) || siblingNodes.contains(entityNodeId)){
+                hasDependencyRelation = true;
+            }
+            
+            if(dependentNodesOfEntity.contains(indexOfNode)){
+                hasParentRelation = true;
+            }
+            
+            //if there is not any connection then don't explore it further.
+            if(!hasDependencyRelation && !hasParentRelation){
+                continue;
+            }
+            
+            //this should never happen, a node can't be both parent and dependent node
+            if(hasDependencyRelation && hasParentRelation){
+                continue;
+            }
+            
             Set<Candidate> uris = getDBpediaMatchesWithEntity(entityHiddenVar.getCandidate().getUri(), dude, node, pos);
 
             for (Candidate c : uris) {
@@ -141,7 +168,13 @@ public class EntityBasedSingleNodeExplorer implements Explorer<State> {
                     s.addHiddenVariable(indexOfNode, indexOfDude, c);
                     s.addHiddenVariable(entityHiddenVar.getTokenId(), entityHiddenVar.getDudeId(), entityHiddenVar.getCandidate());
                     //slot 1
-                    s.addSlotVariable(entityHiddenVar.getTokenId(), indexOfNode, 1);
+                    if(hasParentRelation){
+                        s.addSlotVariable(indexOfNode,entityHiddenVar.getTokenId(), 1);
+                    }
+                    if(hasDependencyRelation){
+                        s.addSlotVariable(entityHiddenVar.getTokenId(), indexOfNode, 1);
+                    }
+                    
 
                     if (!s.equals(currentState)) {
                         newStates.add(s);
@@ -155,7 +188,13 @@ public class EntityBasedSingleNodeExplorer implements Explorer<State> {
                     s.addHiddenVariable(indexOfNode, indexOfDude, c);
                     s.addHiddenVariable(entityHiddenVar.getTokenId(), entityHiddenVar.getDudeId(), entityHiddenVar.getCandidate());
                     //slot 2
-                    s.addSlotVariable(entityHiddenVar.getTokenId(), indexOfNode, 2);
+                    //slot 1
+                    if(hasParentRelation){
+                        s.addSlotVariable(indexOfNode,entityHiddenVar.getTokenId(), 2);
+                    }
+                    if(hasDependencyRelation){
+                        s.addSlotVariable(entityHiddenVar.getTokenId(), indexOfNode, 2);
+                    }
 
                     if (!s.equals(currentState)) {
                         newStates.add(s);

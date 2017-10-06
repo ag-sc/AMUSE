@@ -3,15 +3,9 @@ package de.citec.sc.main;
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.demo.API;
-import de.citec.sc.dudes.rdf.ExpressionFactory;
-import de.citec.sc.dudes.rdf.RDFDUDES;
-import de.citec.sc.index.DBpediaIndex;
 import de.citec.sc.learning.QueryConstructor;
-import static de.citec.sc.main.Pipeline.nelTemplates;
-import static de.citec.sc.main.Pipeline.scorer;
 import de.citec.sc.qald.QALDCorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
-import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
 import de.citec.sc.query.CandidateRetrieverOnMemory;
 import de.citec.sc.query.DBpediaLabelRetriever;
@@ -22,17 +16,14 @@ import de.citec.sc.utils.DBpediaEndpoint;
 import de.citec.sc.utils.ProjectConfiguration;
 import de.citec.sc.variable.State;
 import de.citec.sc.wordNet.WordNetAnalyzer;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 import learning.Model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -307,9 +298,9 @@ public class Main {
 
             args = new String[40];
             args[0] = "-trainDataset";//query dataset
-            args[1] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
+            args[1] = "webQuestionsSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
             args[2] = "-testDataset";  //test dataset
-            args[3] = "qaldSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain    webQuestionsTest webQuestionsSubset
+            args[3] = "webQuestionsSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain    webQuestionsTest webQuestionsSubset
             args[4] = "-includeManualLexicon";//manual lexicon
             args[5] = "true";//true, false
             args[6] = "-includeMatollLexicon";//matoll
