@@ -298,7 +298,7 @@ public class Main {
 
             args = new String[40];
             args[0] = "-trainDataset";//query dataset
-            args[1] = "webQuestionsSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
+            args[1] = "webQuestionsTrain";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain  webQuestionsTest webQuestionsSubset
             args[2] = "-testDataset";  //test dataset
             args[3] = "webQuestionsSubset";//qald6Train  qald6Test   qaldSubset   webQuestionsTrain    webQuestionsTest webQuestionsSubset
             args[4] = "-includeManualLexicon";//manual lexicon

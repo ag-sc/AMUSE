@@ -237,7 +237,7 @@ public class UDPipe {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 
-        DependencyParse p1 = UDPipe.parse("what did Barack_Obama accomplish?", Language.EN);
+        DependencyParse p1 = UDPipe.parse("¿Quién creó Wikipedia?", Language.ES);
         System.out.println(p1);
 
         System.exit(0);
