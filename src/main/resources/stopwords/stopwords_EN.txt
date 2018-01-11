@@ -153,6 +153,10 @@ who's
 whom
 why
 why's
+when
+where
+who
+how
 with
 won't
 would

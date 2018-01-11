@@ -8,7 +8,7 @@ package de.citec.sc.query;
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.main.Main;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.qald.SPARQLParser;
 import de.citec.sc.qald.Triple;
 import de.citec.sc.query.CandidateRetriever.Language;
@@ -64,8 +64,8 @@ public class AnnotateManualLexicon {
                 }
             }
 
-            QALDCorpus corpusTrain = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
-            QALDCorpus corpusTest = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+            QALDCorpus corpusTrain = CorpusLoader.load(CorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+            QALDCorpus corpusTest = CorpusLoader.load(CorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
             System.out.println("Left docs: Train: " + (corpusTrain.getDocuments().size() - coveredTrainIds.size()));
             System.out.println("Left docs: Test: " + (corpusTest.getDocuments().size() - coveredTestIds.size()));

@@ -2,7 +2,7 @@ package de.citec.sc.main;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
 import de.citec.sc.query.ManualLexicon;
@@ -42,8 +42,8 @@ public class AnalyseTrainingDocuments {
         boolean onlyDBO = true;
         boolean isHybrid = false;
 
-        QALDCorpus trainCorpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
-        QALDCorpus testCorpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus trainCorpus = CorpusLoader.load(CorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus testCorpus = CorpusLoader.load(CorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
         List<AnnotatedDocument> trainDocuments = trainCorpus.getDocuments();
         List<AnnotatedDocument> testDocuments = testCorpus.getDocuments();
@@ -133,8 +133,8 @@ public class AnalyseTrainingDocuments {
         boolean onlyDBO = true;
         boolean isHybrid = false;
 
-        QALDCorpus trainCorpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
-        QALDCorpus testCorpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus trainCorpus = CorpusLoader.load(CorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus testCorpus = CorpusLoader.load(CorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
         List<AnnotatedDocument> trainDocuments = trainCorpus.getDocuments();
         List<AnnotatedDocument> testDocuments = testCorpus.getDocuments();

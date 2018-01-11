@@ -7,7 +7,7 @@ package de.citec.sc.nel;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
 import java.util.List;

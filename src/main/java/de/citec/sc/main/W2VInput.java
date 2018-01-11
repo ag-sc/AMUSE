@@ -7,7 +7,7 @@ package de.citec.sc.main;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
@@ -59,8 +59,8 @@ public class W2VInput {
             boolean onlyDBO = true;
             boolean isHybrid = false;
 
-            QALDCorpus corpus1 = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
-            QALDCorpus corpus2 = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+            QALDCorpus corpus1 = CorpusLoader.load(CorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+            QALDCorpus corpus2 = CorpusLoader.load(CorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
             corpus1.getDocuments().addAll(corpus2.getDocuments());
 

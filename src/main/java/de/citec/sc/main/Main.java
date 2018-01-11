@@ -4,7 +4,7 @@ import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.demo.API;
 import de.citec.sc.learning.QueryConstructor;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
 import de.citec.sc.query.CandidateRetrieverOnMemory;
@@ -55,8 +55,8 @@ public class Main {
             initialize();
 
             //load training and testing corpus
-            List<AnnotatedDocument> trainDocuments = getDocuments(QALDCorpusLoader.Dataset.valueOf(ProjectConfiguration.getTrainingDatasetName()), ProjectConfiguration.getTrainMaxWordCount());
-            List<AnnotatedDocument> testDocuments = getDocuments(QALDCorpusLoader.Dataset.valueOf(ProjectConfiguration.getTestDatasetName()), ProjectConfiguration.getTestMaxWordCount());
+            List<AnnotatedDocument> trainDocuments = getDocuments(CorpusLoader.Dataset.valueOf(ProjectConfiguration.getTrainingDatasetName()), ProjectConfiguration.getTrainMaxWordCount());
+            List<AnnotatedDocument> testDocuments = getDocuments(CorpusLoader.Dataset.valueOf(ProjectConfiguration.getTestDatasetName()), ProjectConfiguration.getTestMaxWordCount());
 
             System.out.println("Training on " + ProjectConfiguration.getTrainingDatasetName() + " with " + trainDocuments.size());
             System.out.println("Testing on " + ProjectConfiguration.getTestDatasetName() + " with " + testDocuments.size());
@@ -209,7 +209,7 @@ public class Main {
         System.out.println("Initialization process has ended ....");
     }
 
-    private static List<AnnotatedDocument> getDocuments(QALDCorpusLoader.Dataset dataset, int maxWordCount) {
+    private static List<AnnotatedDocument> getDocuments(CorpusLoader.Dataset dataset, int maxWordCount) {
 
         long startTime = System.currentTimeMillis();
 
@@ -227,13 +227,13 @@ public class Main {
             isHybrid = false;
         }
 
-        QALDCorpus corpus = QALDCorpusLoader.load(dataset, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus corpus = CorpusLoader.load(dataset, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
         List<AnnotatedDocument> documents = new ArrayList<>();
 
         for (AnnotatedDocument d1 : corpus.getDocuments()) {
 
-            if (dataset.equals(QALDCorpusLoader.Dataset.webQuestionsTest) || dataset.equals(QALDCorpusLoader.Dataset.webQuestionsTrain) || dataset.equals(QALDCorpusLoader.Dataset.webQuestionsSubset)) {
+            if (dataset.equals(CorpusLoader.Dataset.webQuestionsTest) || dataset.equals(CorpusLoader.Dataset.webQuestionsTrain) || dataset.equals(CorpusLoader.Dataset.webQuestionsSubset)) {
                 if (d1.getParse() != null) {
                     String before = d1.getParse().toString();
 

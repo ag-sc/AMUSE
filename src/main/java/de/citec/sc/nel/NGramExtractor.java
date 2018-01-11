@@ -1,5 +1,6 @@
 package de.citec.sc.nel;
 
+import de.citec.sc.parser.DependencyParse;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.utils.ProjectConfiguration;
 import de.citec.sc.utils.Stopwords;
@@ -87,6 +88,77 @@ public class NGramExtractor {
         return annotations;
     }
 
+    
+    public static List<EntityAnnotation> getNGrams(DependencyParse parseTree, int maxNgramSize, List<EntityAnnotation> coveredAnnotations) {
+
+        List<EntityAnnotation> annotations = new ArrayList<>();
+
+        String[] unigrams = new String[parseTree.getNodes().size()];
+        
+        int c = 0;
+        for(Integer nodeId : parseTree.getNodes().keySet()){
+            String node = parseTree.getNodes().get(nodeId);
+            unigrams[c] = node;
+            c++;
+        }
+
+        for (int i = 0; i < unigrams.length; i++) {
+
+            int beginPosition = 0;
+
+            for (int l = 0; l < i; l++) {
+                //get character length of previous unigrams
+                beginPosition += unigrams[l].length();
+                //plus 1 for space
+                beginPosition += 1;
+            }
+
+            for (int n = maxNgramSize; n > 0; n--) {
+
+                if (i + n <= unigrams.length) {
+
+                    String ngram = "";
+
+                    for (int k = i; k < i + n; k++) {
+                        ngram += unigrams[k] + " ";
+                    }
+
+                    ngram = ngram.replaceAll("n't", " not")
+                        .replaceAll("'re", " are")
+                        .replaceAll("'s", " is")
+                        .replaceAll("'m", " am");
+                    
+                    ngram = Normalizer.normalize(ngram, Normalizer.Form.NFD);
+
+                    ngram = ngram.replaceAll("[!?,.;:'\"]", "");
+//                    ngram = StringPreprocessor.preprocess(ngram, CandidateRetriever.Language.EN);
+//
+                    if (Stopwords.isStopWord(ngram, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()))) {
+                        continue;
+                    }
+
+                    int endPosition = beginPosition + ngram.length() - 1;
+
+                    //check if this span has been covered before
+                    //add new annotation only if it is new span
+                    if (isNewSpan(coveredAnnotations, beginPosition, endPosition)) {
+
+                        EntityAnnotation a = new EntityAnnotation();
+                        a.setType("NGRAM");
+                        a.setValues(new HashSet<>(Arrays.asList("NGRAM")));
+                        a.setSpan(new Span(beginPosition, endPosition));
+                        a.setProvenance(new Provenance("NO-SOURCE", 1f));
+                        annotations.add(a);
+                    }
+
+                }
+            }
+        }
+
+        annotations.addAll(coveredAnnotations);
+
+        return annotations;
+    }
     //checks whether the span is already in coveredAnnotations based on argument beginPos and endPos
     private static boolean isNewSpan(List<EntityAnnotation> coveredAnnotations, int beginPos, int endPos) {
 

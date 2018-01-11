@@ -8,7 +8,7 @@ package de.citec.sc.utils;
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.main.Main;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
 import de.citec.sc.query.CandidateRetrieverOnMemory;
@@ -31,7 +31,7 @@ public class EntityExtractorUtils {
     public static void main(String[] args) {
         CandidateRetriever retriever = new CandidateRetrieverOnLucene(false, "luceneIndex");
 
-        QALDCorpus corpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.webQuestionsTrain, false, false, false, true, false);
+        QALDCorpus corpus = CorpusLoader.load(CorpusLoader.Dataset.webQuestionsTrain, false, false, false, true, false);
         
         System.out.println(retriever.getAllResources("grand bahama", 10, CandidateRetriever.Language.EN));
         System.out.println(retriever.getAllResources("bahamas", 10, CandidateRetriever.Language.EN));

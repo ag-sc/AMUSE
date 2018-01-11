@@ -11,7 +11,7 @@ import de.citec.sc.evaluator.QueryEvaluator;
 import de.citec.sc.learning.QueryConstructor;
 import de.citec.sc.main.Main;
 import de.citec.sc.parser.DependencyParse;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.qald.Question;
 import de.citec.sc.query.Candidate;
 import de.citec.sc.query.CandidateRetriever;
@@ -396,7 +396,7 @@ public class QueryConstructorTest {
 
         QueryConstructor.initialize(specialSemanticTypes, semanticTypes, validPOSTags, edges);
 
-        List<AnnotatedDocument> documents = getDocuments(QALDCorpusLoader.Dataset.valueOf("qaldSubset"));
+        List<AnnotatedDocument> documents = getDocuments(CorpusLoader.Dataset.valueOf("qaldSubset"));
 
         AnnotatedDocument doc = null;
 
@@ -445,7 +445,7 @@ public class QueryConstructorTest {
 
     }
 
-    private static List<AnnotatedDocument> getDocuments(QALDCorpusLoader.Dataset dataset) {
+    private static List<AnnotatedDocument> getDocuments(CorpusLoader.Dataset dataset) {
 
         boolean includeYAGO = false;
         boolean includeAggregation = false;
@@ -453,7 +453,7 @@ public class QueryConstructorTest {
         boolean onlyDBO = true;
         boolean isHybrid = false;
 
-        QALDCorpus corpus = QALDCorpusLoader.load(dataset, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus corpus = CorpusLoader.load(dataset, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
         List<AnnotatedDocument> documents = new ArrayList<>();
 

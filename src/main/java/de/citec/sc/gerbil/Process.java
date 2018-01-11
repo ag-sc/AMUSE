@@ -10,7 +10,7 @@ import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.gerbil.instance.Convert;
 import de.citec.sc.gerbil.instance.QALDInstance;
 import de.citec.sc.main.Main;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.qald.Question;
 import de.citec.sc.query.CandidateRetriever;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class Process {
 
         CandidateRetriever.Language lang = CandidateRetriever.Language.EN;
 
-        QALDCorpus corpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus corpus = CorpusLoader.load(CorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
         for (AnnotatedDocument d : corpus.getDocuments()) {
 

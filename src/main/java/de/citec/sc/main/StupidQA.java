@@ -7,9 +7,11 @@ package de.citec.sc.main;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
+import de.citec.sc.evaluator.AnswerEvaluator;
 import de.citec.sc.nel.AnnotationExtractor;
 import de.citec.sc.nel.EntityAnnotation;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.nel.StupidQAAnnotationExtractor;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
 import de.citec.sc.query.CandidateRetrieverOnMemory;
@@ -54,80 +56,128 @@ public class StupidQA {
         linkingValidPOSTags.add("ADP");
 
         //get documents
-        QALDCorpus c = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.webQuestionsSubset, true, true, true, true, true);
+        QALDCorpus c = CorpusLoader.load(CorpusLoader.Dataset.webQuestionsSubset, true, true, true, true, true);
 
+        double macroF1 = 0;
+
+        int counter = 0;
         for (AnnotatedDocument d : c.getDocuments()) {
 
             System.out.println(d.toString());
+
+            if (d.getParse() == null) {
+                continue;
+            }
+
+            if (d.getParse().getToken(1) == null) {
+                continue;
+            }
+
+            counter++;
 
             String firstWord = d.getParse().getToken(1);
 
             String classURI = getType(firstWord);
 
-            List<EntityAnnotation> annotations = AnnotationExtractor.getAnnotations(d.getQuestionString(), 4, 0.90, 0.60, retriever);
+            List<EntityAnnotation> annotations = StupidQAAnnotationExtractor.getAnnotations(d,retriever, linkingValidPOSTags);
 
-            for (EntityAnnotation e : annotations) {
+            if (annotations.isEmpty()) {
+                continue;
+            }
+            
 
-                for (Integer nodeId : d.getParse().getNodes().keySet()) {
-                    String nodeText = d.getParse().getNodes().get(nodeId);
+            for (EntityAnnotation a : annotations) {
+                System.out.println(a.print(d.getQuestionString()));
+            }
+            System.out.println("\n\n");
+            
 
-                    String spannedText = e.getSpannedText(d.getQuestionString());
+            EntityAnnotation maxAnnotation = annotations.get(0);
 
-                    String entityURI = (String) e.getValues().toArray()[0];
+            String constructedQuery = "";
+            double maxQueryScore = 0;
+            
+            for(EntityAnnotation e : annotations){
+                
+                String entityURI = "";
+                for(String v : e.getValues()){
+                    entityURI = v;
+                }
+                
+                
+                String propertyQuery = "SELECT DISTINCT ?p WHERE { {<" + entityURI + "> ?p ?o. } UNION {?s ?p <" + entityURI + "> .}}";
+                Set<String> queryResults = DBpediaEndpoint.runQuery(propertyQuery, true);
 
-                    //get all properties from DBpedia
-                    String propertyQuery = "SELECT DISTINCT ?l ?p WHERE { {<" + entityURI + "> ?p ?o. } UNION {?s ?p <" + entityURI + "> .}}";
-                    Set<String> queryResults = DBpediaEndpoint.runQuery(propertyQuery, true);
+            }
 
-                    if (nodeText.equals(spannedText)) {
+            for (Integer nodeId : d.getParse().getNodes().keySet()) {
+                String nodeText = d.getParse().getNodes().get(nodeId);
 
-                        //get all dependent nodes
-                        List<Integer> depNodes = d.getParse().getDependentNodes(nodeId, linkingValidPOSTags);
+                String spannedText = maxAnnotation.getSpannedText(d.getQuestionString());
+
+                String entityURI = (String) maxAnnotation.getValues().toArray()[0];
+
+                //get all properties from DBpedia
+                String propertyQuery = "SELECT DISTINCT ?l ?p WHERE { {<" + entityURI + "> ?p ?o. } UNION {?s ?p <" + entityURI + "> .}}";
+                Set<String> queryResults = DBpediaEndpoint.runQuery(propertyQuery, true);
+
+                if (nodeText.equals(spannedText)) {
+
+                    //get all dependent nodes
+                    List<Integer> depNodes = d.getParse().getDependentNodes(nodeId, linkingValidPOSTags);
 //                        List<Integer> siblings = d.getParse().getSiblings(nodeId, linkingValidPOSTags);
-                        Integer headNode = d.getParse().getParentNode(nodeId);
+                    Integer headNode = d.getParse().getParentNode(nodeId);
 
-                        List<Integer> connectedNodes = new ArrayList<>();
-                        connectedNodes.addAll(depNodes);
+                    List<Integer> connectedNodes = new ArrayList<>();
+                    connectedNodes.addAll(depNodes);
 //                        connectedNodes.addAll(siblings);
-                        connectedNodes.add(headNode);
+                    connectedNodes.add(headNode);
 
-                        String maxDepNodeURI = "";
-                        for (Integer depNodeId : connectedNodes) {
+                    String maxDepNodeURI = "";
+                    for (Integer depNodeId : connectedNodes) {
 
-                            //compare the depNodeText via EmbeddingService to find the maximum
-                            String depNodeText = d.getParse().getNodes().get(depNodeId);
+                        //compare the depNodeText via EmbeddingService to find the maximum
+                        String depNodeText = d.getParse().getNodes().get(depNodeId);
 
-                            for (String p : queryResults) {
+                        for (String p : queryResults) {
 
-                                if (!p.startsWith("http://dbpedia.org/ontology/")) {
-                                    continue;
-                                }
+                            if (!p.startsWith("http://dbpedia.org/ontology/")) {
+                                continue;
+                            }
 
-                                if (p.startsWith("http://dbpedia.org/ontology/wiki")) {
-                                    continue;
-                                }
+                            if (p.startsWith("http://dbpedia.org/ontology/wiki")) {
+                                continue;
+                            }
 
-                                String label = DBpediaLabelRetriever.getLabel(p, CandidateRetriever.Language.EN);
+                            String label = DBpediaLabelRetriever.getLabel(p, CandidateRetriever.Language.EN);
 
-                                double embeddingSimilarity = EmbeddingUtil.similarity(depNodeText, label, "EN");
+                            double embeddingSimilarity = EmbeddingUtil.similarity(depNodeText, label, "EN");
 
-                                String query = getQuery(classURI, entityURI, p);
+                            String query = getQuery(classURI, entityURI, p);
 
-                                if (!query.isEmpty()) {
-                                    System.out.println(entityURI + "  " + p + "   " + embeddingSimilarity);
-                                    System.out.println(query);
+                            if (!query.isEmpty()) {
+//                                    System.out.println(entityURI + "  " + p + "   " + embeddingSimilarity);
+//                                    System.out.println(query);
+
+                                if (embeddingSimilarity > maxQueryScore) {
+                                    maxQueryScore = embeddingSimilarity;
+                                    constructedQuery = query;
                                 }
                             }
                         }
                     }
                 }
-
-                System.out.println("\t" + e.print(d.getQuestionString()));
             }
 
-            break;
+//                System.out.println("\t" + e.print(d.getQuestionString()));
+            double f1 = AnswerEvaluator.evaluate(d.getGoldQueryString(), constructedQuery, false);
+            System.out.println(constructedQuery + "   score : " + f1);
+            System.out.println("\n=================================================================================================================\n");
 
+            macroF1 += f1;
         }
+
+        System.out.println("\n\nMacroF1 : " + (macroF1 / counter));
     }
 
     private static String getType(String word) {
@@ -155,9 +205,9 @@ public class StupidQA {
 
             Set<String> answers1 = DBpediaEndpoint.runQuery(query1, true);
             if (!answers1.isEmpty()) {
-                for(String a : answers1){
+                for (String a : answers1) {
                     //check if matches the date regex
-                    if(isTokenDataType(a)){
+                    if (isTokenDataType(a)) {
                         return query1;
                     }
                 }

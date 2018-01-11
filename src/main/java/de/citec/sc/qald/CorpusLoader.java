@@ -5,22 +5,23 @@
  */
 package de.citec.sc.qald;
 
+import corpus.FileUtils;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.corpus.AnnotatedDocument;
-import de.citec.sc.main.Main;
+import de.citec.sc.evaluator.BagOfLinksEvaluator;
 import de.citec.sc.nel.AnnotationExtractor;
 import de.citec.sc.nel.EntityAnnotation;
 import de.citec.sc.parser.DependencyParse;
-import de.citec.sc.parser.StanfordParser;
 import de.citec.sc.parser.UDPipe;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.query.Search;
-import de.citec.sc.utils.Lemmatizer;
+import de.citec.sc.utils.DBpediaEndpoint;
 import de.citec.sc.utils.ProjectConfiguration;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,26 +33,31 @@ import org.json.simple.parser.JSONParser;
  *
  * @author sherzod
  */
-public class QALDCorpusLoader {
-    
-    private static String outputDirectoryQALD = QALDCorpusLoader.class.getClassLoader().getResource("qald").getPath();
-    private static String outputDirectoryWebQuestions = QALDCorpusLoader.class.getClassLoader().getResource("webquestions").getPath();
+public class CorpusLoader {
 
-    private static final String qald4FileTrain = outputDirectoryQALD+"/qald-4_multilingual_train_withanswers.xml";
-    private static final String qald4FileTest = outputDirectoryQALD+"/qald-4_multilingual_test_withanswers.xml";
-    private static final String qald5FileTrain = outputDirectoryQALD+"/qald-5_train.xml";
-    private static final String qald6FileTrain = outputDirectoryQALD+"/qald-6-train-multilingual.json";
-    private static final String qald7FileTrain = outputDirectoryQALD+"/qald-7-train-multilingual.json";
-    private static final String qald6FileTest = outputDirectoryQALD+"/qald-6-test-multilingual.json";
-    private static final String qald5FileTest = outputDirectoryQALD+"/qald-5_test.xml";
-    private static final String qaldSubset = outputDirectoryQALD+"/qald_test.xml";
-    private static final String webQuestionsTrain = outputDirectoryWebQuestions+"/WebQuestions.DBpedia.train.json";
-    private static final String webQuestionsTest = outputDirectoryWebQuestions+"/WebQuestions.DBpedia.test.json";
-    private static final String webQuestionsSubset = outputDirectoryWebQuestions+"/WebQuestions.DBpedia.subset.json";
+    private static String outputDirectoryQALD = CorpusLoader.class.getClassLoader().getResource("qald").getPath();
+    private static String outputDirectoryWebQuestions = CorpusLoader.class.getClassLoader().getResource("webquestions").getPath();
+    private static String outputDirectorySimpleQuestions = CorpusLoader.class.getClassLoader().getResource("simpleQuestions").getPath();
+
+    private static final String qald4FileTrain = outputDirectoryQALD + "/qald-4_multilingual_train_withanswers.xml";
+    private static final String qald4FileTest = outputDirectoryQALD + "/qald-4_multilingual_test_withanswers.xml";
+    private static final String qald5FileTrain = outputDirectoryQALD + "/qald-5_train.xml";
+    private static final String qald6FileTrain = outputDirectoryQALD + "/qald-6-train-multilingual.json";
+    private static final String qald7FileTrain = outputDirectoryQALD + "/qald-7-train-multilingual.json";
+    private static final String qald6FileTest = outputDirectoryQALD + "/qald-6-test-multilingual.json";
+    private static final String qald5FileTest = outputDirectoryQALD + "/qald-5_test.xml";
+    private static final String qaldSubset = outputDirectoryQALD + "/qald_test.xml";
+    private static final String webQuestionsTrain = outputDirectoryWebQuestions + "/WebQuestions.DBpedia.train.json";
+    private static final String webQuestionsTest = outputDirectoryWebQuestions + "/WebQuestions.DBpedia.test.json";
+    private static final String webQuestionsSubset = outputDirectoryWebQuestions + "/WebQuestions.DBpedia.subset.json";
+    private static final String simpleQuestionsTest = outputDirectorySimpleQuestions + "/annotated_db_data_test.txt";
+    private static final String simpleQuestionsTrain = outputDirectorySimpleQuestions + "/annotated_db_data_train.txt";
+    private static final String simpleQuestionsValid = outputDirectorySimpleQuestions + "/annotated_db_data_valid.txt";
+    private static final String simpleQuestionsSubset = outputDirectorySimpleQuestions + "/annotated_db_data_subset.txt";
 
     public enum Dataset {
 
-        qald4Test, qald4Train, qald5Test, qald5Train, qaldSubset, qald6Train, qald6Test, qald7Train, webQuestionsTrain, webQuestionsTest, webQuestionsSubset
+        qald4Test, qald4Train, qald5Test, qald5Train, qaldSubset, qald6Train, qald6Test, qald7Train, webQuestionsTrain, webQuestionsTest, webQuestionsSubset, simpleQuestionsTest, simpleQuestionsTrain, simpleQuestionsValid, simpleQuestionsSubset
     }
 
     /**
@@ -118,6 +124,22 @@ public class QALDCorpusLoader {
                 filePath = webQuestionsSubset;
                 questions = readWebQuestionsJSONFile(filePath);
                 break;
+            case "simpleQuestionsTrain":
+                filePath = simpleQuestionsTrain;
+                questions = readSimpleQuestionsFile(filePath);
+                break;
+            case "simpleQuestionsTest":
+                filePath = simpleQuestionsTest;
+                questions = readSimpleQuestionsFile(filePath);
+                break;
+            case "simpleQuestionsSubset":
+                filePath = simpleQuestionsSubset;
+                questions = readSimpleQuestionsFile(filePath);
+                break;
+            case "simpleQuestionsValid":
+                filePath = simpleQuestionsValid;
+                questions = readSimpleQuestionsFile(filePath);
+                break;
             default:
                 System.err.println("Corpus not found!");
                 System.exit(0);
@@ -138,19 +160,21 @@ public class QALDCorpusLoader {
 
             DependencyParse parse = null;
             //do only for webquestions datasets
-            if (dataset.name().toLowerCase().contains("webquestions")) {
+            if (dataset.name().toLowerCase().contains("webquestions") || dataset.name().toLowerCase().contains("simplequestions")) {
                 //extract entities with 2 pass over the input
-                List<EntityAnnotation> annotations = AnnotationExtractor.getAnnotations(text, 4, 0.90, 0.65, Search.getRetriever());
+                List<EntityAnnotation> annotations = AnnotationExtractor.getAnnotations(text, 6, 0.90, 0.65, Search.getRetriever());
                 HashMap<String, String> replacedMap = new HashMap<>();
 
                 //replace each found entity with Barack_Obama_N_index
-                
                 for (EntityAnnotation e1 : annotations) {
-                    String entityText = e1.getSpannedText(text)+"";
+                    String entityText = e1.getSpannedText(text) + "";
 
-                    replacedText = replacedText.replace(entityText, "Barack_Obama_N"+annotations.indexOf(e1));
+                    if (entityText.split(" ").length > 1) {
 
-                    replacedMap.put("Barack_Obama_N"+annotations.indexOf(e1), entityText+"");
+                        replacedText = replacedText.replace(entityText, "Obama" + annotations.indexOf(e1));
+
+                        replacedMap.put("Obama" + annotations.indexOf(e1), entityText + "");
+                    }
                 }
 
                 parse = UDPipe.parse(replacedText, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
@@ -163,26 +187,22 @@ public class QALDCorpusLoader {
                     for (Integer key : nodes.keySet()) {
                         String node = nodes.get(key);
 
-                        if(replacedMap.containsKey(node)){
-                            changedNodes.put(key, replacedMap.get(node)+"");
-                            
+                        if (replacedMap.containsKey(node)) {
+                            changedNodes.put(key, replacedMap.get(node) + "");
+
                             parse.setPOSTag(key, "PROPN");
-                        }
-                        else{
-                            changedNodes.put(key, node+"");
-                            
+                        } else {
+                            changedNodes.put(key, node + "");
+
                         }
                     }
                     parse.setNodes(changedNodes);
                 }
-            }
-            else{
+            } else {
                 parse = UDPipe.parse(replacedText, CandidateRetriever.Language.valueOf(ProjectConfiguration.getLanguage()));
             }
-            
 
             AnnotatedDocument document = new AnnotatedDocument(parse, q);
-            
 
             documents.add(document);
 
@@ -304,6 +324,64 @@ public class QALDCorpusLoader {
         }
 
         return qaldQuestions;
+    }
+
+    private static List<Question> readSimpleQuestionsFile(String filePath) {
+        List<Question> questions = new ArrayList<>();
+
+        try {
+            List<String> content = FileUtils.readLines(filePath);
+
+            int counter = 0;
+            for (String c : content) {
+                String[] data = c.split("\t");
+
+                String hybrid = "false", onlyDBO = "true", aggregation = "false", answerType = "resource";
+
+                String query1 = "SELECT DISTINCT ?e WHERE {<http://dbpedia.org/resource/" + data[2] + "> <http://dbpedia.org/ontology/" + data[1] + "> ?e. }";
+                String query2 = "SELECT DISTINCT ?e WHERE {?e <http://dbpedia.org/ontology/" + data[1] + "> <http://dbpedia.org/resource/" + data[2] + ">. }";
+                Set<String> answers1 = DBpediaEndpoint.runQuery(query1, true);
+
+                Set<String> expectedAnswer = new HashSet<>();
+                expectedAnswer.add("http://dbpedia.org/resource/" + data[0]);
+
+                double f1 = BagOfLinksEvaluator.evaluate(answers1, expectedAnswer);
+                if (f1 != 1.0) {
+                    answers1 = DBpediaEndpoint.runQuery(query2, true);
+
+                    f1 = BagOfLinksEvaluator.evaluate(answers1, expectedAnswer);
+                    if (f1 == 1.0) {
+
+                        counter++;
+
+                        List<String> answers = new ArrayList<>(answers1);
+                        Map<Language, String> questionText = new HashMap<>();
+                        questionText.put(Language.EN, data[3]);
+
+                        Question q1 = new Question(questionText, query2, onlyDBO, aggregation, answerType, hybrid, content.indexOf(c) + "");
+                        q1.setAnswers(answers);
+
+                        questions.add(q1);
+                    }
+                } else {
+                    counter++;
+
+                    List<String> answers = new ArrayList<>(answers1);
+                    Map<Language, String> questionText = new HashMap<>();
+                    questionText.put(Language.EN, data[3]);
+
+                    Question q1 = new Question(questionText, query1, onlyDBO, aggregation, answerType, hybrid, content.indexOf(c) + "");
+                    q1.setAnswers(answers);
+
+                    questions.add(q1);
+                }
+            }
+
+            System.out.println("Loaded " + counter + "/" + content.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return questions;
     }
 
     private static List<Question> readWebQuestionsJSONFile(String filePath) {

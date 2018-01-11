@@ -7,7 +7,7 @@ package de.citec.sc.main;
 
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +26,8 @@ public class TestDocuments {
         boolean onlyDBO = true;
         boolean isHybrid = false;
 
-        QALDCorpus corpus7 = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald7Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
-        QALDCorpus corpus6 = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus corpus7 = CorpusLoader.load(CorpusLoader.Dataset.qald7Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+        QALDCorpus corpus6 = CorpusLoader.load(CorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
         List<AnnotatedDocument> doc6 = corpus6.getDocuments();
         List<AnnotatedDocument> doc7 = corpus7.getDocuments();

@@ -8,7 +8,7 @@ package de.citec.sc.parser;
 import de.citec.sc.corpus.AnnotatedDocument;
 import de.citec.sc.corpus.QALDCorpus;
 import de.citec.sc.main.Main;
-import de.citec.sc.qald.QALDCorpusLoader;
+import de.citec.sc.qald.CorpusLoader;
 import de.citec.sc.query.CandidateRetriever;
 import de.citec.sc.query.CandidateRetriever.Language;
 import de.citec.sc.query.CandidateRetrieverOnLucene;
@@ -266,8 +266,8 @@ public class UDPipe {
         for (Language l : languages) {
             CandidateRetriever.Language lang = l;
 
-            QALDCorpus corpus = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
-            QALDCorpus corpus2 = QALDCorpusLoader.load(QALDCorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+            QALDCorpus corpus = CorpusLoader.load(CorpusLoader.Dataset.qald6Train, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
+            QALDCorpus corpus2 = CorpusLoader.load(CorpusLoader.Dataset.qald6Test, includeYAGO, includeAggregation, includeUNION, onlyDBO, isHybrid);
 
             corpus.getDocuments().addAll(corpus2.getDocuments());
 

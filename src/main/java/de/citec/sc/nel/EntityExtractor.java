@@ -27,13 +27,13 @@ public class EntityExtractor {
         List<EntityAnnotation> annotations = new ArrayList<>();
         for (EntityAnnotation e : nGrams) {
             String searchText = e.getSpannedText(text);
-
+            
             //get the DBpedia candidates
             List<Instance> instances = retriever.getAllResources(searchText, 10, CandidateRetriever.Language.EN);
             if (instances.isEmpty()) {
                 continue;
             }
-
+            
 //            HashMap<String, Double> candidates = new LinkedHashMap<>();
 //
 //            int sum = 0;
@@ -82,7 +82,7 @@ public class EntityExtractor {
                 anno.setProvenance(new Provenance("EntityExtractor", similarity));
                 annotations.add(anno);
 
-            }
+        }
         }
 
         return annotations;

@@ -1,7 +1,11 @@
 package de.citec.sc.nel;
 
+import de.citec.sc.corpus.AnnotatedDocument;
+import de.citec.sc.parser.DependencyParse;
 import de.citec.sc.query.CandidateRetriever;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +14,7 @@ import java.util.Set;
  *
  * @author sherzod
  */
-public class AnnotationExtractor {
+public class StupidQAAnnotationExtractor {
 
     /**
      * performs two pass over the text by extracting ngrams and querying over
@@ -22,9 +26,11 @@ public class AnnotationExtractor {
      * result of the first pass, query those ngrams in the database, choose ones
      * that similarity score >= secondPassThreshold
      *
+     * @param document
      * @param text
      * @param maxNGramSize
      * @param firstPassThreshold
+     * @param retriever
      * @param secondPassThreshold
      * @param String text
      * @param int maxNGramsize
@@ -32,37 +38,51 @@ public class AnnotationExtractor {
      * @param double secondPassThreshold
      * @return entityAnnotations
      */
-    public static List<EntityAnnotation> getAnnotations(String text, int maxNGramSize, double firstPassThreshold, double secondPassThreshold, CandidateRetriever retriever) {
+    public static List<EntityAnnotation> getAnnotations(AnnotatedDocument document, CandidateRetriever retriever, Set<String> linkingValidPOSTags) {
 
         List<EntityAnnotation> annotations = new ArrayList<>();
 
         Set<String> coveredTypes = new HashSet<>();
 
         //extract ngrams up to maxNGramSize argument
-        List<EntityAnnotation> firstPassNGrams = NGramExtractor.getNGrams(text, maxNGramSize, annotations);
+//        List<EntityAnnotation> firstPassNGrams = NGramExtractor.getNGrams(document.getParse(), maxNGramSize, annotations);
         //retrieve entities from database based on similarity threshold -> firstPassThreshold
-        List<EntityAnnotation> firstPassAnnotations = EntityExtractor.getAnnotations(firstPassNGrams, text, firstPassThreshold, coveredTypes, retriever);
+        List<EntityAnnotation> firstPassAnnotations = StupidQAEntityExtractor.getAnnotations(document, retriever, linkingValidPOSTags);
 
         if (!firstPassAnnotations.isEmpty()) {
             //add retrieved
             annotations.addAll(firstPassAnnotations);
         }
 
-        //perform second pass over the text and extract ngrams if not covered previously
-        //(and only for those that didn't match yet)
-        //extract ngrams while not adding the spans that are covered in the first pass
-        List<EntityAnnotation> secondPassNGrams = NGramExtractor.getNGrams(text, maxNGramSize, annotations);
-        //retreive entities from database based on ngrams from the second pass
-        List<EntityAnnotation> secondPassAnnotations = EntityExtractor.getAnnotations(secondPassNGrams, text, secondPassThreshold, coveredTypes, retriever);
-
-        if (!secondPassAnnotations.isEmpty()) {
-            //add retrieved
-            annotations.addAll(secondPassAnnotations);
-        }
-
+//        //perform second pass over the text and extract ngrams if not covered previously
+//        //(and only for those that didn't match yet)
+//        //extract ngrams while not adding the spans that are covered in the first pass
+//        List<EntityAnnotation> secondPassNGrams = NGramExtractor.getNGrams(text, maxNGramSize, annotations);
+//        //retreive entities from database based on ngrams from the second pass
+//        List<EntityAnnotation> secondPassAnnotations = EntityExtractor.getAnnotations(secondPassNGrams, text, secondPassThreshold, coveredTypes, retriever);
+//
+//        if (!secondPassAnnotations.isEmpty()) {
+//            //add retrieved
+//            annotations.addAll(secondPassAnnotations);
+//        }
         annotations = filterSameInterpretation(annotations);
         annotations = filterSubSpans(annotations);
         
+        //sort annotations
+
+        Collections.sort(annotations, new Comparator<Annotation>() {
+            @Override
+            public int compare(final Annotation a, Annotation b) {
+                if (a.getProvenance().getConfidence() > b.getProvenance().getConfidence()) {
+                    return -1;
+                }
+                if (a.getProvenance().getConfidence() < b.getProvenance().getConfidence()) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+
         return annotations;
     }
 

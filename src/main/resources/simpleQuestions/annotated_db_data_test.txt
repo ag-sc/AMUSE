@@ -1,0 +1,756 @@
+Hans_Zimmer	musicComposer	Taffin	Who did the music for the film taffin
+Livin'_on_the_Run	artist	Scott_Grimes	what is an album recorded by scott grimes
+Tour_Perret_(Amiens)	architect	Auguste_Perret	who was the architect of the structure tour perret
+Workbench_Songs	producer	Guy_Clark	What is an album by guy clark?
+R.J._Nuevas	developer	La_Vendetta_(TV_series)	who is the program creator of the show la vendetta?
+Touch_of_Pink	director	Ian_Iqbal_Rashid	Which film was directed by ian iqbal rashid
+Changin'_Tires_on_the_Road_to_Ruin	artist	Superdrag	What is the name of an album by superdrag
+Under_Wraps_(Jethro_Tull_album)	artist	Jethro_Tull_(band)	what album is by jethro tull (band)?
+The_Creature_of_Black_Water_Lake	author	Gary_Paulsen	what is the name of a work done by  gary paulsen
+Helen_Gardner_(actress)	starring	Cleopatra_(1912_film)	who edited the film cleopatra?
+Edmund_Crispin	musicComposer	Carry_On_Cruising	Who did the music for the film carry on cruising
+Alex_Lovy	director	Woody_Meets_Davy_Crewcut	Who directed woody meets davy crewcut
+Jack_Kirby	creator	Hermes_(Marvel_Comics)	who created the comic book character hermes
+Jamming_with_Edward!	artist	Bill_Wyman	Name an album by bill wyman.
+Ari_Folman	director	The_Congress_(2013_film)	Who directed the film the congress
+Kiss_Kiss_(Bang_Bang)	musicComposer	John_Dankworth	who wrote the music for kiss kiss
+Merry_Christmas,_Mr._Lawrence	starring	Ryuichi_Sakamoto	which film did ryuichi sakamoto create the music for 
+The_Clancy_Brothers	associatedMusicalArtist	Bobby_Clancy	what group was named after bobby clancy
+Milton_Rubenfeld	relative	Paul_Reubens	who is paul reubens's father
+Roscoe_Arbuckle	director	The_Tourist_(1925_film)	Who directed the the tourist film?
+Sue_Grafton	author	%22W%22_Is_for_Wasted	who wrote \\"w\\" is for wasted 
+United_States	stateOfOrigin	Marion_Carpenter	which country was marion carpenter born
+Love_and_Marriage_(1996_TV_series)	executiveProducer	Amy_Sherman-Palladino	which program was created by amy sherman-palladino
+Blake_Edwards	director	Darling_Lili	Who directed the film darling lili
+Andrew_Vachss	author	Strega_(novel)	Who wrote the book strega
+Stan_Bush	artist	Til_All_Are_One	who is the artist that released til all are one
+Bruce_Cannon	editing	Abduction_(2011_film)	The film abduction  was edited by whom? 
+Mark_Antony	commander	Liberators'_civil_war	name a military personnel involved in liberators civil war
+Konami	publisher	Roc'n_Rope	who is the videogame developer of roc'n rope
+William_Castle	director	Drums_of_Tahiti	who directed the film drums of tahiti
+Stainless_Steel_Studios	developer	Empire_Earth	who developed the computer videogame empire earth
+Superscape	developer	Lego_Creator:_Knights'_Kingdom	Who was the developer of lego creator: knights kingdom?
+Jerry_Bock	writer	Rich_Girl_(Gwen_Stefani_song)	who composed the song rich girl
+Jerry_Goldsmith	musicComposer	The_Salamander_(1981_film)	Who composed the music for the salamander?
+United_Kingdom	nationality	David_Gavaghan	Where in europe was david gavaghan born
+Harry_Turtledove	author	The_Case_of_the_Toxic_Spell_Dump	Who wrote the case of the toxic spell dump
+Firebird_V11	producer	Phil_Manzanera	What is an album by phil manzanera?
+D._W._Griffith	director	The_Spanish_Gypsy_(film)	who directed the spanish gypsy
+Number_Ones_(video)	producer	Michael_Jackson	who directed michael jackson: number ones 
+Kronos_Quartet	artist	Early_Music_(Lachrymæ_Antiquæ)	Who is the artist of the album early music?
+Douglas_Sirk	director	A_Time_to_Love_and_a_Time_to_Die	Which movie did a time to love and a time to die direct?
+Placebo_(band)	artist	Battle_for_the_Sun	Who is the artist off the album battle for the sun
+Soundtrack	type	The_Invisible_(soundtrack)	the invisible is what type of album?
+The_Starting_Line	artist	Say_It_Like_You_Mean_It	who is the artist on the album say it like you mean it
+Witness_(comics)	creator	Paul_Ryan_(cartoonist)	which fictional character did paul ryan create
+Snow_White	basedOn	Snow_White_and_the_Huntsman	what was snow white and the huntsman adapted from?
+Canada	origin	Ellice_River	What country does the ellice river run through
+Subhash_Ghai	director	Ram_Lakhan	who directed the film ram lakhan
+Jack_McDuff	artist	Somethin'_Slick!	Which artist recorded somethin' slick!?
+Pony_Soldier	musicComposer	Alex_North	which file did alex north write music for?
+Holiday:_A_Soldier_Is_Never_Off_Duty	director	AR_Murugadoss	which movie did a. r. murugadoss direct 
+Annie_(1982_film)	musicComposer	Charles_Strouse	What is a film that charles strouse contributed music for?
+George_Waggner	director	The_Climax	Who was the director of the film titled the climax
+Jack_Gantos	author	What_Would_Joey_Do%3F	What author wrote the book "What Would Joey Do?"?
+Stone_Fox	author	John_Reynolds_Gardiner	What's a book written by john reynolds gardiner
+Allen_Klein	foundedBy	ABKCO_Records	who founded abkco records
+Jean_Vanier	relation	Pauline_Vanier	Who is a child of pauline vanier
+Hashimoto's_thyroiditis	knownFor	Hakaru_Hashimoto	What got its name from hakaru hashimoto
+After_the_Dark	musicComposer	Jonathan_Davis	What movie did jonathan davis write the score for
+Lewis_Allen_(director)	director	So_Evil_My_Love	who directed so evil my love
+Diana_(U.S._TV_series)	author	Leonard_B._Stern	What is a program that leonard b. stern created?
+Crystal_Dynamics	developer	Gex:_Enter_the_Gecko	What company developed the game gex: enter the gecko
+Coldplay	artist	Mylo_Xyloto	Who was the artist behind mylo xyloto
+Bappi_Lahiri	musicComposer	Sachché_Ká_Bol-Bálá	WHo did the music for the film sachché ká bol-bálá
+Isaac_Asimov	author	The_End_of_Eternity	who was the author of the end of eternity
+Ralph_McTell	producer	Streets...	Who produced the album streets...
+Egypt	nationality	Mervat_Tallawy	what is mervat tallawy's nationality
+What_About_Bob%3F	director	Frank_Oz	Who was the director of frank oz
+Honeywell	foundedBy	Mark_C._Honeywell	who was the founder of honeywell
+United_States	stateOfOrigin	Jenna_Lee	what is jenna lee's ethnicity?
+Vinayan	director	Vellinakshatram_(2004_film)	Who directed the film vellinakshatram
+Blondie_(band)	artist	The_Hunter_(Blondie_album)	who produced the album the hunter?
+Mayo_Clinic	knownFor	Charles_Horace_Mayo	What is named after charles horace mayo
+United_Kingdom	nationality	Reginald_Mountain	which country is reginald mountain from
+Aries_(comics)	creator	Keith_Giffen	which characters did keith giffen create
+Tim_Omaji	writer	Set_It_Off_(Timomatic_song)	who is the composer for set it off
+7_(Nancy_Ajram_album)	artist	Nancy_Ajram	who is the artist on nancy7
+Gerry_Anderson	creator	Lady_Penelope_Creighton-Ward	who created lady penelope creighton-ward
+Tsunku	producer	Romantic_Ukare_Mode	who composed romantic ukare mode
+Race_Driver:_Grid	publisher	Codemasters	which games were developed by codemasters?
+Rising_Zan:_The_Samurai_Gunman	product	UEP_Systems	What is a game developed by uep systems?
+Gebran_Tueni_(journalist)	parent	Ghassan_Tueni	what's the name of one of ghassan tueni's parents
+Ready_to_Rock	producer	Airbourne_(band)	what album was created by airbourne
+Blancmange_(band)	producer	Believe_You_Me	who released believe you me
+Richard_Manuel	writer	Tears_of_Rage	who was the composer for tears of rage 
+Harry_Harrison_(writer)	author	Bill,_the_Galactic_Hero	Who was the author of bill, the galactic hero?
+Dave_Chappelle	starring	Chappelle's_Show	who created the chappelle's show
+Sue_Grafton	author	%22L%22_Is_for_Lawless	Who wrote \\"l\\" is for lawless?
+Sydney_Pollack	director	The_Scalphunters	who directed the film the scalphunters
+Guster	artist	Ganging_Up_on_the_Sun	who created ganging up on the sun
+Bill_Plympton	director	The_Tune	who directed the movie 
+Robert_Cray	producer	Live_from_Across_the_Pond	which artist released live from across the pond?
+Simple_Dreams	artist	Linda_Ronstadt	what album was created by linda ronstadt
+George_Harrison	producer	Living_in_the_Material_World	who recorded the album living in the material world
+Elvin_Bishop	artist	Let_It_Flow_(album)	Name the artist of the album "Let it Flow".
+There's_No_Gettin'_Over_Me_(album)	producer	Ronnie_Milsap	What is an album by  ronnie milsap?
+Wynton_Marsalis	artist	Marsalis_Standard_Time,_Vol._I	marsalis standard time, volume 1 is by who
+Beetlejuice	director	Tim_Burton	what film is  tim burton known for directing
+Russ_Meyer	cinematography	Finders_Keepers,_Lovers_Weepers!	What film was russ meyer a cinematographer for?
+Sagar_Ballary	director	Bheja_Fry_(film)	who directed bheja fry (film)
+Mick_Jackson_(director)	director	Temple_Grandin_(film)	who was the director of the film temple grandin
+Yoko_Kanno	producer	Arjuna:_Into_the_Another_World	what is the name of the artist for the album  arjuna : into the another world
+United_States	stateOfOrigin	Matthew_Karatz	What is matthew karatz's nationality
+Another_Planet	producer	Alien_Sex_Fiend	What's an album from alien sex fiend
+The_Spoiler_(album)	artist	Stanley_Turrentine	Which artist is responsible for
+The_Beauty_of_the_Rain	artist	Dar_Williams	What is the name of dar williams's 2003 album
+Beyond_Colossal	artist	Dozer	what is an album by dozer
+Porridge_(TV_series)	creator	Dick_Clement	What is the name of a program created by dick clement
+Ravenous	musicComposer	Michael_Nyman	what movie did michael nyman create music for?
+The_R.E.D._Album	artist	The_Game_(rapper)	what album is by jayceon terrell taylor?
+New_Super_Mario_Bros.	developer	Nintendo_Entertainment_Analysis_&_Development	nintendo entertainment analysis & development developed this well-received Nintendo DS title. 
+Old_Wives_for_New	editing	Cecil_B._DeMille	What is the name of a film directed by cecil b. demille
+Philippa_of_Lancaster	parent	Edward,_King_of_Portugal	Who is the mother of edward, king of portugal?
+Richard_Quine	director	Drive_a_Crooked_Road	who directed drive a crooked road
+TVXQ	artist	T_(TVXQ_album)	Name an album by TVXQ.
+The_Maquis	director	David_Livingston	Which episode did david livingston direct?
+United_States	stateOfOrigin	Billy_Lustig	whats billy lustigs nationality
+Sullan	musicComposer	Vidyasagar_(composer)	What is the name of a film that vidyasagar (music director) contributed to music to
+Dixie_Chicks	musicalArtist	Ready_to_Run_(Dixie_Chicks_song)	which female band created the album ready to run?
+Dido_(singer)	musicalArtist	Life_for_Rent_(song)	who composed life for rent?
+Steven_Page	writer	If_I_Had_$1000000	who is the composer of the song if i had $1000000
+Alex_Gibney	relation	Frank_Gibney	Whats the name of a child of frank gibney
+Doris_F._Fisher	foundedBy	Gap_Inc.	who is the founder of gap inc.?
+Jazz_Boat	director	Ken_Hughes	in which movie was ken hughes the music director
+Red_Eye_(2005_American_film)	editing	Patrick_Lussier	What is the name of a film that patrick lussier edited
+Jean-Pierre_Jeunet	director	The_Young_and_Prodigious_T.S._Spivet	who directed the film the young and prodigious spivet
+Lovely_to_Look_At	director	Mervyn_LeRoy	what film was mervyn leroy the director of
+Richie_Sambora	writer	In_These_Arms	who composed in these arms
+Doom_3	developer	Id_Software	what's one game that id software designed
+Adolph_Deutsch	musicComposer	The_Stratton_Story	who did the music for the film  the stratton story
+King_of_the_Gypsies_(film)	musicComposer	David_Grisman	what film was david grisman the music contributor
+Bob_Bennett_(singer-songwriter)	artist	Small_Graces	What artist released the album small graces
+David_Arnold	musicComposer	Amazing_Grace_(2006_film)	what music is on the film amazing grace?
+At_89	artist	Pete_Seeger	What's an album from pete seeger
+Kumi_Koda	artist	Secret_(Kumi_Koda_album)	which artist released the album secret
+Black_Nativity	musicBy	Langston_Hughes	which retelling of a classic story was written by langston hughes?
+Jeremy_Fisher	artist	Let_It_Shine_(album)	who is the recording artist of the album let it shine?
+Rowland_V._Lee	director	Tower_of_London_(1939_film)	who directed tower of london (1939 film)
+At_My_Age	producer	Nick_Lowe	What's an album from nick lowe
+Frank_Sinatra	artist	Portrait_of_Sinatra:_Columbia_Classics	Which artist recorded the album portrait of sinatra?
+Quarashi	artist	Xeneizes	who is xeneizes by
+Brown_Sugar_(1931_film)	director	Leslie_S._Hiscott	What's a movie that leslie s. hiscott has directed
+Michael_Franks_(musician)	artist	Abandoned_Garden	who is the recording artist for abandoned garden?
+First_on_the_Moon_(1970_book)	author	Michael_Collins_(astronaut)	Who authored first on the moon
+Ennio_Morricone	musicComposer	Jacob_(film)	Name a composer for the film Jacob?
+India	stateOfOrigin	Joy_Sengupta	Where is joy sengupta from?
+Ben-Hur:_A_Tale_of_the_Christ	author	Lew_Wallace	what books have lew wallace written?
+On_Trial_(1928_film)	cinematography	Byron_Haskin	Which movie did byron haskin directed?
+The_New_New_Thing	author	Michael_Lewis	What is a book by michael lewis (author)?
+Susan_Maggi	editing	Touch_of_Pink	who edited touch of pink
+Trina	artist	Still_da_Baddest	Which artist made the album still the baddest
+Chris_Rock	starring	I_Think_I_Love_My_Wife	who directed i think i love my wife
+The_Goddess_of_Doom	wikiPageRedirects	Reverend_Bizarre	What's an album by reverend bizarre
+Lyudmila_Chernykh	discoverer	2212_Hephaistos	Who discovered 2212 hephaistos
+James_Taylor	writer	Don't_Let_Me_Be_Lonely_Tonight	who wrote don't let me be lonely tonight
+Frederic_Edwin_Church	author	El_Rio_de_Luz	Who is the artist for the piece, el rio de luz?
+Richard_Arnell	musicComposer	The_Man_Outside_(1967_film)	Who did the music for the film the man outside
+United_States	stateOfOrigin	John_B._Calhoun	john b. calhoun is a citizen of what country?
+Rio_(1939_film)	director	John_Brahm	which 1939 movie was directed by john brahm
+Lit_(band)	artist	Atomic_(album)	which album was done by the artist lit 
+Solo_Flytes	artist	Lynyrd_Skynyrd	Which artist created lynyrd skynyrd: solo flytes
+Taito_Corporation	publisher	Elevator_Action_Returns	Who developed elevator action returns
+Mike_Oldfield	producer	In_High_Places_(song)	who is the composer of in high places
+Julieta_Venegas	producer	Bien_o_Mal	who composed bien o mal
+Genesis_(band)	artist	From_Genesis_to_Revelation	who is the musician that created from genesis to revelation
+Ice-T	producer	Home_Invasion_(album)	who is the album home invasion by?
+John_le_Carré	author	The_Honourable_Schoolboy	Who is the author of the honourable schoolboy?
+Eleanor_of_Aquitaine	parent	Alix_of_France	Who is the parent of alix of france?
+Nickelodeon	network	The_Adventures_of_Pete_&_Pete	what netflix genre houses the adventures of pete & pete
+The_Marriage_of_Maria_Braun	editing	Rainer_Werner_Fassbinder	what film did rainer werner fassbinder edit
+Roger_Deakins	cinematography	The_Shawshank_Redemption	who is the cinematographer of the shawshank redemption
+Autograph_(2004_film)	starring	Cheran_(director)	who directed autograph
+Anu_Malik	musicComposer	Sssshhh...	Who wrote the musical score for sssshhh...
+Brown_Sugar_(1922_film)	director	Fred_Paul	What is the name of a film directed by fred paul
+United_States	nationality	Ralph_Metzner	Which nation is ralph metzner from?
+Aiden	artist	A_Split_of_Nightmares	Who is the artist of the album a split of nightmares?
+Pakistan	nationality	Asif_Ali_Malik	what nationality is asif ali malik
+Alan_Ayckbourn	author	Taking_Steps	who wrote taking steps
+Gene_Deitch	director	Calypso_Cat	who directed the film calypso cat
+Alan_Moore	creator	Sodam_Yat	Name an english writer who created the Sodam Yat fictional character
+Manowar	artist	Battle_Hymns_MMXI	who is the artist of battle hymns mmxi
+At_Bertram's_Hotel	author	Agatha_Christie	what book is written by agatha christie?
+Paul_Weller	producer	Live_Wood	who is the artist for live wood
+Faye_Wong_(1997_album)	artist	Faye_Wong	who's album is faye wong
+Onimusha_2:_Samurai's_Destiny	publisher	Capcom	Which company developed onimusha 2
+United_Kingdom	stateOfOrigin	Drummond_Money-Coutts	from which european country is drummond money-coutts from
+Nancy_Juvonen	executiveProducer	Tough_Love_(TV_series)	who created the show tough love
+Star_Trek_(novel)	author	Alan_Dean_Foster	who is the author of star trek
+Sugar_and_Spice_(The_Searchers_album)	artist	The_Searchers_(band)	who wrote the album sugar and spice
+United_Kingdom	stateOfOrigin	Frederick_Attenborough	where was frederick attenborough born
+Electronic_Labyrinth:_THX_1138_4EB	director	George_Lucas	what film did george lucas direct?
+Believe_in_Me_(Regina_Belle_album)	artist	Regina_Belle	What is an album by regina belle?
+Tales_of_the_Night_(2011_film)	director	Michel_Ocelot	what film is directed by michel ocelot?
+Gordon_Lightfoot	producer	Salute_(Gordon_Lightfoot_album)	Who is the artist of the album salute?
+Jungle_Adventurer	director	Umberto_Lenzi	what film was umberto lenzi the director of
+Gorath	musicComposer	Kan_Ishii	kan ishii was a composer for which film?
+Willie_Nelson	artist	Willie_–_Before_His_Time	who is the artist that recorded willie – before his time
+Canada	nationality	Michael_Walker_(economist)	where was michael walker (economist) born 
+Romolo_e_Remo	musicComposer	Piero_Piccioni	who did the music for duel of the titans
+Filipinos	nationality	Michael_Farenas	What ethnicity is michael farenas?
+Kim_Manners	director	Milagro_(The_X-Files)	Who directed the tv series milagro
+GMA_Network	creator	Fantastic_Man	who created fantastic man
+John_Hiatt	artist	Hangin'_Around_the_Observatory	which artist released hangin around the observatory?
+Gary_Numan	producer	Resonator_(Pioneer_of_Sound)	which artist made the album resonator (2002-2003) 
+Zhang_Yimou	director	Happy_Times	Who directed happy times
+Instigator_(album)	producer	Kaci_Brown	What album was produced by kaci brown
+The_River_(1984_film)	musicComposer	John_Williams	What film did john williams contribute music towards
+Cosmic_Ark	publisher	Imagic	What's an atari game developed by imagic
+John_Douglas_(architect)	architect	Chapel_of_the_Good_Shepherd,_Carlett_Park	who designed chapel of the good shepherd, carlett park
+Tuxedomoon	producer	Scream_with_a_View	Which artist made scream with a view
+Hannah_Arendt	author	The_Origins_of_Totalitarianism	who wrote the origins of totalitarianism
+Kevin_Smith	editing	Cop_Out_(2010_film)	who directed cop out
+Robert_McKimson	director	A_Mutt_in_a_Rut	who directed a mutt in a rut?
+Breaking_Pangaea	artist	Phoenix_(Breaking_Pangaea_album)	who created the album phoenix
+White_Lion	artist	Fight_to_Survive	Who is the artist of the album fight to survive?
+Peking_Express_(film)	musicComposer	Dimitri_Tiomkin	What is the name of a film that dimitri tiomkin was the music contributor for
+Basia	artist	The_Sweetest_Illusion	which artist released the sweetest illusion?
+The_Drowning_(EP)	artist	Dashboard_Confessional	name an album done by dashboard confessional 
+Mark_Waters_(director)	director	Mean_Girls	who directed mean girls
+Robert_Anton_Wilson	author	Reality_Is_What_You_Can_Get_Away_With	what country is maiwa language spoken in
+Peter_Paul_Rubens	author	The_Descent_from_the_Cross_(Rubens)	who was the artist of the descent from the cross
+McCoy_Tyner	artist	Prelude_and_Sonata_(McCoy_Tyner_album)	Who recorded the album prelude and sonata
+Rad_Racer	designer	Hiroyuki_Ito	what game is designed by hiroyuki ito
+At_All	producer	Viggo_Mortensen	What's an album featuring viggo mortensen
+Ricky_Martin	musicalArtist	Jaleo_(Ricky_Martin_song)	who is the musician that created jaleo
+James_Turrell	field	Installation_art	Who is an artist involved with installation art?
+John_Myung	composer	Six_Degrees_of_Inner_Turbulence_(song)	who composed six degrees of inner turbulence
+Matmos	artist	Matmos_(album)	what album did matmos record
+Rosanne_Cash	producer	The_Very_Best_of_Rosanne_Cash	Who released the album the very best of rosanne cash
+Playing_the_Field_(album)	artist	The_Outfield	what is the album made by the outfield
+Jacob_Groth	musicComposer	The_Girl_with_the_Dragon_Tattoo_(2009_film)	Who composed the music for the film the girl with the dragon tattoo?
+Mario_Bava	cinematography	Nero's_Weekend	who directed the cinematography for nero's mistress?
+Joseph_Barbera	director	Downhearted_Duckling	Who directed the film downhearted duckling?
+Leopold_II_of_Belgium	parent	Princess_Louise_of_Belgium	Who was a parent of princess louise of belgium
+John_Carpenter	editing	Assault_on_Precinct_13_(1976_film)	Who edited the film Assault on Precinct 13?
+Barry_Windham	trainer	Bray_Wyatt	why was bray wyatt named after
+New_Life_(Monica_album)	artist	Monica_(singer)	what are albums by monica
+Monstrosity_(band)	producer	Rise_to_Power_(Monstrosity_album)	what is the name of monstrosity's album
+JLS	artist	Jukebox_(JLS_album)	Name an album by the artist jls.
+Possible_Side_Effects	author	Augusten_Burroughs	What has augusten burroughs written
+Bon_Jovi	artist	Lost_Highway:_The_Concert	who was the artist that put out the album lost highway: the concert
+Elmer_Bernstein	musicComposer	Five_Days_One_Summer	Who handled the music for five days one summer
+Milt_Jackson	artist	Born_Free_(Milt_Jackson_album)	who takes the credit for the album born free
+On_the_Lot	executiveProducer	Steven_Spielberg	what tv show did steven spielberg create
+The_Paladin	author	C._J._Cherryh	What is a book written by c. j. cherryh?
+Marvel_vs._Capcom:_Clash_of_Super_Heroes	publisher	Capcom	which fighting games were developed by capcom?
+Jon_Bon_Jovi	writer	Summertime_(Bon_Jovi_song)	who is the composer for summertime
+Australia	nationality	Frank_Woodley	What is the nationality of frank woodley
+John_Washington	parent	Lawrence_Washington_(1659–1698)	who were lawrence washington (1659–1698)'s parents
+Holy_Moses	artist	Strength_Power_Will_Passion	What artist has an album titled strength, power, will, passion?
+The_Six_Million_Dollar_Man	producer	Kenneth_Johnson_(producer)	What television program did producer Kenneth Johnson create?
+Chicago_XXVI:_Live_in_Concert	artist	Chicago_(band)	Name a live album by chicago.
+Chris_Vrenna	producer	Arma-Goddamn-Motherfuckin-Geddon	who composed arma-goddamn-motherfuckin-geddon
+Kiuas	artist	Lustdriven	which musician creates lustdriven
+The_Vineyard_(film)	director	James_Hong	what is the film directed by james hong
+Pilot_(Masters_of_Sex)	director	John_Madden_(director)	What's an episode that john madden directed
+Sam_Harris	author	Letter_to_a_Christian_Nation	What author wrote letter to a christian nation
+Elizabeth_Edwards	parent	Cate_Edwards	who is  the parent of cate edwards
+Douglas_McGrath	director	Infamous_(film)	Who directed the film infamous (film)
+Side_Pocket	developer	Acclaim_Studios_Austin	Name a video game developed under acclaim studios austin
+Last_2_Walk	artist	Three_6_Mafia	whats an album by three 6 mafia
+The_King_of_Queens	creator	Michael_J._Weithorn	what is a show that michael j. weithorn is known for
+Life_on_Earth_(TV_series)	presenter	David_Attenborough	Who created the show life on earth
+Richard_Kelly_(director)	director	Donnie_Darko	who was the director of donnie darko
+The_Hand_(film)	director	Oliver_Stone	What film was directed by oliver stone in 1981?
+Willie_Nelson	producer	Red_Headed_Stranger	who is the musician that created red headed stranger
+Victor_Young	musicComposer	Gun_Crazy	who wrote the music for gun crazy 
+Atlus	publisher	Purikura_Daisakusen	who were the designers for the game purikura daisakusen?
+Electric_Light_Orchestra	artist	Three_Light_Years	which musician created three light years
+Nintendo	publisher	The_Legend_of_Zelda:_A_Link_to_the_Past	What is the name of a nintendo game developed in 1991?
+Gael_Baudino	author	Spires_of_Spirit	Who is the author of spires of spirit
+Howard_Blake	musicComposer	S.O.S._Titanic	Who did the music for s.o.s. titanic 
+Khia	artist	Gangstress	which artist released gangstress?
+A_High_Wind_in_Jamaica_(film)	musicComposer	Larry_Adler	Which film did larry adler help with?
+Peter_Gabriel	producer	Biko_(song)	Who composed biko?
+Ace_Atkins	author	Lullaby_(Spenser_novel)	who is the author of the work robert b. parker's lullaby?
+Roger_Waters	writer	Party_Sequence	who is the composer of party sequence
+Sean_Delaney_(musician)	producer	Highway_(Sean_Delaney_album)	What is a body of work by sean delaney
+Fear_Factory	producer	Archetype_(Fear_Factory_album)	which fear factory album was released in 2004?
+Will_Gregory	producer	Ooh_La_La_(Goldfrapp_song)	who composed ooh la la (goldfrapp song)
+David_Bowie	producer	The_Hearts_Filthy_Lesson	Who composed the song the hearts filthy lesson?
+Madagascar_3:_Europe's_Most_Wanted	musicComposer	Hans_Zimmer	what film did hans zimmer contribute music to
+United_States	nationality	Vernon_L._Smith	what nationality is vernon l. smith?
+Merzbow	artist	Scene_(album)	what Japanese noise musician is the creator of the scene album
+John_Koerner	artist	Spider_Blues	who is the creator of spider blues
+The_Cradle_Will_Rock	musicBy	Marc_Blitzstein	what did marc blitzstein write
+Opeth	artist	In_Live_Concert_at_the_Royal_Albert_Hall	which artist made the album  in live concert at the royal albert hall
+Super_Mario_Strikers	developer	Next_Level_Games	what is a game developed by next level games
+Terry_Reid	artist	Seed_of_Memory	What artist released seed of memory?
+Bappi_Lahiri	musicComposer	Tere_Pyar_Mein_(1979_film)	who composed the music for the film tere pyar mein?
+Leonard_B._Stern	founder	Price_Stern_Sloan	who was the founder of price stern sloan
+Ultima_Online:_Lord_Blackthorn's_Revenge	developer	Origin_Systems	What's a game made by origin systems
+John_Hughes_(filmmaker)	director	Sixteen_Candles	what is a movie directed by john hughes
+The_Missouri_Breaks	musicComposer	John_Williams	what films has john williams contributed music to
+Richard_Eyre	director	Stage_Beauty	who directed stage beauty
+Maeve_Binchy	author	Circle_of_Friends_(novel)	who wrote circle of friends
+Blue_Hawaii	editing	Terry_O._Morse	what film was terry o. morse the editor for 
+Mark_Isham	musicComposer	Cool_World	Who did the music for cool world?
+Shola_Inkosi	creator	Chris_Claremont	what fictional characters did chris claremont create
+Muslimgauze	artist	Vote_Hezbollah	who is the author of the vote hezbollah album
+Eight_Below	musicComposer	Mark_Isham	what film did mark isham contribute music to
+D._W._Griffith	director	The_Avenging_Conscience	who directed the film the avenging conscience?
+Victoria_Wood	musicBy	Acorn_Antiques:_The_Musical!	who was the writer of acorn antiques: the musical!
+United_Kingdom	stateOfOrigin	Malcolm_Muggeridge	where is malcolm muggeridge's nationality of origin
+Darkest_Hour_(band)	artist	The_Mark_of_the_Judas	Who's album is the mark of the judas?
+Night_Flight_(Justin_Hayward_album)	artist	Justin_Hayward	What is an album by justin hayward?
+Dadnapped	director	Paul_Hoen	what film did paul hoen direct?
+Argentina	nationality	José_Figueroa_Alcorta	is josé figueroa alcorta from argentina or costa rica
+Freddie_Mercury	writer	Liar_(Queen_song)	which queen band member composed the song liar?
+McFly	artist	All_the_Greatest_Hits_(McFly_album)	What is an album by McFly
+Freda_Payne	artist	The_Best_of_Freda_Payne:_Ten_Best_Series	Who released the best of freda payne: ten best series
+The_Cult	artist	Electric_(The_Cult_album)	What is the third album by The Cult?
+Jerzy_Skolimowski	starring	Identification_Marks:_None	who was the director of  identification marks: none
+Savatage	artist	Final_Bell_/_Ghost_in_the_Ruins	who was the artist that released final bell / ghost in the ruins
+Hal_Roach	director	Luke_and_the_Mermaids	Who directed the film luke and the mermaids
+Ryū_Murakami	author	Coin_Locker_Babies	Who's the author of coin locker babies
+Tommy_Dorsey	artist	This_Is_Tommy_Dorsey_&_His_Orchestra,_Vol._1	who is the artist on the album this is tommy dorsey & his orchestra, vol. 1?
+Sega	publisher	F1_Challenge	what is the name of the company that developed f1 challenge
+Korn	producer	Untouchables_(album)	who was the artist of the album  untouchables
+Bronisław_Kaper	musicComposer	Three_Guys_Named_Mike	what music is in the film three guys named mike?
+Robyn_Hitchcock	musicComposer	Women_in_Trouble	who wrote the music for the movie women in trouble
+Stanley_Kramer	director	On_the_Beach_(1959_film)	Who directed the film titled on the beach
+Carl_Davis	musicComposer	The_Trial_(1993_film)	Who did the music for the trial?
+Inna	musicalArtist	Be_My_Lover_(Inna_song)	who is the author of be my lover
+La_Evolución	artist	Wisin_&_Yandel	what albums are by the artist wisin y yandel
+James_Ingo_Freed	architect	Ronald_Reagan_Building_and_International_Trade_Center	Who was the architect for the ronald reagan building?
+Albanians	stateOfOrigin	Anthony_Athanas	anthony athanas belongs to which ethnic people?
+The_Country_Gentlemen	producer	Sugar_Hill_Collection	who released an album called sugar hill collection
+Ezzedine_Choukri_Fishere	nationality	Egypt	Name a person born in Egypt.
+Frank_Herbert	author	Dune_(novel)	who was the author of dune (novel)
+The_Kingston_Trio	artist	Sunny_Side!	this band is the artist of sunny side!.
+Gameloft	publisher	Hero_of_Sparta	who was the developer of the game hero of sparta
+A_Change_Is_Gonna_Come_(Jack_McDuff_album)	artist	Jack_McDuff	what is an work created by jack mcduff
+The_Unforgiving_Sounds_of_Maow	producer	Maow	What is an album by maow?
+Animaniacs_(video_game)	developer	Factor_5	which game was developed by factor 5
+Canada	nationality	Louis_Helbig	which country is louis helbig from 
+Prince_(musician)	producer	A_Love_Bizarre	which artist composed a love bizarre 
+Newport_News_Shipbuilding	builder	USS_Los_Angeles_(SSN-688)	which company built the uss los angeles (ssn-688)?
+Mao_Zedong	author	Quotations_from_Chairman_Mao_Tse-tung	who is the author of quotations from chairman mao tse-tung
+Pradeep_Kar	keyPerson	Microland	who founded microland
+Tyga	artist	Well_Done_3	who released the album well done 3
+United_States	nationality	Lea_Bayers_Rapp	What country is lea bayers rapp from
+Ennio_Morricone	musicComposer	The_Inheritance_(1976_film)	Who composed the music for the film the inheritance?
+The_Original_7ven	artist	The_Time_(The_Time_album)	What is an album by the time (band)?
+Kylie_Minogue	artist	KylieFever2002:_Live_in_Manchester	Who is the artist on the album kylie fever 2002 live in manchester
+Happy_Days_(1929_film)	director	Benjamin_Stoloff	what movie did benjamin stoloff direct?
+Martin_Eichler	nationality	Germany	Name a person who was born in germany
+Naran_(film)	director	Joshiy	Who directed naran 
+Main_Street_(Roy_Wood_&_Wizzard_album)	artist	Wizzard	which album is created by wizzard
+Ghulam_Ali_(singer)	musicComposer	Aaj_Ka_Boss	Who did the music for the film aaj ka boss
+The_Wind_in_the_Willows_(TV_series)	director	Cosgrove_Hall_Films	what program was cosgrove hall the creator of
+Gangsta_Granny	author	David_Walliams	which comedy book did david walliams write?
+No_Witch	artist	The_Cave_Singers	what is an album given by the cave singers
+Shadow_Over_Mars	author	Leigh_Brackett	what is the title of the work written by leigh brackett
+The_Hunley	musicComposer	Randy_Edelman	what film was randy edelman a music contributor for?
+Jag_Panzer	artist	Mechanized_Warfare	what artist made the album  mechanized warfare
+OK_Go	artist	Of_the_Blue_Colour_of_the_Sky	what alternative rock band from Chicago is the author of of the blue colour of the sky
+Lady_Gaga	writer	Paparazzi_(Lady_Gaga_song)	who composed the song paparazzi (lady gaga song)
+Joseph_L._Mankiewicz	director	Cleopatra_(1963_film)	who directed cleopatra?
+Norman_Cook	producer	Turn_On,_Tune_In,_Cop_Out	who is the composer of the song turn on, tune in, cop out
+Justin_Lin	editing	Better_Luck_Tomorrow	Who directed the movie better luck tomorrow?
+Rasputina_(band)	artist	Melora_a_la_Basilica	which artist recorded melora a la basilica 
+Stryper	artist	7_Weeks:_Live_in_America,_2003	Who is the artist that wrote the 7 weeks: live in america 2003 album
+American_Boy:_A_Profile_of_Steven_Prince	starring	Martin_Scorsese	what film about steven prince did martin scorsese direct
+Germany	nationality	Friedrich_Karl_Schmidt	Where is friedrich karl schmidt from
+New_Zealand	nationality	Steven_Richards	What country was steven richards born in
+United_States	nationality	Davey_Moore_(boxer,_born_1933)	which country is davey moore from 
+Steve_Niles	creator	Simon_Dark	who created the character simon dark
+Edgar_Wright	director	A_Fistful_of_Fingers	who directed a fistful of fingers 
+Todd_Field	director	Too_Romantic	who directed too romantic
+Epic_Games	developer	Unreal_Championship	Who developed unreal championship?
+As_Safe_as_Yesterday_Is	artist	Humble_Pie_(band)	what albums have been released by humble pie?
+The_World_Is_Not_Enough	musicComposer	David_Arnold	What is the name of a film that david arnold contributed music toward
+Justina_(empress)	parent	Valentinian_II	who are valentinian ii's parents
+James_Horner	musicComposer	The_Land_Before_Time_VIII:_The_Big_Freeze	Who did the music for the film the land before time viii: the big freeze?
+Karen_Traviss	author	Bloodlines_(Star_Wars_novel)	who is the author of bloodlines
+Andrzej_Wajda	director	Without_Anesthesia	Who directed without anesthesia?
+Trio_for_Blunt_Instruments	author	Rex_Stout	what are books written by rex stout
+David_Brin	author	Startide_Rising	who was the author of the startide rising novel
+Stan_Lee	creator	Crusher_(comics)	Who created the fictional character crusher?
+4J_Studios	developer	Star_Trek:_Conquest	Who is the developer of the videogame star trek: conquest?
+The_Benchwarmers	director	Dennis_Dugan	what film did dennis dugan direct
+Sal_Buscema	creator	Ghaur	who created ghaur
+Jesse_Malin	artist	On_Your_Sleeve	Which artist wrote on your sleeve
+Bob_Dylan	musicalArtist	Gates_of_Eden_(song)	Who composed gates of eden?
+Jay_Chandrasekhar	starring	Super_Troopers	what actor did adapt the super troopers film
+Peter_Ritchie_Calder	parent	Nigel_Calder	who is father of nigel calder
+Paper_Doll_(novel)	author	Robert_B._Parker	Name a work by robert b. parker
+Sit_Down,_Shut_Up_(2009_TV_series)	executiveProducer	Mitchell_Hurwitz	What's a show that mitchell hurwitz created
+Sri_Ramadasu	cinematography	S._Gopala_Reddy	what is a movie by the cinematographer s. gopal reddy
+Who_Speaks_for_Planet_Earth%3F	artist	And_Then_There_Were_None_(band)	what is and then there were none's album
+Yuriy_Kotsiubynsky	nationality	Ukrainians	who are ukrainians
+Luther_Vandross	producer	The_Night_I_Fell_in_Love_(album)	the night i fell in love is an album by what acclaimed artist
+Trey_Parker	director	Canada_on_Strike	who is the director of the canada on strike episode
+Basil_Spence	architect	Coventry_Cathedral	who was the architect of coventry cathedral
+Bam_Margera	starring	Bam's_Unholy_Union	who created the tv program bams unholy union
+Grigori_Aleksandrov	director	Volga-Volga	who directed the movie volga-volga
+Total_World_Domination	artist	Sworn_Enemy	what album was done by the artist sworn enemy
+Pillar_(band)	artist	Nothing_Comes_for_Free	who is the artist behind nothing comes for free
+George_Jones	artist	Double_Trouble_(George_Jones_and_Johnny_Paycheck_album)	Whose album is double trouble?
+Ricky_Steamboat	trainer	Richie_Steamboat	who is the father of richie steamboat
+Peter_Robinson_(novelist)	author	Friend_of_the_Devil_(novel)	who wrote friend of the devil
+Marco_Hietala	writer	Beauty_of_the_Beast	who composed beauty of the beast
+Cash_Money_Records	associatedMusicalArtist	Juvenile_(rapper)	What label is juvenile associated with?
+Vettaiyaadu_Vilaiyaadu_(2006_film)	musicComposer	Harris_Jayaraj	Which film did harris jayaraj do the music for
+Friz_Freleng	director	Ain't_She_Tweet	who directed the movie ain't she tweet
+Russell_Metty	cinematography	The_Stranger_(1946_film)	Who did the cinematography of the stranger
+South_Pacific_(musical)	basedOn	Tales_of_the_South_Pacific	what is an adaptation of tales of the south pacific called
+Mythologies_(album)	artist	Rhett_Miller	is rhett miller or beyonce the artist associated with mythologies
+Bill_Finger	creator	Batman	who created batman
+Ubisoft_Romania	developer	Blazing_Angels:_Squadrons_of_WWII	What company developed blazing angels?
+George_Clinton_(musician)	producer	Gold_(Parliament_album)	What artist released the album gold?
+United_States	stateOfOrigin	T._Keith_Glennan	what is t. keith glennan's nationality
+United_States	nationality	Terry_Considine	which country does terry considine belong to
+Bappi_Lahiri	musicComposer	Acid_Factory	which musician contributed to acid factory
+Wayne_Hancock	artist	Thunderstorms_and_Neon_Signs	who recorded thunderstorms and neon signs
+Myer	keyPerson	Sidney_Myer	what organization was founded by  sidney myer
+Kutumb_(TV_series)	creator	Balaji_Telefilms	who created kutumb
+Naren_Shankar	writer	The_Origin_of_Species_(The_Outer_Limits)	Who is the director of the tv series the origin of species?
+Akhenaten	parent	Meritaten	who is meritaten's parents 
+Lou_and_Andy	creator	Matt_Lucas	What are characters created by matt lucas
+Capcom	publisher	Phoenix_Wright:_Ace_Attorney:_Justice_for_All	who developed phoenix wright: ace attorney: justice for all 
+Anthology_(The_Miracles_album)	artist	The_Miracles	what is an album by the miracles
+Warschau_(album)	producer	Marduk_(band)	which albums were released by marduk (band)?
+Splendor_in_the_Grass	director	Elia_Kazan	Which film was directed by elia kazan
+Dreamland_(Robert_Plant_album)	producer	Robert_Plant	What's an album recorded by robert plant
+Joe_Quesada	creator	Carlie_Cooper	Who created the fictional character carlie cooper
+Revolution_(TV_series)	executiveProducer	Eric_Kripke	Name a tv program created by eric kripke
+Richard_Fleischer	director	Doctor_Dolittle_(film)	who directed doctor dolittle
+Stuart_Baird	editing	Lethal_Weapon	who was lethal weapon edited by
+Vilmos_Zsigmond	cinematography	The_Monitors_(film)	Who did the cinematography for the film the monitors?
+Lou_Reed	artist	Animal_Serenade	who is the artist that created animal serenade
+Hal_Roach	director	Luke,_Patient_Provider	who in the world directed luke, patient provider
+Skyclad_(band)	producer	The_Wayward_Sons_of_Mother_Earth	who is an artist that released an album called the wayward sons of mother earth
+Edward_Killy	director	Nevada_(1944_film)	Who was the director for the film nevada?
+Raoul_Walsh	director	Kindred_of_the_Dust	who directed kindred of the dust
+Sacred_Love	producer	Sting_(musician)	what's one of sting's albums?
+Ion_Dissonance	artist	Solace_(Ion_Dissonance_album)	What band has solace as their second album?
+Bob_Dylan	artist	The_Original_Mono_Recordings	Which artist made the original mono recordings
+Richard_Prince	director	Destricted	Who directed destricted?
+Ant-Man_(film)	writer	Edgar_Wright	what film did edgar wright direct?
+Jonathan_Kellerman	author	Flesh_and_Blood_(Kellerman_novel)	Who is the author of the book flesh and blood
+Louis_XV_of_France	parent	Princess_Sophie_of_France	who are the parents of princess sophie-philippine of france?
+Laurie_Strode	creator	John_Carpenter	Who is a fictional character created by john carpenter
+Ron_Frenz	creator	Quicksand_(comics)	who created the character quicksand
+McG	executiveProducer	Westside_(TV_pilot)	What's a film joseph mcginty nichol directed?
+Bruce_Surtees	cinematography	Sparkle_(1976_film)	Who is the cinematographer that worked on the film sparkle
+Lennie_Tristano_(album)	artist	Lennie_Tristano	Who made the album lennie tristano
+Warren_Zevon	artist	Warren_Zevon_(album)	Which artist released the self-titled album warren zevon?
+Madlib	producer	Sujinho	which artist recorded sujinho
+James_II_of_Scotland	parent	Margaret_Stewart_(born_c._1455)	Who is margaret stewart's dad
+Philip_Kaufman	director	Twisted_(2004_film)	who directed the film twisted
+Epic_Games	developer	Infinity_Blade_III	The video game infinity blade iii was developed by whom?
+Leslie_Charteris	author	The_Saint_and_the_Hapsburg_Necklace	who wrote the saint and the hapsburg necklace
+Fear_Itself_(TV_series)	creator	Mick_Garris	Who created fear itself
+Comeandgetit	producer	Liz_Phair	which artist released liz phair
+Space_Mutiny	director	David_Winters_(choreographer)	what is a film written by david winters
+Other_Voices,_Too_(A_Trip_Back_to_Bountiful)	artist	Nanci_Griffith	what album is from nanci griffith
+1-UP_Studio	developer	Sword_of_Mana	who developed the computer game sword of mana
+United_States	nationality	Robert_Sapolsky	what is the nationality of  robert sapolsky
+Dimitry_Elyashkevich	cinematography	Jackass_3D	Who was the cinematographer for jackass 3d?
+Pakistan	stateOfOrigin	Nasim_Ashraf	What is naseem ashraf's nationality
+The_System_(1964_film)	cinematography	Nicolas_Roeg	What films was nicolas roeg a cinematographer on? 
+Silly_Wizard	artist	So_Many_Partings	This artist is behind the album so many partings.
+Terry_Goodkind	author	Soul_of_the_Fire	Who wrote soul of the fire?
+Martha_Stewart_Living_Omnimedia	foundedBy	Martha_Stewart	What company did martha stewart fund
+Ali_Azmat	artist	Social_Circus_(album)	which artist recorded social circus
+Richard_Linklater	director	The_Newton_Boys	Who directed the newton boys?
+Butthole_Surfers	artist	The_Hurdy_Gurdy_Man_(EP)	Which artist created the hurdy gurdy man album
+Simian_Mobile_Disco	artist	Sample_and_Hold	who is the artist that performed on the album sample and hold: attack decay sustain release?
+Leos_Carax	director	Les_Amants_du_Pont-Neuf	who directed the lovers on the bridge?
+Rob_Marshall	director	Annie_(1999_film)	Who directed the film annie
+Henry_II_of_England	parent	Geoffrey_(archbishop_of_York)	geoffrey was the son of who?
+The_City_of_Lost_Children	director	Jean-Pierre_Jeunet	which movie was directed by jean-pierre jeunet
+Chris_Crawford_(game_designer)	designer	Gossip_(video_game)	who is the designer of gossip
+India	stateOfOrigin	Surbhi_Tiwari	which country was surbhi tiwari born in?
+Edgar_Allan_Poe	author	The_Fall_of_the_House_of_Usher	who wrote the fall of the house of usher
+Raoul_Walsh	director	Wild_Girl_(film)	who is the director for wild girl
+Ennio_Morricone	musicComposer	Espion,_lève-toi	what music is in espion, lève-toi?
+Lennie_Hayton	musicComposer	Battleground_(film)	the film battleground featured music by what artist?
+The_Incite_Mill	director	Hideo_Nakata	What is the name of a film directed by hideo nakata
+Rancid_(band)	artist	Radio_Radio_Radio	What band released the album radio, radio, radio?
+Chris_de_Burgh	artist	The_Storyman	what artist made the album the storyman
+Crossroads_to_Crime	musicComposer	Barry_Gray	which film did barry gray make the music for 
+Endemol	creator	Milionerzy	What company created the show who wants to be a millionaire?
+Edith_Wharton	author	Ethan_Frome	who is the author of ethan frome
+Showtime_(TV_network)	distributor	Reefer_Madness_(2005_film)	what is the netflix genre of the film reefer madness
+Dizzy_Gillespie	artist	Dee_Gee_Days:_The_Savoy_Sessions	who is the artist of dee gee days: the savoy sessions
+Aquagirl	creator	Ramona_Fradon	what characters have ramona fradon created?
+Ludovico_Einaudi	artist	In_a_Time_Lapse	who is the artist that released the album in a time lapse
+Trevor_Rabin	musicComposer	12_Rounds_(film)	who provided the music for the film 12 rounds (film)?
+The_Beaver_(film)	director	Jodie_Foster	who was the director for the beaver?
+Siouxsie_and_the_Banshees	musicComposer	Jubilee_(1978_film)	Which artists played music in jubilee
+Dingleberry_Haze	artist	Bloodhound_Gang	What's an album made by the bloodhound gang
+Roger_Avary	director	Killing_Zoe	who directed the film killing zoe
+Mohammad_Bakri	director	Jenin,_Jenin	jenin, jenin is a film that was directed by whom?
+Tony_Iommi	producer	Fused_(album)	which artist recorded fused
+Daybreak_(1948_film)	director	Compton_Bennett	who directed daybreak
+Owen_Pallett	producer	Heartland_(Owen_Pallett_album)	who made the album heartland 
+Outside_These_Walls	director	Ray_McCarey	What is the name of the film directed by Ray McCarey?
+Lewis_Milestone	director	New_York_Nights	who directed the new york nights movie
+Len_Wein	creator	Matthew_Cable	who created matthew cable
+The_Dead_Eye	artist	The_Haunted	what album was done by the artist the haunted
+Pale_Saints	artist	The_Comforts_of_Madness_(album)	what artist recorded the comforts of madness
+King_of_Clubs_(video_game)	developer	Oxygen_Studios	what is a game developed by oxygen studios?
+Session_9	editing	Brad_Anderson_(director)	Name a film that brad anderson worked on as an editor
+United_States	stateOfOrigin	Josh_Lewin	what is josh lewin's nationality
+Letters_of_Transit	writer	Akiva_Goldsman	What episodes did Akiva Goldsman direct?
+The_Color_Purple_(film)	editing	Michael_Kahn_(film_editor)	What is the name of a film that michael kahn edited
+Bizzy_Bone	artist	Speaking_in_Tongues_(Bizzy_Bone_album)	What band recorded the album speaking in tongues
+Messy_Little_Raindrops	artist	Cheryl_Fernandez-Versini	What is an album by cheryl cole?
+United_States	nationality	Paul_D._MacLean	what is paul d. maclean's nationality
+Indonesia	nationality	Toeti_Heraty	what country gives nationality to toeti heraty
+Ray_Cory	cinematography	Horsing_Around	Who did the cinematography of horsing around
+Memoirs_of_an_Invisible_Man_(film)	director	John_Carpenter	Name a film john carpenter has directed.
+Prince_Henry,_Duke_of_Gloucester	parent	Prince_Richard,_Duke_of_Gloucester	who is prince richard, duke of gloucester's father 
+Sonny_Stitt	artist	Kaleidoscope_(Sonny_Stitt_album)	what is on of sonny stitt's album?
+Randy_Shilts	author	The_Mayor_of_Castro_Street	Who wrote the mayor of castro street
+Los_Bandoleros_(album)	producer	Don_Omar	What's n album from don omar
+Kottonmouth_Kings	artist	High_Society_(Kottonmouth_Kings_album)	what artist released high society?
+Science	nonFictionSubject	A_History_of_Pi	what type of book would a history of pi be
+Fury_(video_game)	product	N3V_Games	what game did n3v games develop
+Antonio_Vivaldi	musicComposer	La_Chinoise	who did the music for the film la chinoise
+Mötley_Crüe	musicalArtist	Looks_That_Kill	Who composed looks that kill?
+Silent_Hill_(film)	cinematography	Dan_Laustsen	what film is dan lausten given credit as cinematographer?
+Abel_Gance	director	The_Tenth_Symphony	who directed the tenth symphony?
+Peter_Fleming_(writer)	author	Brazilian_Adventure	who wrote brazilian adventure
+United_States	nationality	Patrick_Merla	whats the nationality of  patrick merla
+The_Manhattan_Transfer	artist	An_Acapella_Christmas	What artist made an acapella christmas
+United_States	stateOfOrigin	Darren_Walker	Which nation is darren walker originally from?
+We've_Come_for_You_All	producer	Anthrax_(American_band)	What is the name of a album produce by the anthrax band?
+United_States	nationality	Charles_W._Morris	which country is charles w. morris from
+P._F._Sloan	producer	Eve_of_Destruction_(song)	Who composed eve of destruction (song)
+Staind	producer	Chapter_V_(Staind_album)	Chapter v is an album by which artist?
+Johnny_Mandel	musicComposer	MASH_(film)	who is credited for the music in mash (film)
+Thomas_Bangalter	musicComposer	Irréversible	who did compose the music of irréversible
+I_Took_Up_the_Runes	artist	Jan_Garbarek	what are albums by jan garbarek?
+The_Story_of_Mankind_(film)	director	Irwin_Allen	what is a work directed by irwin allen
+Richard_Rodgers	musicComposer	Evergreen_(film)	who created the music for the film  evergreen
+One_Wrench	artist	Avail	what albums are by avail
+Rob_Bowman_(director)	director	Sleepless_(The_X-Files)	who was the director of  the tv series episode sleepless
+XO_(song)	writer	Ryan_Tedder	who composed xo
+Jeff_Beal	musicComposer	Ping_Pong_Playa	Who contributed to the music of ping pong playa?
+Konami	publisher	Castlevania:_Legacy_of_Darkness	What's an adventure game made by konami
+L._Frank_Baum	parent	Frank_Joslyn_Baum	Who was a parent of frank joslyn baum
+Koloman_Moser	field	Printmaking	Name an artist who was known for printmaking
+Eurythmics	artist	Ultimate_Collection_(Eurythmics_album)	Who is the artist of the ultimate collection album?
+Misia	artist	Love_Is_the_Message	love is the message is an album by what singer?
+Chris_LeDoux	artist	Western_Underground	What artist produced the album Western Underground?
+UB40	artist	The_Best_of_UB40_–_Volume_One	what artist is featured on the best of ub40, volume 1
+Hudson_Soft	publisher	Binary_Land	who is the developer of the computer videogame binary land
+United_States	nationality	John_Mahaffey	which country is john mahaffey from
+Maurice_Gibb	writer	Islands_in_the_Stream_(song)	Who composed the composition islands in the stream?
+Strong_Enough_to_Bend	artist	Tanya_Tucker	what album is by the artist tanya tucker?
+Filipinos	nationality	Vincent_S._Perez	what is vincent s. perez's ethnicity?
+Peng_Dehuai	commander	Long_March	who was involved in the long march
+Soviet_Union	nationality	Vladimir_Vasyutin	Where is vladimir vasyutin originally from?
+Noel_Gallagher	producer	Mucky_Fingers	who was the composer for the songmucky fingers?
+Kid_Cudi	producer	Man_on_the_Moon:_The_End_of_Day	who is the artist of man on the moon: the end of day
+Paul_Rotha	director	The_World_Is_Rich	Who directed the movie the world is rich
+Afternoon_of_a_Georgia_Faun	artist	Marion_Brown	What is one of the albums marion brown recorded?
+Konami	publisher	Castlevania:_Legacy_of_Darkness	who developed the game castlevania: legacy of darkness?
+Altum	artist	Silentium	what album is by silentiumband
+Eric_Byler	cinematography	9500_Liberty	who directed 9500 liberty
+Jane_Austen	author	Sense_and_Sensibility	who is the author of sense and sensibility
+Idemitsu_Kosan	foundedBy	Sazō_Idemitsu	who founded sazō idemitsu
+United_States	nationality	Nanci_Bowen	what is nanci bowen's county of nationality?
+Sega	publisher	Bonanza_Bros.	who is the developer of bonanza bros.?
+John_Ford	director	The_Sun_Shines_Bright	who is the director of the movie the sun shines bright
+Ryan_Tedder	writer	We_Remain	who composed we remain
+Zbigniew_Preisner	musicComposer	Decalogue_III	Who did the music on the film decalogue iii
+Isabella_of_Portugal,_Queen_of_Castile	parent	Isabella_I_of_Castile	who is mother of isabella i of castile
+EXL	foundedBy	Vikram_Talwar	Who is a founder of exl
+Bee_Gees	producer	Their_Greatest_Hits:_The_Record	which artist made a the greatest hits album
+Moss_Side_Story	producer	Barry_Adamson	What is an album from barry adamson?
+Not_One_Less	award	Zhang_Yimou	What film did zhang yimou direct?
+Rob_Liefeld	creator	Prophet_(comics)	who introduced the character prophet
+Ship_of_Fools_(Porter_novel)	author	Katherine_Anne_Porter	What's a book written by katherine anne porter
+James_Bond_007_(1983_video_game)	publisher	Parker_Brothers	Which game did parker brothers develop?
+Britannia_High	creator	Arlene_Phillips	what's the name of a show that arlene phillips created
+Toya_(singer)	artist	Toya_(album)	Who is the artist from the album titled toya
+Shola_Inkosi	creator	Chris_Claremont	which characters did chris claremont create
+Jonathan_Carroll	author	Sleeping_in_Flame	Who was the author of sleeping in flame
+John_Carpenter	director	Ghosts_of_Mars	who wrote the music for ghosts of mars
+The_Circle_of_Life_(album)	artist	Freedom_Call	whats an album created by the artist  freedom call
+Garth_Brooks	artist	Fresh_Horses_(album)	which country artist recorded fresh horses
+The_Zombies	producer	Odessey_and_Oracle	which artist released odessey and oracle?
+Harry_Nilsson	artist	Aerial_Ballet	which musician recorded aerial ballet
+Pavement_(band)	producer	Wowee_Zowee	which artist put out the album wowee zowee: sordid sentinels edition?
+Muslimgauze	artist	Hajj_(album)	what's the name of one of bryn jones's albums
+Wolves_(1999_film)	musicComposer	Robbie_Robertson	to what film did robbie robertson contribute music
+Deniece_Williams	writer	Free_(Deniece_Williams_song)	Who composed "free"?
+The_Smiling_Lieutenant	director	Ernst_Lubitsch	what film was ernst lubitsch the director of
+Prayers_for_Bobby	director	Russell_Mulcahy	Which film did russell mulcahy direct
+The_Wizard_of_Oz_(1939_film)	musicComposer	Herbert_Stothart	Which film did herbert stothart contribute music to?
+Seven_(David_Bowie_song)	producer	David_Bowie	who is the artist of seven
+Yo-Yo_Ma	artist	Yo-Yo_Ma_Plays_Ennio_Morricone	who is the musician that created around the world in 77 minutes
+Capcom	developer	Mega_Man_6	Who developed mega man 6
+Sally_Menke	editing	Jackie_Brown_(film)	Who edited the film jackie brown (film)
+United_Kingdom	nationality	Jehanne_Wake	What nationality is jehanne wake
+Goran_Bregović	musicComposer	A_Chef_in_Love	who composed the music in a chef in love
+Night_Sessions	artist	Chris_Botti	WHat's an album from chris botti
+United_States	nationality	Damon_Wayans	what country is damon wayans from?
+Jesus:_A_Portrait	author	Gerald_O'Collins	what books have gerald o'collins written?
+Nine_Network	creator	The_Lost_Tribes_(TV_series)	What network created the tv progam the lost tribes
+Henry_Farrell	creator	Baby_Jane_Hudson	who created the character baby jane hudson
+Kurt_Vonnegut	author	2_B_R_0_2_B	who wrote the title 2 b r 0 2 b
+James_Cruze	director	The_City_That_Never_Sleeps_(film)	who directed the city that never sleeps
+Soviet_Union	nationality	Aleksandr_Ivanchenkov	where is aleksandr ivanchenkov from
+Frederick_Wiseman	director	La_Danse_(film)	Who edited la danse: the paris opera ballet?
+The_King_Must_Die	author	Mary_Renault	what work was written by mary renault
+My_Girl_(The_Temptations_song)	writer	Smokey_Robinson	Who composed my girl?
+Leni_Riefenstahl	starring	Tiefland_(film)	who directed the film tiefland
+Carol_Beckwith	stateOfOrigin	United_States	What artist was born in the united states?
+Banpresto	publisher	Mobile_Suit_Gundam:_Gundam_vs._Gundam_Next	Who developed mobile suit gundam: gundam vs. gundam next?
+Billy_Bitzer	cinematography	A_Feud_in_the_Kentucky_Hills	who was the cinematographer of the film a feud in the kentucky hills
+Duran_Duran	writer	Hungry_Like_the_Wolf	What band made hungry like the wolf
+Working_Title_Films	keyPerson	Sarah_Radclyffe	What is an organization that was founded by sarah radclyffe
+Liam_Lynch_(musician)	director	Tenacious_D_in_The_Pick_of_Destiny	who directed tenacious d in the pick of destiny
+William_Castle	director	I_Saw_What_You_Did	who directed the film i saw what you did?
+Bill_Melendez	director	A_Charlie_Brown_Christmas	who is the director for a charlie brown christmas
+Vacas	director	Julio_Medem	who directed the film cows
+Suburban_Legends	artist	Infectious_(album)	Who recorded infectious?
+The_We_and_the_I	director	Michel_Gondry	what is a film directed by michel gondry
+American_Revolutionary_War	knownFor	Abraham_Bowman	What war did abraham bowman take part in
+Nil_Recurring	producer	Porcupine_Tree	Who is the artist for porcupine tree?
+Tove_Jansson	author	The_Book_about_Moomin,_Mymble_and_Little_My	who wrote the book about moomin, mymble and little my?
+Ten_(2002_film)	director	Abbas_Kiarostami	Which film was abbas kiarostami the editor for?
+Paulo_Coelho	author	Eleven_Minutes	who wrote the novel eleven minutes
+Zilch_(band)	artist	3.2.1.	which artist made the album 3.2.1 
+Trevor_Jones_(composer)	musicComposer	Angel_Heart	who wrote the music for angel heart
+Reminiscences_of_a_Journey_to_Lithuania	cinematography	Jonas_Mekas	what film is directed by jonas mekas?
+The_Conchologist's_First_Book	author	Edgar_Allan_Poe	Name a work written by edgar allan poe
+Trick'N_Snowboarder	publisher	Capcom	What's a sports game made by capcom
+It_All_Starts_with_One	artist	Ane_Brun	what is an album recorded by ane brun 
+The_Everly_Brothers	artist	Give_Me_a_Future	Who is the artist from the album give me a future
+Diana_Wynne_Jones	author	The_Crown_of_Dalemark	who was the author of the crown of dalemark
+The_Long_Rain	author	Ray_Bradbury	Name a work written by ray bradbury
+Joe_Bini	editing	Rescue_Dawn	who edited rescue dawn
+Guru_Gobind_Singh	successor	Guru_Tegh_Bahadur	What is the name of a child of guru tegh bahadur
+Poland	nationality	Mariusz_Hermanowicz	whats that nationality of  mariusz hermanowicz
+Buckethead	artist	Pumpkin_(album)	what artist recorded pumpkin?
+A_Night_Full_of_Rain	cinematography	Giuseppe_Rotunno	Which film did giuseppe rotunno do the cinematography for
+Claude_Chirac	relation	Jacques_Chirac	What is the name of jacques chirac child
+John_Marsden_(writer)	author	The_Dead_of_the_Night	who is the author of the dead of the night
+Aquaman_(TV_pilot)	creator	Paul_Norris	what television shows have paul norris created?
+Third_Day	artist	Live_Revelations	what artist released the albume live revelations
+Richard_Marks	editing	Spanglish_(film)	Who edited the film titled spanglish (film)
+Jack_King_(animator)	director	Donald's_Cousin_Gus	Who directed the film donald's cousin gus?
+Joel_McNeely	musicComposer	I_Know_Who_Killed_Me	Who did the music for the film i know who killed me?
+Charlie_Clouser	musicComposer	Dead_Silence	who is the American composer of the dead silence film 
+Aaron_Rapoport	field	Photography	who is US artist known for photography
+John_Barry_(composer)	producer	Down_Deep_Inside	Who composed the piece titled down deep inside
+The_Third_Degree	director	Michael_Curtiz	What was a film that was directed by michael curtiz
+Pino_Donaggio	musicComposer	Seed_of_Chucky	who composed music for seed of chucky?
+John_Ford	director	Cheyenne_Autumn	Who directed "Cheyenne Autumn"?
+Skrillex	producer	Narcissistic_Cannibal	Who composed narcissistic cannibal?
+Ladysmith_Black_Mambazo	artist	Ukukhanya_Kwelanga	what is the name of the group who released ukukhanya kwelanga
+Walt_Simonson	creator	Mortalla	who created the character mortalla
+Live_at_Fillmore_East_(King_Crimson_album)	artist	King_Crimson	Name an album by king crimson.
+Mark_Waid	creator	Dream_Boy_(comics)	who was dream boy created by
+Jersey_Boys:_Original_Broadway_Cast_Recording	producer	Bob_Gaudio	What's an album from bob gaudio
+Romania	nationality	Petre_Țuțea	which nation is petre Țuțea with
+Looper_(band)	producer	The_Geometrid	who is the artist on the geometrid
+Arjun_Sarja	director	Vedham	who directed the film vedham
+Ruff_Ryders_Entertainment	associatedMusicalArtist	Cassidy_(rapper)	Which label is cassidy signed to
+Wild_Women	director	John_Ford	which film did john ford directed
+Robert_Louis_Stevenson	author	Treasure_Island	who wrote the book treasure island
+J._D._Souther	artist	Home_by_Dawn	who is the artist that created home by dawn
+Victor_Hugo	author	The_Last_Day_of_a_Condemned_Man	who is the writer of the last day of a condemned man
+Rakesh_Roshan	director	Kishen_Kanhaiya	Who directed the film kishen kanhaiya
+Terry_Knight_and_the_Pack	associatedMusicalArtist	Terry_Knight	what is the namesake of the source terry knight
+Wendy_Carlos	artist	Switched-On_Bach_II	who was the artist for switched-on bach ii
+Hard_Cash	director	Predrag_Antonijević	what is a film directed by predrag antonijević
+Bappi_Lahiri	musicComposer	Muqaddar_Ka_Faisla	Name a song from the muqaddar ka faisla film soundtrack
+Marvin_Hamlisch	writer	The_Way_We_Were_(song)	who composed the song the way we were?
+Nancy_Lu	creator	Tom_DeFalco	Which fictional character did tom defalco create?
+Scorpions_(band)	artist	Moment_of_Glory	who made moment of glory 
+William_Hanna	director	Cruise_Cat	who directed cruise cat
+A_Charlie_Brown_Thanksgiving	author	Charles_M._Schulz	what program was created by  charles m. schulz
+Neversoft	developer	Guitar_Hero:_Aerosmith	who is the developer of the videogame guitar hero: aerosmith?
+Paul_Chihara	musicComposer	Killer_Instinct_(1988_film)	who composed the film killer instinct
+Jo_Stafford	artist	Songs_of_Scotland_(Jo_Stafford_album)	what is the artist from the album songs of scotland
+EA_Black_Box	developer	Sega_Soccer_Slam	who developed sega soccer slam
+James_Bond_007:_The_Duel	publisher	Domark_Software	What is a game domark developed?
+Poland	nationality	Andrzej_Pałys	where was  andrzej pałys born
+Celine_Dion	artist	The_Best_of_Celine_Dion	who participated in the album the best of celine dion
+The_Grapes_of_Wrath_(film)	cinematography	Gregg_Toland	what film did gregg toland do the cinematography for
+Hanns_Eisler	musicComposer	Dans_les_rues	Who put together the music for the movie dans les rues
+Operation_Shylock	author	Philip_Roth	What's a work by philip roth
+Kirk_Hammett	writer	Hero_of_the_Day	Who composed hero of the day
+Anne_Murray	producer	What_a_Wonderful_World_(Anne_Murray_album)	what is the musician for what a wonderful world
+Sean_Combs	producer	The_Saga_Continues...	which artist released the saga continues
+Peter_Greenaway	director	The_Cook,_the_Thief,_His_Wife_&_Her_Lover	Who directed the cook, the thief, his wife & her lover?
+Ya'acov_Ben-Dov	field	Photographer	Name a famous photographer
+Terra_Incognita:_Ambient_Works_1975_to_Present	artist	Boyd_Rice	which album has the artist boyd rice in it?
+Carolyn_S._Shoemaker	discoverer	11836_Eileen	who discovered 11836 eileen
+Mark_Robson	director	Bedlam_(film)	who is bedlam directed by
+Joanna_of_Castile	parent	Charles_V,_Holy_Roman_Emperor	Who is a parent of charles v, holy roman emperor
+Al_Kooper	producer	Easy_Does_It_(Al_Kooper_album)	Who is the artist of the album easy does it?
+Daybreak_Game_Company	developer	EverQuest_II:_Desert_of_Flames	what game is sony online entertainment make?
+The_Desert_Rats_(film)	director	Robert_Wise	Name one film in which robert wise is the director of
+Filter_(band)	producer	The_Amalgamut	What band wrote the album the amalgamut?
+Come,_Tell_Me_How_You_Live	author	Agatha_Christie	What is a work written by author agatha christie?
+The_Happening_(2008_film)	musicComposer	James_Newton_Howard	what films have james newton howard participated in?
+Italy	nationality	Antonio_da_Correggio	Where is antonio da correggio from
+Capcom	publisher	Final_Fight	Who developed the game final fight
+Gun_Crazy	cinematography	Russell_Harlan	What is a film that russell harlan did the cinematography for
+Ken's_Bar_II	artist	Ken_Hirai	what is the cover album by Japanese pop singer Ken Hirai
+Michael_Mann_(director)	director	Thief_(film)	Who directed thief
+Jon_Lord	producer	Sarabande_(album)	what artist created sarabande
+Finland	nationality	Kari_Rajamäki	what is kari rajamäki's country of nationality
+Boyzone	artist	BZ20	whats the title of bz20's album
+Alfred_Newman_(composer)	musicComposer	Mr._Belvedere_Goes_to_College	which music was used in mr. belvedere goes to college
+Hodierna_of_Jerusalem	parent	Morphia_of_Melitene	who is the child of morphia of melitene
+William_Hanna	director	The_Invisible_Mouse	Who directed the invisible mouse
+John_Taylor_Gatto	author	Dumbing_Us_Down	what author penned the book dumbing us down
+Vilmos_Zsigmond	cinematography	Jersey_Girl_(2004_film)	who did cinematography for jersey girl
+Extreme_Close-Up_(film)	director	Jeannot_Szwarc	what films did jeannot szwarc direct
+Athol_Fugard	author	%22Master_Harold%22...and_the_Boys	who wrote \\"master harold\\"...and the boys?
+Joseph_P._Kennedy,_Sr.	parent	Rosemary_Kennedy	Who is a parent of rosemary kennedy
+Golden_Boy_(film)	cinematography	Karl_Freund	What film was karl freund a cinematographer for?
+John_Stockwell_(actor)	director	Middle_of_Nowhere_(2008_film)	Who was the director for the film middle of nowhere?
+Bruce_Coville	author	Aliens_Ate_My_Homework	who wrote aliens ate my homework
+Sucks_Less_with_Kevin_Smith	creator	Scott_Mosier	what programs has scott mosier created
+Go_West_(1925_film)	starring	Buster_Keaton	who is the director for go west?
+Priscilla_Ahn	artist	A_Good_Day_(Priscilla_Ahn_album)	what was priscilla ahn's first album
+The_Drifter_(1917_film)	director	Fred_Kelsey	What's a film directed by fred kelsey
+Sleep_(band)	producer	Jerusalem_and_Dopesmoker	Who released the album jerusalem
+Czech_Republic	stateOfOrigin	Ondřej_Soukup	Which country was ondřej soukup born in
+Peter_Guber	foundedBy	Mandalay_Pictures	Who created mandalay pictures?
+Rick_Famuyiwa	director	Brown_Sugar_(2002_film)	who is the male director of the film brown sugar?
+Wong_Jing	director	To_Live_and_Die_in_Mongkok	Who directed the film to live and die in mongkok
+Vidhu_Vinod_Chopra	director	Parinda	Who directed the film parinda
+India	stateOfOrigin	Bhogaraju_Pattabhi_Sitaramayya	in which country was bhogaraju pattabhi sitaramayya born
+Sal_Buscema	creator	Hitman_(Marvel_Comics)	who was the creator of the fictional character hitman (marvel comics)
+Mötley_Crüe	artist	Girls,_Girls,_Girls_(Mötley_Crüe_album)	who is the artist of the album girls, girls, girls?
+Rockstar_San_Diego	developer	Smuggler's_Run	who created smugglers run
+John_Corigliano	musicComposer	Revolution_(1985_film)	what was the music in the film revolution
+Robert_Pollard	artist	The_Crawling_Distance	which artist recorded the crawling distance 
+Jack_Conway_(filmmaker)	director	Soul_Mates_(film)	What filmmaker directed the movie soul mates?
+Brian_Eno	producer	Wrong_Way_Up	who is the artist for wrong way up
+Like_Someone_in_Love_(Ella_Fitzgerald_album)	artist	Ella_Fitzgerald	what albums did ella fitzgerald record
+Belgium	nationality	Ermano_Fegatilli	Which country does ermano fegatilli have nationality in
+Bo_Diddley	artist	Hey..._Bo_Diddley:_In_Concert	who recorded hey... bo diddley: in concert
+Parade_(1974_film)	starring	Jacques_Tati	what movie did jacques tati direct?
+Strategic_Simulations	developer	Demon's_Winter	Who was the developer behind demons winter?
+Poland	nationality	Tomasz_Szczypiński	what is the nationality of tomasz szczypiński?
+Lidia_Zamenhof	parent	L._L._Zamenhof	who is the child of l. l. zamenhof
+Sam_Shepard	author	A_Lie_of_the_Mind	Who wrote the work a lie of the mind?
+Sega	publisher	TransBot	who was the developer of the game transbot?
+Jani_Lane	writer	Heaven_(Warrant_song)	who is the musical composer of heaven?
+Evermore_(band)	artist	Dreams_(Evermore_album)	Who is the group that released dreams?
+László_Kovács_(cinematographer)	cinematography	Huckleberry_Finn_(1974_film)	Who was the cinematographer for the film huckleberry finn (1974 film)?
+Hoagy_Carmichael	artist	In_Hoagland	Who is the artist that composed in hoagland
+Buck_Owens_(1961_album)	artist	Buck_Owens	What band produce the al
